@@ -13,7 +13,7 @@
 
 ## Checklist
 
-- [ ] It follows the conventions of [CONTRIBUTING.md](https://github.com/AerafalDev/D3B/blob/main/CONTRIBUTING.md).
+- [ ] It follows the conventions of [CONTRIBUTING.md](https://github.com/FlokiGiit/D3B.Bis/blob/main/CONTRIBUTING.md).
 - [ ] Changes to `src/` come with their tests.
 - [ ] The README and `docs/` describe the new behavior, and a change of direction has its entry in `docs/decisions/`.
 - [ ] Nothing extracted from the client, no capture, no database and no login ticket is committed.

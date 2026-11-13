@@ -11,7 +11,7 @@ namespace D3B.Bis.Data.Releases;
 public static class ClientRelease
 {
     /// <summary>The repository whose releases ship the packs, as <c>owner/name</c>.</summary>
-    public const string DefaultRepository = "AerafalDev/D3B";
+    public const string DefaultRepository = "FlokiGiit/D3B.Bis";
 
     private const int HashLength = 64;
 

@@ -26,6 +26,11 @@ independent repository, with `D3B.Bis` as the root of the names. The rest is the
   copies D3B's database through SQLite's backup, the studio's project and the app's preferences, each only where D3B.Bis has none. D3B's files
   are only read; the read of its database, in WAL mode, left SQLite's empty `-wal` and `-shm` beside it, which the next write of D3B clears.
   Tested on temporary folders, and seen once on the owner's machine while D3B ran: 1 account, 2 characters, 539 graphics and 28 runs came across.
+- **Made, the repository.** `FlokiGiit/D3B.Bis`, private, the owner's choice of 2026-11-13; `AerafalDev/D3B` stays a remote to read from.
+  `ClientRelease.DefaultRepository` names it, so the app's updates, the report channel and the tools' releases are its own and none of them
+  writes to or sends anything to D3B's. It has no release yet: the tools take D3B's `client-3.7.13.17` with `--repository AerafalDev/D3B`, the
+  app finds no update and no report channel (a report stays a file), and the links of the README, the templates and the policies name it. Not
+  done: the releases of a private repository are read with a token, which neither Velopack's source nor the report channel is given here.
 - **The earlier entries.** Their project names and paths follow the rename, so that what they point at is found; what they say of
   `%LOCALAPPDATA%\D3B` and of the name D3B is as it was written. The docs still say D3B for short.
 - **Rejected.**

@@ -38,7 +38,7 @@ internal sealed partial class SettingsViewModel : ObservableObject
     private const string NoticesFile = "THIRD-PARTY-NOTICES.md";
     private const decimal DefaultCaptureDays = 7;
     private const decimal DefaultCaptureMegabytes = 1024;
-    private const string NoticesPage = "https://github.com/AerafalDev/D3B/blob/main/THIRD-PARTY-NOTICES.md";
+    private const string NoticesPage = "https://github.com/FlokiGiit/D3B.Bis/blob/main/THIRD-PARTY-NOTICES.md";
 
     private readonly Localizer _localizer;
     private readonly AppPreferences? _preferences;

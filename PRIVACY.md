@@ -33,7 +33,10 @@ The report also says the app's version, the client build, the area of the bug an
 
 ## Where it goes and who reads it
 
-A report is posted to a private channel of a Discord server that only D3B's maintainers read. Discord is a third party
+D3B.Bis has published no channel yet (D426): pressing Send finds none, says so, and the report stays a file on your
+computer, which you hand over yourself or not at all. Once a channel is published, what follows holds.
+
+A report is posted to a private channel of a Discord server that only D3B.Bis's maintainers read. Discord is a third party
 with its own [privacy policy](https://discord.com/privacy): it stores the file for as long as the maintainers leave it.
 The maintainers delete a report once its bug is fixed and at the latest 90 days after they received it.
 
@@ -47,7 +50,7 @@ and is never committed to the repository or used in a public test.
 
 - Send nothing: turn the recording off, or never use Report a bug.
 - Send less: uncheck any part in the preview, except the capture of a bug of the game.
-- Ask for a deletion: give the maintainers the report's code (`D3B-XXXX-XX`, shown when it is saved) on
-  [Discord](https://discord.com/invite/6A6Vw9Mn24) or in an issue, and it is deleted.
+- Ask for a deletion: give the maintainers the report's code (`D3B-XXXX-XX`, shown when it is saved) in an issue, and it
+  is deleted.
 
 D3B is not affiliated with Ankama. Questions about this page: open an issue or ask on Discord.

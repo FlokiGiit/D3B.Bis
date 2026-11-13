@@ -39,7 +39,7 @@ You need Windows 10 or 11, Git and the .NET 10 SDK pinned in [`global.json`](glo
 by Ankama's launcher, is needed to run the bots and the data tools, not to build or test.
 
 ```powershell
-git clone https://github.com/AerafalDev/D3B.git
+git clone https://github.com/FlokiGiit/D3B.Bis.git
 cd D3B
 dotnet build
 dotnet test
@@ -135,10 +135,10 @@ dotnet build .claude/hooks/<hook>.cs  # each hook you changed
 
 For a bug of the game (a fight, a harvest, a bank journey, an NPC), use **Help, Report a bug** in the app: it makes a
 report with a cleaned copy of your session's capture, which you read and may uncheck before pressing Send, and gives you its
-code to quote on [Discord](https://discord.com/invite/6A6Vw9Mn24) or in an issue. What it holds and where it goes is in
+code to quote in an issue. What it holds and where it goes is in
 [PRIVACY.md](PRIVACY.md). Never attach a capture yourself.
 
-For anything else, use the [issue forms](https://github.com/AerafalDev/D3B/issues/new/choose). For a bug, give D3B's version and the
+For anything else, use the [issue forms](https://github.com/FlokiGiit/D3B.Bis/issues/new/choose). For a bug, give D3B's version and the
 client build, both in the settings' About section, what you did, what you expected and what happened, and the relevant
 lines of the bot's journal from the bottom panel. Leave out anything that names your account if you prefer: it is never
 needed.

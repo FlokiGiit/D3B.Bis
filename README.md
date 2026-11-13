@@ -1,9 +1,7 @@
 # D3B.Bis
 
-[![CI](https://github.com/AerafalDev/D3B/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/AerafalDev/D3B/actions/workflows/ci.yml)
-[![Latest release](https://img.shields.io/github/v/release/AerafalDev/D3B?label=release)](https://github.com/AerafalDev/D3B/releases/latest)
+[![CI](https://github.com/FlokiGiit/D3B.Bis/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/FlokiGiit/D3B.Bis/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![Discord](https://img.shields.io/badge/Discord-join-5865F2?logo=discord&logoColor=white)](https://discord.com/invite/6A6Vw9Mn24)
 
 > [!NOTE]
 > D3B.Bis continues [D3B](https://github.com/AerafalDev/D3B), by Aerafal, from its commit `df9a242` (2026-11-10), in a repository of
@@ -75,7 +73,7 @@ and groups, the marketplace and crafting. The [roadmap](docs/roadmap.md) has the
 ## Install
 
 1. On Windows 10 or 11, install Dofus 3 with Ankama's launcher.
-2. Download `D3B.Bis.App-win-Setup.exe` from the [latest release](https://github.com/AerafalDev/D3B/releases/latest) and run
+2. Download `D3B.Bis.App-win-Setup.exe` from the [latest release](https://github.com/FlokiGiit/D3B.Bis/releases/latest) and run
    it. It installs D3B for the current user in `%LOCALAPPDATA%\D3B.Bis.App`, with a shortcut on the desktop and in the Start
    menu. The installer is not signed yet: if Windows SmartScreen stops it, choose *More info*, then *Run anyway*.
    A portable zip is in the same release.
@@ -111,7 +109,7 @@ You need Windows, Git and the .NET 10 SDK pinned in [`global.json`](global.json)
 official client is needed to run the bots, not to build or test.
 
 ```powershell
-git clone https://github.com/AerafalDev/D3B.git
+git clone https://github.com/FlokiGiit/D3B.Bis.git
 cd D3B
 dotnet build                          # warnings are errors
 dotnet test                           # every test project, on Microsoft.Testing.Platform
@@ -130,8 +128,11 @@ code reads. It looks for them in `%LOCALAPPDATA%\D3B.Bis\data`, then beside the 
 from the build's release `client-<version>`, with the [GitHub CLI](https://cli.github.com) signed in:
 
 ```powershell
-dotnet run --file scripts/embed.cs -- --client-version 3.7.13.17 --output "$env:LOCALAPPDATA\D3B.Bis\data"
+dotnet run --file scripts/embed.cs -- --client-version 3.7.13.17 --output "$env:LOCALAPPDATA\D3B.Bis\data" --repository AerafalDev/D3B
 ```
+
+D3B.Bis has published no `client-<version>` release of its own yet (D426): `--repository AerafalDev/D3B` takes D3B's, which
+holds the formats this code reads. Without it the tool looks in this repository's releases.
 
 The tool checks the files, and says so when the release lacks a format your checkout reads, as happens while a format
 change on `main` waits for its upload. When Ankama updates the client, the maintainer extracts and maps the new build
@@ -253,8 +254,7 @@ flowchart LR
 
 Issues and pull requests are welcome. Read [CONTRIBUTING.md](CONTRIBUTING.md) first: it covers the conventions the build
 enforces and what can never be committed. Everyone taking part follows the [code of conduct](CODE_OF_CONDUCT.md). To
-report a vulnerability, follow the [security policy](SECURITY.md) rather than opening an issue. To talk about D3B, join
-its [Discord](https://discord.com/invite/6A6Vw9Mn24).
+report a vulnerability, follow the [security policy](SECURITY.md) rather than opening an issue.
 
 **To report a bug of the game** (a fight, a harvest, a bank journey, an NPC), use Help, Report a bug in the app: it makes
 a report with a cleaned copy of your session's capture, which you read before anything is sent. What it holds, where it goes

@@ -38,8 +38,9 @@ As of 2026-11-13, after D426 (D3B.Bis continues D3B in a repository of its own: 
 - D3B.Bis (D426) was built, tested and started on the owner's machine while D3B 0.9.1 ran: the window opened, the pack of format 12 and the
   mapping of format 17 fetched from D3B's release were read, D3B's database, project and preferences came across, and the host stopped at the
   relay's address, which D3B held. Not done: a session through a client with D3B closed, an installer packed and installed beside D3B's, an
-  update, a report sent. The app's updates, the tools' default repository and the report channel still name `AerafalDev/D3B`
-  (`ClientRelease.DefaultRepository`) until the new repository exists.
+  update, a report sent. The repository is `FlokiGiit/D3B.Bis`, private (`ClientRelease.DefaultRepository`): it has no release yet, so the
+  tools take D3B's client release with `--repository AerafalDev/D3B`, the app finds no update and no report channel, and a private
+  repository's releases will need a token the app does not have.
 
 - The harvest and the zones of a map (D424): a player's report ("it tries but cannot, unless it stands in front of the resource or comes back from
   another side"), read in the code and measured on the pack (864 maps with more than one zone, 3,673 element and zone pairs on 607 maps), fixed and

@@ -108,7 +108,7 @@ public sealed class AppUpdatesTests
         var none = new ConfigurationBuilder().Build();
         var folder = new ConfigurationBuilder().AddCommandLine(["--Updates:Source", @"C:\releases"]).Build();
 
-        Assert.Equal("https://github.com/AerafalDev/D3B", UpdateSettings.SourceIn(none));
+        Assert.Equal("https://github.com/FlokiGiit/D3B.Bis", UpdateSettings.SourceIn(none));
         Assert.Equal(@"C:\releases", UpdateSettings.SourceIn(folder));
     }
 }

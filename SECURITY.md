@@ -15,7 +15,7 @@ in the next release, which installed apps download when they start.
 
 **Do not report a vulnerability in a public issue, pull request or comment.**
 
-Report it privately through GitHub: on the repository's [Security](https://github.com/AerafalDev/D3B/security) tab,
+Report it privately through GitHub: on the repository's [Security](https://github.com/FlokiGiit/D3B.Bis/security) tab,
 choose *Report a vulnerability*. Only the maintainer sees the report, and you can discuss the fix there.
 
 Please include:
