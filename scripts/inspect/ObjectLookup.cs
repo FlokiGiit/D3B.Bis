@@ -1,7 +1,7 @@
 using AssetsTools.NET;
 using AssetsTools.NET.Extra;
 
-namespace D3B.Scripts.Inspect;
+namespace D3B.Bis.Scripts.Inspect;
 
 /// <summary>Finds one object across bundles, by path id or by name.</summary>
 internal static class ObjectLookup

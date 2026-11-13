@@ -6,7 +6,7 @@
 #:include docs/LinkChecker.cs
 
 using System.Globalization;
-using D3B.Scripts.Docs;
+using D3B.Bis.Scripts.Docs;
 
 // Looks after the repository's Markdown files (D401): finds the links whose file or heading does not exist, so that a
 // document moved or split keeps every reference to it.

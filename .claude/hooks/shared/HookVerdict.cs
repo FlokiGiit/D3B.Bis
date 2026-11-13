@@ -1,4 +1,4 @@
-namespace D3B.Hooks;
+namespace D3B.Bis.Hooks;
 
 /// <summary>A guard's answer to a tool call it refuses or hands to the owner; a call it lets through has no verdict.</summary>
 internal sealed class HookVerdict

@@ -1,7 +1,7 @@
 using Google.Protobuf.Reflection;
 using FieldType = Google.Protobuf.Reflection.FieldDescriptorProto.Types.Type;
 
-namespace D3B.Scripts.Schema;
+namespace D3B.Bis.Scripts.Schema;
 
 /// <summary>Counts what a file descriptor holds, to describe a schema by its structure.</summary>
 internal sealed class SchemaSummary

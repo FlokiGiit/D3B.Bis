@@ -1,4 +1,4 @@
-namespace D3B.Hooks;
+namespace D3B.Bis.Hooks;
 
 /// <summary>
 /// The writes Claude may not make in the project: what is extracted from the official client is never committed, and the
@@ -6,7 +6,7 @@ namespace D3B.Hooks;
 /// </summary>
 internal static class WriteGuard
 {
-    private const string ProtocolFolder = "src/D3B.Protocol/";
+    private const string ProtocolFolder = "src/D3B.Bis.Protocol/";
     private const string TestsFolder = "tests/";
 
     private static readonly HashSet<string> _extractedExtensions = new(StringComparer.OrdinalIgnoreCase)

@@ -1,15 +1,15 @@
 using System.CommandLine;
 using System.Security.Cryptography;
-using D3B.Data;
-using D3B.Data.Packs;
-using D3B.Data.Releases;
-using D3B.Protocol.Mapping;
-using D3B.Protocol.Translation;
-using D3B.Scripts.Unity;
+using D3B.Bis.Data;
+using D3B.Bis.Data.Packs;
+using D3B.Bis.Data.Releases;
+using D3B.Bis.Protocol.Mapping;
+using D3B.Bis.Protocol.Translation;
+using D3B.Bis.Scripts.Unity;
 using Google.Protobuf;
 using Google.Protobuf.Reflection;
 
-namespace D3B.Scripts.Embed;
+namespace D3B.Bis.Scripts.Embed;
 
 /// <summary>The command that puts a client build's pack, schema and mapping beside a published app (D172).</summary>
 internal static class EmbedCommand
@@ -18,7 +18,7 @@ internal static class EmbedCommand
     {
         var version = new Option<string>("--client-version")
         {
-            Description = "The client build whose files the app ships, the ClientVersion property of src/D3B.App.",
+            Description = "The client build whose files the app ships, the ClientVersion property of src/D3B.Bis.App.",
             Required = true,
         };
         var output = new Option<DirectoryInfo>("--output")
@@ -28,7 +28,7 @@ internal static class EmbedCommand
         };
         var packs = new Option<DirectoryInfo?>("--packs")
         {
-            Description = @"Takes the files from this directory, one directory per client version, such as %LOCALAPPDATA%\D3B\data, instead of the build's release.",
+            Description = @"Takes the files from this directory, one directory per client version, such as %LOCALAPPDATA%\D3B.Bis\data, instead of the build's release.",
         };
         var repository = new Option<string>("--repository")
         {

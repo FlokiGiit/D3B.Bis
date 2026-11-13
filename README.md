@@ -1,9 +1,15 @@
-# D3B
+# D3B.Bis
 
 [![CI](https://github.com/AerafalDev/D3B/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/AerafalDev/D3B/actions/workflows/ci.yml)
 [![Latest release](https://img.shields.io/github/v/release/AerafalDev/D3B?label=release)](https://github.com/AerafalDev/D3B/releases/latest)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Discord](https://img.shields.io/badge/Discord-join-5865F2?logo=discord&logoColor=white)](https://discord.com/invite/6A6Vw9Mn24)
+
+> [!NOTE]
+> D3B.Bis continues [D3B](https://github.com/AerafalDev/D3B), by Aerafal, from its commit `df9a242` (2026-11-10), in a repository of
+> its own: D3B itself is being written again on another stack, and this line stays C# on .NET 10 for Windows. The
+> history, the MIT license and its copyright are D3B's, kept as they were. The projects and namespaces are named
+> `D3B.Bis.*`; the texts below still say D3B for short.
 
 An open-source bot for Dofus 3, Ankama's Unity client, written in C# on .NET 10 for Windows. D3B plays your character
 through the official client: it harvests, banks and fights, and a desktop app shows what each bot does. Every feature is
@@ -69,8 +75,8 @@ and groups, the marketplace and crafting. The [roadmap](docs/roadmap.md) has the
 ## Install
 
 1. On Windows 10 or 11, install Dofus 3 with Ankama's launcher.
-2. Download `D3B.App-win-Setup.exe` from the [latest release](https://github.com/AerafalDev/D3B/releases/latest) and run
-   it. It installs D3B for the current user in `%LOCALAPPDATA%\D3B.App`, with a shortcut on the desktop and in the Start
+2. Download `D3B.Bis.App-win-Setup.exe` from the [latest release](https://github.com/AerafalDev/D3B/releases/latest) and run
+   it. It installs D3B for the current user in `%LOCALAPPDATA%\D3B.Bis.App`, with a shortcut on the desktop and in the Start
    menu. The installer is not signed yet: if Windows SmartScreen stops it, choose *More info*, then *Run anyway*.
    A portable zip is in the same release.
 
@@ -80,7 +86,7 @@ version of D3B for it comes out afterwards. D3B checks for a new version when it
 when you restart it from its banner or close it. Its settings' About section shows its version and the client build it
 ships.
 
-D3B keeps its database, settings and captures in `%LOCALAPPDATA%\D3B`. Uninstalling it from Windows' settings removes the
+D3B keeps its database, settings and captures in `%LOCALAPPDATA%\D3B.Bis`. Uninstalling it from Windows' settings removes the
 app and keeps that folder.
 
 ## Getting started
@@ -115,16 +121,16 @@ dotnet format --verify-no-changes     # CI checks it
 ### Run
 
 ```powershell
-dotnet run --project src/D3B.App      # the desktop app, which runs the bots' host in its process
-dotnet run --project src/D3B.Host     # the same host without the app, until Ctrl+C
+dotnet run --project src/D3B.Bis.App      # the desktop app, which runs the bots' host in its process
+dotnet run --project src/D3B.Bis.Host     # the same host without the app, until Ctrl+C
 ```
 
 The host needs the data pack, the protocol schema and the mapping of the installed client's build, in the formats the
-code reads. It looks for them in `%LOCALAPPDATA%\D3B\data`, then beside the published app. Run from source, take them
+code reads. It looks for them in `%LOCALAPPDATA%\D3B.Bis\data`, then beside the published app. Run from source, take them
 from the build's release `client-<version>`, with the [GitHub CLI](https://cli.github.com) signed in:
 
 ```powershell
-dotnet run --file scripts/embed.cs -- --client-version 3.7.13.17 --output "$env:LOCALAPPDATA\D3B\data"
+dotnet run --file scripts/embed.cs -- --client-version 3.7.13.17 --output "$env:LOCALAPPDATA\D3B.Bis\data"
 ```
 
 The tool checks the files, and says so when the release lacks a format your checkout reads, as happens while a format
@@ -133,18 +139,18 @@ with the tools below, then publishes its release; mapping a build also needs cap
 
 Both the app and the host keep the accounts their relay sees, what their bots learn, such as the placement cells of every
 fight they see begin with the map fought on and the one left, and the variables each character keeps, in
-`%LOCALAPPDATA%\D3B\d3b.db`. The profiles and behaviors you make are files of a project, one JSON file each, in
-`%LOCALAPPDATA%\D3B\studio`; those given with D3B are read only, copied to be changed. Options are configuration keys,
+`%LOCALAPPDATA%\D3B.Bis\d3b.db`. The profiles and behaviors you make are files of a project, one JSON file each, in
+`%LOCALAPPDATA%\D3B.Bis\studio`; those given with D3B are read only, copied to be changed. Options are configuration keys,
 given on the command line:
 
 | Option | Effect |
 | --- | --- |
 | `--Storage:Path <file>` | Uses another database file. |
 | `--Studio:Path <folder>` | Uses another project's folder, for its profiles and behaviors. |
-| `--Network:Captures:Game false` | Stops recording the game connection, which D3B records by default in `%LOCALAPPDATA%\D3B\captures\game`, so that a bug can be replayed and reported (the app's protocol inspector replays it too). A capture holds the account's login ticket: never share one. |
+| `--Network:Captures:Game false` | Stops recording the game connection, which D3B records by default in `%LOCALAPPDATA%\D3B.Bis\captures\game`, so that a bug can be replayed and reported (the app's protocol inspector replays it too). A capture holds the account's login ticket: never share one. |
 | `--Network:Captures:Retention:Days 7`, `--Network:Captures:Retention:Megabytes 1024` | How long and how much of the game's captures are kept: the older ones, then the oldest while the rest is over the size, are deleted at each start of the host, never one still open. `0` lifts a limit. |
 | `D3B_REPORT_WEBHOOK` (environment variable) | The URL of a Discord webhook that bug reports are posted to instead of the one the release `report-channel` names: for a fork or a test. Never commit one. |
-| `--Network:Captures:Enabled true` | Also records the connection phase's captures, in `%LOCALAPPDATA%\D3B\captures`, which only the mapping tool reads and which hold the account's login token. |
+| `--Network:Captures:Enabled true` | Also records the connection phase's captures, in `%LOCALAPPDATA%\D3B.Bis\captures`, which only the mapping tool reads and which hold the account's login token. |
 | `--Fights:Alone true` | Has the AI play every fight of the bots, the player's own included, whatever their activity says. |
 | `--Delays:Display 1.5` | The client's display time, in seconds; the other delays are under `Delays:` too. |
 | `--Banking:FullAt 98` | The share of pods, from 50 to 100, at which the bots go to the bank; `--Banking:UseZaaps false` has them walk there. A profile with its own banking rules ignores both. |
@@ -153,7 +159,7 @@ given on the command line:
 
 The tools are [file-based apps](https://learn.microsoft.com/dotnet/core/sdk/file-based-apps) in `scripts/`, run with
 `dotnet run --file scripts/<tool>.cs`; `-- --help` lists each one's options. By default they read the client installed
-in `%LOCALAPPDATA%\Ankama\Dofus-dofus3` and write under `%LOCALAPPDATA%\D3B`.
+in `%LOCALAPPDATA%\Ankama\Dofus-dofus3` and write under `%LOCALAPPDATA%\D3B.Bis`.
 
 | Tool | What it does |
 | --- | --- |
@@ -175,7 +181,7 @@ pinned in [`.config/dotnet-tools.json`](.config/dotnet-tools.json):
 
 ```powershell
 dotnet tool restore
-dotnet tool run dotnet-ef migrations add <Name> --project src/D3B.Storage --startup-project src/D3B.Storage --output-dir Migrations
+dotnet tool run dotnet-ef migrations add <Name> --project src/D3B.Bis.Storage --startup-project src/D3B.Bis.Storage --output-dir Migrations
 ```
 
 ### Build the installer
@@ -185,9 +191,9 @@ the app. The same installer, built on your machine in PowerShell:
 
 ```powershell
 dotnet tool restore
-dotnet publish src/D3B.App -c Release -r win-x64 --self-contained -o publish -p:MinVerVersionOverride=0.1.0
-dotnet run --file scripts/embed.cs -- --client-version 3.7.13.17 --output publish/data --packs "$env:LOCALAPPDATA\D3B\data"
-dotnet tool run vpk pack --packId D3B.App --packVersion 0.1.0 --packDir publish --mainExe D3B.App.exe --packTitle D3B --icon src/D3B.App/Assets/d3b.ico -o releases
+dotnet publish src/D3B.Bis.App -c Release -r win-x64 --self-contained -o publish -p:MinVerVersionOverride=0.1.0
+dotnet run --file scripts/embed.cs -- --client-version 3.7.13.17 --output publish/data --packs "$env:LOCALAPPDATA\D3B.Bis\data"
+dotnet tool run vpk pack --packId D3B.Bis.App --packVersion 0.1.0 --packDir publish --mainExe D3B.Bis.App.exe --packTitle D3B.Bis --icon src/D3B.Bis.App/Assets/d3b.ico -o releases
 ```
 
 An installed app started with `--Updates:Source <folder>` takes its updates from a folder of releases packed this way.
@@ -215,20 +221,20 @@ flowchart LR
   and a mapping from the build's obfuscated protocol to readable `.proto` files. Nothing extracted from the client is
   committed; packs and mappings ship as release assets.
 - **Bots.** Each character a client plays is an async actor fed by the game it observes. Pathfinding, the rules of a
-  fight and its effects live in `D3B.Engine`, pure code with no I/O.
+  fight and its effects live in `D3B.Bis.Engine`, pure code with no I/O.
 
 | Project | Role |
 | --- | --- |
-| `src/D3B.Core` | Modules and `BotBuilder`, on the .NET Generic Host. |
-| `src/D3B.Network` | The relay: Kestrel's transport, framing and codec, and the captures. |
-| `src/D3B.Protocol` | The readable protocol, a build's mapping and the translation through it. |
-| `src/D3B.Data` | The pack's format and readers: maps, world graph, the world maps' tiles, items, spells, monsters, texts. |
-| `src/D3B.Engine` | Pathfinding, line of sight, the rules of a fight, its effects and the AI's search. |
-| `src/D3B.Bot` | The bots' run time: state, activities, settings, and the host both apps share. |
-| `src/D3B.Studio` | The studio's model: assets, behaviors and nodes, routes. |
-| `src/D3B.Storage` | The database, SQLite through EF Core: accounts, runs, what the bots learn and the characters' variables. |
-| `src/D3B.App` | The Avalonia desktop app. |
-| `src/D3B.Host` | The host without the app. |
+| `src/D3B.Bis.Core` | Modules and `BotBuilder`, on the .NET Generic Host. |
+| `src/D3B.Bis.Network` | The relay: Kestrel's transport, framing and codec, and the captures. |
+| `src/D3B.Bis.Protocol` | The readable protocol, a build's mapping and the translation through it. |
+| `src/D3B.Bis.Data` | The pack's format and readers: maps, world graph, the world maps' tiles, items, spells, monsters, texts. |
+| `src/D3B.Bis.Engine` | Pathfinding, line of sight, the rules of a fight, its effects and the AI's search. |
+| `src/D3B.Bis.Bot` | The bots' run time: state, activities, settings, and the host both apps share. |
+| `src/D3B.Bis.Studio` | The studio's model: assets, behaviors and nodes, routes. |
+| `src/D3B.Bis.Storage` | The database, SQLite through EF Core: accounts, runs, what the bots learn and the characters' variables. |
+| `src/D3B.Bis.App` | The Avalonia desktop app. |
+| `src/D3B.Bis.Host` | The host without the app. |
 
 ## Documentation
 

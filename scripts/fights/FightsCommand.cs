@@ -1,14 +1,14 @@
 using System.CommandLine;
-using D3B.Data;
-using D3B.Data.Maps;
-using D3B.Data.Packs;
-using D3B.Engine.Tactics;
-using D3B.Network.Captures;
-using D3B.Network.Relay;
-using D3B.Protocol.Mapping;
-using D3B.Protocol.Translation;
+using D3B.Bis.Data;
+using D3B.Bis.Data.Maps;
+using D3B.Bis.Data.Packs;
+using D3B.Bis.Engine.Tactics;
+using D3B.Bis.Network.Captures;
+using D3B.Bis.Network.Relay;
+using D3B.Bis.Protocol.Mapping;
+using D3B.Bis.Protocol.Translation;
 
-namespace D3B.Scripts.Fights;
+namespace D3B.Bis.Scripts.Fights;
 
 /// <summary>The command that replays the captured fights and compares what D3B foresees with what the server announced.</summary>
 internal static class FightsCommand
@@ -17,12 +17,12 @@ internal static class FightsCommand
     {
         var paths = new Argument<string[]>("paths")
         {
-            Description = @"Game captures, or directories of them. Defaults to %LOCALAPPDATA%\D3B\captures\game, where the host records them.",
+            Description = @"Game captures, or directories of them. Defaults to %LOCALAPPDATA%\D3B.Bis\captures\game, where the host records them.",
             Arity = ArgumentArity.ZeroOrMore,
         };
         var data = new Option<DirectoryInfo?>("--data")
         {
-            Description = @"The directory of the packs, schemas and mappings, one subdirectory per client version. Defaults to %LOCALAPPDATA%\D3B\data.",
+            Description = @"The directory of the packs, schemas and mappings, one subdirectory per client version. Defaults to %LOCALAPPDATA%\D3B.Bis\data.",
         };
         var version = new Option<string?>("--client-version")
         {
@@ -49,7 +49,7 @@ internal static class FightsCommand
         {
             Description = "Counts what D3B did in the fights instead: who played each, how it ended, and what came of the AI's requests (D206).",
         };
-        var command = new RootCommand("Replays the captured fights and compares what D3B.Engine foresees with what the server announced, action by action.")
+        var command = new RootCommand("Replays the captured fights and compares what D3B.Bis.Engine foresees with what the server announced, action by action.")
         {
             paths,
             data,

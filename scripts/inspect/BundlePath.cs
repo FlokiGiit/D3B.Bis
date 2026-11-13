@@ -1,4 +1,4 @@
-namespace D3B.Scripts.Inspect;
+namespace D3B.Bis.Scripts.Inspect;
 
 /// <summary>A bundle of the official client.</summary>
 /// <param name="FullPath">Where the bundle is on disk.</param>

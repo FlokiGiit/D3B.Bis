@@ -58,7 +58,7 @@ SOFTWARE.
 
 ## IntelliJ Platform's icons
 
-The studio's icons, in `src/D3B.App/Themes/IntelliJIcons.axaml`, which `scripts/icons.cs` writes (D331), and its mockup,
+The studio's icons, in `src/D3B.Bis.App/Themes/IntelliJIcons.axaml`, which `scripts/icons.cs` writes (D331), and its mockup,
 `docs/mockups/studio-7c.html` (D319), are the dark variants of these SVG icons of the IntelliJ Platform, from
 `platform/icons/src/expui` in [JetBrains/intellij-community](https://github.com/JetBrains/intellij-community), each of
 whose files says "Copyright 2000-2025 JetBrains s.r.o. and contributors. Use of this source code is governed by the Apache

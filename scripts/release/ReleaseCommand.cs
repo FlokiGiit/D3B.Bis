@@ -1,14 +1,14 @@
 using System.CommandLine;
-using D3B.Data;
-using D3B.Data.Packs;
-using D3B.Data.Releases;
-using D3B.Protocol.Mapping;
-using D3B.Protocol.Translation;
-using D3B.Scripts.Unity;
+using D3B.Bis.Data;
+using D3B.Bis.Data.Packs;
+using D3B.Bis.Data.Releases;
+using D3B.Bis.Protocol.Mapping;
+using D3B.Bis.Protocol.Translation;
+using D3B.Bis.Scripts.Unity;
 using Google.Protobuf;
 using Google.Protobuf.Reflection;
 
-namespace D3B.Scripts.Release;
+namespace D3B.Bis.Scripts.Release;
 
 /// <summary>The command that publishes the pack, schema and mapping of a client build to the release of that build.</summary>
 internal static class ReleaseCommand
@@ -25,7 +25,7 @@ internal static class ReleaseCommand
         };
         var packs = new Option<DirectoryInfo?>("--packs")
         {
-            Description = @"The directory packs, schemas and mappings are kept in, one directory per client version. Defaults to %LOCALAPPDATA%\D3B\data, where the tools write.",
+            Description = @"The directory packs, schemas and mappings are kept in, one directory per client version. Defaults to %LOCALAPPDATA%\D3B.Bis\data, where the tools write.",
         };
         var repository = new Option<string>("--repository")
         {
@@ -135,9 +135,9 @@ internal static class ReleaseCommand
 
         ReleaseAsset[] assets =
         [
-            ReleaseAsset.Hash(packPath, $"game data, pack format {GamePack.FormatVersion}, extracted by D3B.Data {info.ExtractorVersion} from client files of fingerprint `{info.Fingerprint}`"),
+            ReleaseAsset.Hash(packPath, $"game data, pack format {GamePack.FormatVersion}, extracted by D3B.Bis.Data {info.ExtractorVersion} from client files of fingerprint `{info.Fingerprint}`"),
             ReleaseAsset.Hash(schemaPath, $"the protocol's obfuscated schema, format {SchemaFile.FormatVersion}, read from the client's code by `scripts/schema.cs`"),
-            ReleaseAsset.Hash(mappingPath, $"the protocol mapping, format {MappingFile.FormatVersion}, matched with that schema by D3B.Protocol {mapping.ToolVersion}"),
+            ReleaseAsset.Hash(mappingPath, $"the protocol mapping, format {MappingFile.FormatVersion}, matched with that schema by D3B.Bis.Protocol {mapping.ToolVersion}"),
         ];
 
         Console.WriteLine($"Pack: format {GamePack.FormatVersion}, client {info.ClientVersion}, extractor {info.ExtractorVersion}, fingerprint {info.Fingerprint}");

@@ -5,7 +5,7 @@ owed. The reasons are in [the decisions](decisions/README.md), found through [de
 their sessions are in [roadmap.md](roadmap.md); how the code is built is in [architecture.md](architecture.md). Whoever closes
 a session updates this page, the roadmap and the index.
 
-As of 2026-11-10, after D425 (the harvest's tour goes into another zone of a map, out and back through the world graph), D424 (a resource in another zone of its map is out of reach, no longer used from afar), D421 (7r6, a step of a list repeats and plays another list), D420 (the Pandawa no longer swaps Sobre and Saoul instead of striking), D419 (7r4, following a run), D418 (7r5b, the profile as an asset editor), D415 (7r5 part 1, the zones read by the harvest and the hunt), D417 (the harvest's tour weighs the character's level) and D416 (it leaves the houses of a town alone), D414 (hints on the world map), D413 (7r3, the Sequencer) and D408 (the fight AI after the players' reports, D407, summons a last resort; the home page, D406; banking by general settings, D405; D394, session 7d4, merged into 7r2's branch). App 0.8.1, client build 3.7.13.17, pack format 11 published, 12 extracted and not published (D414), mapping format 17.
+As of 2026-11-13, after D426 (D3B.Bis continues D3B in a repository of its own: projects and namespaces `D3B.Bis.*`, files in `%LOCALAPPDATA%\D3B.Bis`, D3B's formats and published packs kept), D425 (the harvest's tour goes into another zone of a map, out and back through the world graph), D424 (a resource in another zone of its map is out of reach, no longer used from afar), D421 (7r6, a step of a list repeats and plays another list), D420 (the Pandawa no longer swaps Sobre and Saoul instead of striking), D419 (7r4, following a run), D418 (7r5b, the profile as an asset editor), D415 (7r5 part 1, the zones read by the harvest and the hunt), D417 (the harvest's tour weighs the character's level) and D416 (it leaves the houses of a town alone), D414 (hints on the world map), D413 (7r3, the Sequencer) and D408 (the fight AI after the players' reports, D407, summons a last resort; the home page, D406; banking by general settings, D405; D394, session 7d4, merged into 7r2's branch). App 0.8.1, client build 3.7.13.17, pack format 11 published, 12 extracted and not published (D414), mapping format 17.
 
 ## What exists
 
@@ -28,12 +28,18 @@ As of 2026-11-10, after D425 (the harvest's tour goes into another zone of a map
   map beside the form to pick the zone or the sub-areas of its place.
 - **A versioned Claude Code setup** (D398): `.claude/` holds C# hooks that ask before a push or a `gh` write and refuse
   what the client produces, skills for C#, the studio's UI, tests, Git and the rest, and two agents. The hooks are tested in
-  `tests/D3B.Hooks.Tests`; the write guard and the Git guard were seen refusing inside a session, the "ask" answers and the
+  `tests/D3B.Bis.Hooks.Tests`; the write guard and the Git guard were seen refusing inside a session, the "ask" answers and the
   Stop hook's block not yet.
 - **Published**: the installer and updates through Velopack (D171); the client build's pack, schema and mapping as the release
   `client-3.7.13.17` (D365).
 
 ## Not measured in game
+
+- D3B.Bis (D426) was built, tested and started on the owner's machine while D3B 0.9.1 ran: the window opened, the pack of format 12 and the
+  mapping of format 17 fetched from D3B's release were read, D3B's database, project and preferences came across, and the host stopped at the
+  relay's address, which D3B held. Not done: a session through a client with D3B closed, an installer packed and installed beside D3B's, an
+  update, a report sent. The app's updates, the tools' default repository and the report channel still name `AerafalDev/D3B`
+  (`ClientRelease.DefaultRepository`) until the new repository exists.
 
 - The harvest and the zones of a map (D424): a player's report ("it tries but cannot, unless it stands in front of the resource or comes back from
   another side"), read in the code and measured on the pack (864 maps with more than one zone, 3,673 element and zone pairs on 607 maps), fixed and
@@ -143,13 +149,22 @@ Q16 (casts and walks the server refuses that the rules allow), Q17 (a build that
 
 ## Known debt
 
-- `D3B.Bot` is about 17,900 lines in 224 files and `D3B.Studio` about 6,300 in 141 (D393). The border is the compiler's, one way:
-  `D3B.Studio` references `D3B.Bot`, which knows nothing of it. Left over: `D3B.Studio.Routes` reaches the harvest and the fight
-  through `MapHarvest` and `MapFight`, now public, so a module of `D3B.Bot` cannot declare nodes (the node API is the studio's):
-  a future module in a project of its own can. Nine members and types of `D3B.Bot` became public so that the studio could use them
+- The tests are not steady on the owner's machine (seen 2026-11-13 with the game and D3B running, on D3B's binaries of `df9a242` as on D3B.Bis's,
+  so it predates D426): about one run in two of `D3B.Bis.Studio.Tests` or `D3B.Bis.Bot.Tests` alone, and both runs of `dotnet test`, had a test
+  that failed or a process that never ended. Failed: `BehaviorActivityTests.AListThatRepeatsReportsItsFirstStepAgainWhenItStartsOver` (three
+  times: it advances the fake time once the progress says 1, perhaps before the next wait is asked for),
+  `FrameRecorderTests.ABotsFramesAreRecordedFromItsConnectionsFirstFrameBothSidesAndD3BsOwn` (the bot's frame after the server's answer),
+  `ReportSendTests.AReportSentSaysSoWithItsCodeCannotBeSentTwiceAndCarriesTheMessageAndTheManifest`. Never ended:
+  `ActivityRunTests.TheBotStoppingEndsTheActivityWhetherItStepsOrWaits`, `FollowRouteTests.ACharacterIsFollowingItsRouteOnlyWhileTheRoutePlaysInTheListOfSteps`
+  (names as xunit's `-longRunning` gave them). Every project passed alone at least twice, 2,280 tests. Read, not diagnosed: a session of its own.
+
+- `D3B.Bis.Bot` is about 17,900 lines in 224 files and `D3B.Bis.Studio` about 6,300 in 141 (D393). The border is the compiler's, one way:
+  `D3B.Bis.Studio` references `D3B.Bis.Bot`, which knows nothing of it. Left over: `D3B.Bis.Studio.Routes` reaches the harvest and the fight
+  through `MapHarvest` and `MapFight`, now public, so a module of `D3B.Bis.Bot` cannot declare nodes (the node API is the studio's):
+  a future module in a project of its own can. Nine members and types of `D3B.Bis.Bot` became public so that the studio could use them
   (`BotContext.Actor`, `BotActor.Time`, `Log`, `PauseAfterStep`, `SettingDefinition.TryRead`, `ActivitySettingsBuilder`'s
   constructor and `Build`, `MapHarvest`, `MapFight`): a narrower seam would be a task of its own.
-- Files over 900 lines (D399): none any more. `FightJudge` (890, from 1,365: its pure turn arithmetic is `JudgeTurns`, its damage tables and landing caches `JudgeTables`, its odds `JudgeOdds`; its score's terms, threat, approach, marks and buffs stay in it, cut only with the replay of the captured fights, `scripts/fights.cs --turns`, compared before and after) and `RouteEditorViewModel` (886, from 1,238: its texts, map scene, step rows, action forms, undo history, path planning, typed anchor, trace and world menu are cut). `AssetsViewModel` (885), `Imagination` (864, its pure fighter helpers are `ImaginedFighters`), `WorldMapView` (848, its hit test is `WorldMapHitTesting`), `BotActor` (723) and `HarvestActivity` (709) are cut. `D3B.Bot` stays one project: its core (`Runtime`, `Activities`, `Banks`, `Movement`, `Journal`, `Characters`) refers to itself both ways, `Harvesting` and `Fighting` are the leaves.
+- Files over 900 lines (D399): none any more. `FightJudge` (890, from 1,365: its pure turn arithmetic is `JudgeTurns`, its damage tables and landing caches `JudgeTables`, its odds `JudgeOdds`; its score's terms, threat, approach, marks and buffs stay in it, cut only with the replay of the captured fights, `scripts/fights.cs --turns`, compared before and after) and `RouteEditorViewModel` (886, from 1,238: its texts, map scene, step rows, action forms, undo history, path planning, typed anchor, trace and world menu are cut). `AssetsViewModel` (885), `Imagination` (864, its pure fighter helpers are `ImaginedFighters`), `WorldMapView` (848, its hit test is `WorldMapHitTesting`), `BotActor` (723) and `HarvestActivity` (709) are cut. `D3B.Bis.Bot` stays one project: its core (`Runtime`, `Activities`, `Banks`, `Movement`, `Journal`, `Characters`) refers to itself both ways, `Harvesting` and `Fighting` are the leaves.
 - Undo has two histories: the route editor keeps its own snapshots (D375), the list of steps, the profile and the zone editors use
   `UndoHistory` (D394). Moving the route onto it is a change of no use by itself; do it when the route editor is next opened for another reason.
 - The zones are read by the harvest and the hunt as a place (D415) and by their editor; a zone is not yet a filter of the Automatic place, and the nodes and conditions of 7f do not read them.

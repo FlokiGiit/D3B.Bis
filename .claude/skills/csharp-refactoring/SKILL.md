@@ -174,16 +174,16 @@ checks.
 
 This repository does not have the skills named above, `dotnet-upgrade` and `dotnet-breaking-changes`: a framework or package
 version change is a task of its own, never part of a refactor, and a change to the surface that plugins load (`IModule`,
-`BotBuilder` and what they expose in `D3B.Core`, D5 and D6) is decided with the owner before it is made.
+`BotBuilder` and what they expose in `D3B.Bis.Core`, D5 and D6) is decided with the owner before it is made.
 
 - **Verify** with the three checks (`dotnet build`, `dotnet test`, `dotnet format --verify-no-changes`); the build's
   analyzers hold the style, so a refactor that leaves it green has also kept the conventions of `CLAUDE.md`.
 - **Generated code is not edited**: the classes Grpc.Tools makes from the `.proto` files, and the EF Core migrations under
-  `src/D3B.Storage/Migrations`. Change the generator's input.
+  `src/D3B.Bis.Storage/Migrations`. Change the generator's input.
 - **Names that leave the code**: a type or member stored by MemoryPack (the packs, D25), by EF Core (the database and its
   migrations) or in the studio's JSON assets can change a format when it is renamed or moved. Read how it is stored before
   the edit, and keep the stored name when it differs from the C# one.
 - **A moved type changes its namespace**, since each folder is one namespace and each file one type.
 - **Why it matters here**: `docs/status.md` lists the known debt, among it files over 900 lines and the narrower seam between
-  `D3B.Bot` and `D3B.Studio` (D393). Cut along the seams the architecture names, one move per commit, and run the tests
+  `D3B.Bis.Bot` and `D3B.Bis.Studio` (D393). Cut along the seams the architecture names, one move per commit, and run the tests
   between moves.

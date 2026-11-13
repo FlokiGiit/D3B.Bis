@@ -1,4 +1,4 @@
-namespace D3B.Hooks;
+namespace D3B.Bis.Hooks;
 
 /// <summary>How a command the hooks ran ended, and what it wrote on its two outputs.</summary>
 internal sealed class ProcessResult

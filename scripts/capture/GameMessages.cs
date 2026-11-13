@@ -1,9 +1,9 @@
 using System.Buffers;
 using System.Text;
-using D3B.Network.Captures;
-using D3B.Network.Framing;
+using D3B.Bis.Network.Captures;
+using D3B.Bis.Network.Framing;
 
-namespace D3B.Scripts.Capture;
+namespace D3B.Bis.Scripts.Capture;
 
 /// <summary>Lists the messages a game connection's frames carry, in the order they came, by their type URLs (D56, D58).</summary>
 /// <remarks>

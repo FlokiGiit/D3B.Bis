@@ -1,7 +1,7 @@
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace D3B.Scripts.Docs;
+namespace D3B.Bis.Scripts.Docs;
 
 /// <summary>The anchors GitHub gives the headings of a Markdown file.</summary>
 internal static partial class HeadingSlugs

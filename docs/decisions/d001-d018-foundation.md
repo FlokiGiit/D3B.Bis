@@ -101,7 +101,7 @@ attribute. A `dotnet new` template creates one.
 
 ## D7: A headless host runs the bots, the desktop app is its client
 
-*2026-10-27. Superseded by D91: the bots run in the app's process, and `D3B.Host` runs them without the app.*
+*2026-10-27. Superseded by D91: the bots run in the app's process, and `D3B.Bis.Host` runs them without the app.*
 
 The bots run in a headless host. The Avalonia app connects to it over gRPC on a named pipe, served by Kestrel.
 

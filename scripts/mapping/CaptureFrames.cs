@@ -1,9 +1,9 @@
 using System.Buffers;
-using D3B.Network.Captures;
-using D3B.Network.Framing;
-using D3B.Protocol.Mapping;
+using D3B.Bis.Network.Captures;
+using D3B.Bis.Network.Framing;
+using D3B.Bis.Protocol.Mapping;
 
-namespace D3B.Scripts.Mapping;
+namespace D3B.Bis.Scripts.Mapping;
 
 /// <summary>Reads the frames of the captures the host recorded of a build's connections (D37, D38).</summary>
 /// <remarks>

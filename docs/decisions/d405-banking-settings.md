@@ -19,7 +19,7 @@ recommended it. Builds D79, D80, D83, D127, D129, D167, D248 and D151 for the ma
   reading of the report, not seen on the owner's capture: the cost of a zaap leaving Incarnam's world map is measured only towards it
   (client.md), so the real 1,500 may also lie above what `TeleportCost` reckons, and the answer to a teleport that cannot be paid is
   not measured either.
-- **One general setting** (`BankingPreferences`, in `D3B.Bot.Banks`, the host's configuration `Banking:FullAt`, 50 to 100, 90 by
+- **One general setting** (`BankingPreferences`, in `D3B.Bis.Bot.Banks`, the host's configuration `Banking:FullAt`, 50 to 100, 90 by
   default, and `Banking:UseZaaps`, on by default), shown in the app's Settings, section Bots, group Banking, kept in `app.json` like
   the delays and applied at once to the bots' next step. A bad value stops the host before it starts, as a delay does.
 - **A profile follows it unless it asks for its own**: `OwnBanking` in the settings of the harvest and of the hunt, off by default,

@@ -1,15 +1,15 @@
 #!/usr/bin/env dotnet
 #:package Google.Protobuf
 #:package System.CommandLine
-#:project ../src/D3B.Network/D3B.Network.csproj
-#:project ../src/D3B.Protocol/D3B.Protocol.csproj
+#:project ../src/D3B.Bis.Network/D3B.Bis.Network.csproj
+#:project ../src/D3B.Bis.Protocol/D3B.Bis.Protocol.csproj
 #:include capture/CaptureCommand.cs
 #:include capture/GameMessages.cs
 #:include capture/ProtobufShape.cs
 #:include capture/SchemaMatch.cs
 
 using System.Globalization;
-using D3B.Scripts.Capture;
+using D3B.Bis.Scripts.Capture;
 
 // Describes the captures the host records of relayed connections (D37) by their structure: reads, frames and their
 // sizes, whether the bytes are TLS, and with --frames the protobuf shape of each frame. With --schema, a schema

@@ -1,10 +1,10 @@
 #!/usr/bin/env dotnet
 #:package System.CommandLine
-#:project ../src/D3B.Bot/D3B.Bot.csproj
+#:project ../src/D3B.Bis.Bot/D3B.Bis.Bot.csproj
 #:include report/ReportCommand.cs
 
 using System.Globalization;
-using D3B.Scripts.Report;
+using D3B.Bis.Scripts.Report;
 
 // Unpacks a bug report (D410), a .d3breport zip from a player, as untrusted input: it checks the zip's bounds and every file's size and SHA-256
 // against its manifest, prints the player's message first (D411) with its control characters replaced, describes the report and its capture by

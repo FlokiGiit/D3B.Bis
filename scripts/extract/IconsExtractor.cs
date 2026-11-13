@@ -4,16 +4,16 @@ using AssetRipper.TextureDecoder.Dxt;
 using AssetRipper.TextureDecoder.Rgb.Formats;
 using AssetsTools.NET;
 using AssetsTools.NET.Extra;
-using D3B.Data.Breeds;
-using D3B.Data.Icons;
-using D3B.Data.Items;
-using D3B.Data.Jobs;
-using D3B.Data.Monsters;
-using D3B.Data.Spells;
-using D3B.Data.World;
-using D3B.Scripts.Unity;
+using D3B.Bis.Data.Breeds;
+using D3B.Bis.Data.Icons;
+using D3B.Bis.Data.Items;
+using D3B.Bis.Data.Jobs;
+using D3B.Bis.Data.Monsters;
+using D3B.Bis.Data.Spells;
+using D3B.Bis.Data.World;
+using D3B.Bis.Scripts.Unity;
 
-namespace D3B.Scripts.Extract;
+namespace D3B.Bis.Scripts.Extract;
 
 /// <summary>
 /// Reads the icons of every item, of the professions, of the classes' spells, of the monsters a hunter meets and the

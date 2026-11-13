@@ -1,6 +1,6 @@
 using Cpp2IL.Core.Model.Contexts;
 
-namespace D3B.Scripts.Schema;
+namespace D3B.Bis.Scripts.Schema;
 
 /// <summary>A field of a message, as its metadata declares it: a number constant and the property it pairs with.</summary>
 internal sealed class LayoutField

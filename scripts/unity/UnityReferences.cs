@@ -1,6 +1,6 @@
 using AssetsTools.NET.Extra;
 
-namespace D3B.Scripts.Unity;
+namespace D3B.Bis.Scripts.Unity;
 
 /// <summary>Reads managed references (<c>[SerializeReference]</c>): their classes' type trees, and an object's registry.</summary>
 /// <remarks>

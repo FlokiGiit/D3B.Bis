@@ -1,4 +1,4 @@
-namespace D3B.Scripts.Inspect;
+namespace D3B.Bis.Scripts.Inspect;
 
 /// <summary>Formats byte counts in binary units.</summary>
 internal static class Sizes

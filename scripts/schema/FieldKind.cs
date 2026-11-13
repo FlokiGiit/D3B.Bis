@@ -1,4 +1,4 @@
-namespace D3B.Scripts.Schema;
+namespace D3B.Bis.Scripts.Schema;
 
 /// <summary>What a message's field holds.</summary>
 internal enum FieldKind

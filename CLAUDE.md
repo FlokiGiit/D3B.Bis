@@ -1,6 +1,8 @@
-# D3B
+# D3B.Bis
 
-An open-source bot for Dofus 3 (Unity), in .NET 10 on Windows, assembled from modules.
+An open-source bot for Dofus 3 (Unity), in .NET 10 on Windows, assembled from modules. D3B.Bis continues D3B in a
+repository of its own (D426): the projects and namespaces are `D3B.Bis.*`, its files are in `%LOCALAPPDATA%\D3B.Bis`,
+what a file or the wire holds kept D3B's name, and the docs still say D3B for short.
 The repository is the only memory between sessions: never assume an earlier session is remembered.
 
 ## Read first
@@ -74,8 +76,8 @@ the rest is yours to keep.
 dotnet build                               # warnings are errors; about 20 s
 dotnet test                                # every test project, on Microsoft.Testing.Platform
 dotnet format --verify-no-changes          # CI checks it
-dotnet run --project src/D3B.App           # the desktop app, which runs the bots' host in its process (D91); closing it disconnects the clients
-dotnet run --project src/D3B.Host          # the same host without the app; needs the installed build's pack, schema and mapping (D172)
+dotnet run --project src/D3B.Bis.App           # the desktop app, which runs the bots' host in its process (D91); closing it disconnects the clients
+dotnet run --project src/D3B.Bis.Host          # the same host without the app; needs the installed build's pack, schema and mapping (D172)
 dotnet run --file scripts/<tool>.cs -- --help   # the tools of scripts/, each described by its own help
 ```
 
@@ -88,7 +90,7 @@ crash. The shell is Git Bash on Windows.
 - Skills in `.claude/skills/`: `/decision`, `/ship`, `/review`, `/close-session`, `/new-tool`, and, loaded when the task
   fits, `csharp`, `test-first`, `studio-ui`, `git`, `read-client`, `diagnosing-bugs`, and `csharp-refactoring`. Agents: `reviewer`, which reads a diff fresh, and `explorer`,
   which studies the client and `vendor/` and writes only under `artifacts/studies/`.
-- Hooks, C# apps in `.claude/hooks/` tested in `tests/D3B.Hooks.Tests`: pushes, `gh` writes and `git clean` ask first;
+- Hooks, C# apps in `.claude/hooks/` tested in `tests/D3B.Bis.Hooks.Tests`: pushes, `gh` writes and `git clean` ask first;
   pushes to `main`, forced pushes, `git reset --hard` and AI attributions in commits are refused, so are writes of what the client or a machine
   produced; the C# written is formatted; a turn that left changed code ends on a green `dotnet build`.
 - Once per machine, copy `.claude/settings.local.example.json` to `.claude/settings.local.json`: it turns off the plugins

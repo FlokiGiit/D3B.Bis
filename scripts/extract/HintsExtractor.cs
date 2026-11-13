@@ -3,11 +3,11 @@ using System.Globalization;
 using AssetRipper.TextureDecoder.Dxt;
 using AssetRipper.TextureDecoder.Rgb.Formats;
 using AssetsTools.NET.Extra;
-using D3B.Data.Hints;
-using D3B.Data.Icons;
-using D3B.Scripts.Unity;
+using D3B.Bis.Data.Hints;
+using D3B.Bis.Data.Icons;
+using D3B.Bis.Scripts.Unity;
 
-namespace D3B.Scripts.Extract;
+namespace D3B.Bis.Scripts.Extract;
 
 /// <summary>Reads the hints of the world map, their categories and their pictures.</summary>
 /// <remarks>

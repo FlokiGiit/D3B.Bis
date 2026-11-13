@@ -1,8 +1,8 @@
 using System.Globalization;
-using D3B.Data.Maps;
-using D3B.Scripts.Unity;
+using D3B.Bis.Data.Maps;
+using D3B.Bis.Scripts.Unity;
 
-namespace D3B.Scripts.Extract;
+namespace D3B.Bis.Scripts.Extract;
 
 /// <summary>Reads a map of either of the client's two layouts into a <see cref="MapData"/>, through its type tree.</summary>
 /// <remarks>

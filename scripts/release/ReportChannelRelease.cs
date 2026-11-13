@@ -1,7 +1,7 @@
-using D3B.Bot.Reports;
-using D3B.Scripts.Unity;
+using D3B.Bis.Bot.Reports;
+using D3B.Bis.Scripts.Unity;
 
-namespace D3B.Scripts.Release;
+namespace D3B.Bis.Scripts.Release;
 
 /// <summary>Publishes the URL of the private Discord webhook that bug reports go to, as the one asset of the release <c>report-channel</c> (D410).</summary>
 /// <remarks>

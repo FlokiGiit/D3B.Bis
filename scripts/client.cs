@@ -1,11 +1,11 @@
 #!/usr/bin/env dotnet
 #:package System.CommandLine
-#:project ../src/D3B.Network/D3B.Network.csproj
+#:project ../src/D3B.Bis.Network/D3B.Bis.Network.csproj
 #:include client/ClientCommand.cs
 #:include unity/ClientInstall.cs
 
 using System.Globalization;
-using D3B.Scripts.Client;
+using D3B.Bis.Scripts.Client;
 
 // Checks where the client's configuration sends it, Ankama's or D3B's, and gives it Ankama's back (D35).
 // Usage: dotnet run --file scripts/client.cs -- [check | restore] [--client <dir>] [--redirect-directory <dir>]

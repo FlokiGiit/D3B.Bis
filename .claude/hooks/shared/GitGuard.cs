@@ -1,6 +1,6 @@
 using System.Text.RegularExpressions;
 
-namespace D3B.Hooks;
+namespace D3B.Bis.Hooks;
 
 /// <summary>
 /// The Git and GitHub calls Claude may not make alone: nothing is pushed, published or merged without the owner's go, and

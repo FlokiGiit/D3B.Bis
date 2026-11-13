@@ -1,4 +1,4 @@
-namespace D3B.Scripts.Fights;
+namespace D3B.Bis.Scripts.Fights;
 
 /// <summary>Counts of what the bench measured, by a key naming the section and the outcome, printed in order.</summary>
 internal sealed class Tally

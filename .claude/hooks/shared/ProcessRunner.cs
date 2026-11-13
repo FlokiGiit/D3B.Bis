@@ -1,6 +1,6 @@
 using System.Diagnostics;
 
-namespace D3B.Hooks;
+namespace D3B.Bis.Hooks;
 
 /// <summary>Runs the commands the hooks need, <c>git</c> and <c>dotnet</c>, and waits for them.</summary>
 internal static class ProcessRunner

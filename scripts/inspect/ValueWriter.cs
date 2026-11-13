@@ -2,7 +2,7 @@ using System.Text;
 using System.Text.Unicode;
 using AssetsTools.NET;
 
-namespace D3B.Scripts.Inspect;
+namespace D3B.Bis.Scripts.Inspect;
 
 /// <summary>Writes the fields of an object as an indented tree, with arrays and long values cut short.</summary>
 internal sealed class ValueWriter

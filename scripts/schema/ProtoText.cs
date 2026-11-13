@@ -1,7 +1,7 @@
 using Google.Protobuf.Reflection;
 using FieldType = Google.Protobuf.Reflection.FieldDescriptorProto.Types.Type;
 
-namespace D3B.Scripts.Schema;
+namespace D3B.Bis.Scripts.Schema;
 
 /// <summary>Writes a file descriptor back as <c>.proto</c> text, to read it: protoc compiles it to an equivalent descriptor.</summary>
 /// <remarks>Types are named by their full names, with a leading dot, so that no name depends on where it is written.</remarks>

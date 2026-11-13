@@ -1,4 +1,4 @@
-namespace D3B.Hooks;
+namespace D3B.Bis.Hooks;
 
 /// <summary>Finds the project a source file belongs to.</summary>
 internal static class ProjectFile

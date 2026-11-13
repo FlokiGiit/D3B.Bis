@@ -1,10 +1,10 @@
 using System.Collections.Concurrent;
 using System.Runtime.ExceptionServices;
 using AssetsTools.NET.Extra;
-using D3B.Data.Maps;
-using D3B.Scripts.Unity;
+using D3B.Bis.Data.Maps;
+using D3B.Bis.Scripts.Unity;
 
-namespace D3B.Scripts.Extract;
+namespace D3B.Bis.Scripts.Extract;
 
 /// <summary>Reads every map of <c>Content/Map/Data</c>, in both layouts, into <see cref="MapData"/>.</summary>
 /// <remarks>

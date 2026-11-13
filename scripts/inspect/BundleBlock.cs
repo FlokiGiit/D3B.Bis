@@ -1,4 +1,4 @@
-namespace D3B.Scripts.Inspect;
+namespace D3B.Bis.Scripts.Inspect;
 
 /// <summary>A storage block of a UnityFS bundle: entries are concatenated, then cut into blocks compressed one by one.</summary>
 /// <param name="CompressedSize">Its size on disk.</param>

@@ -1,7 +1,7 @@
-using D3B.Data.Spells;
-using D3B.Scripts.Unity;
+using D3B.Bis.Data.Spells;
+using D3B.Bis.Scripts.Unity;
 
-namespace D3B.Scripts.Extract;
+namespace D3B.Bis.Scripts.Extract;
 
 /// <summary>Reads the states fighters may be in, and counts the states that spells name and the client lacks.</summary>
 /// <remarks>A state keeps its name, its booleans as one set of flags, its effects' numbers and its spell level; its icon is left out.</remarks>

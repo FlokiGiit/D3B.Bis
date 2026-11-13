@@ -1,7 +1,7 @@
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace D3B.Hooks;
+namespace D3B.Bis.Hooks;
 
 /// <summary>
 /// Reads the <c>git</c> and <c>gh</c> calls of a Bash or PowerShell command. It is a safety net against a mistake, not a

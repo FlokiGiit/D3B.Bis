@@ -1,7 +1,7 @@
 using AssetsTools.NET.Extra;
-using D3B.Scripts.Unity;
+using D3B.Bis.Scripts.Unity;
 
-namespace D3B.Scripts.Inspect;
+namespace D3B.Bis.Scripts.Inspect;
 
 /// <summary>A bundle opened through AssetsTools.NET, with its serialized files loaded.</summary>
 /// <remarks>

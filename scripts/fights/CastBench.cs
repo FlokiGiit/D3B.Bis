@@ -1,26 +1,26 @@
 using System.Collections.Immutable;
-using D3B.Bot.Characters;
-using D3B.Bot.Fights;
-using D3B.Data;
-using D3B.Data.Maps;
-using D3B.Data.Spells;
-using D3B.Engine.Effects;
-using D3B.Engine.Fights;
-using D3B.Engine.Maps;
-using D3B.Engine.Tactics;
-using D3B.Network.Relay;
-using D3B.Protocol.Game;
+using D3B.Bis.Bot.Characters;
+using D3B.Bis.Bot.Fights;
+using D3B.Bis.Data;
+using D3B.Bis.Data.Maps;
+using D3B.Bis.Data.Spells;
+using D3B.Bis.Engine.Effects;
+using D3B.Bis.Engine.Fights;
+using D3B.Bis.Engine.Maps;
+using D3B.Bis.Engine.Tactics;
+using D3B.Bis.Network.Relay;
+using D3B.Bis.Protocol.Game;
 using Google.Protobuf;
-using FightBuff = D3B.Protocol.Game.FightBuff;
+using FightBuff = D3B.Bis.Protocol.Game.FightBuff;
 
-namespace D3B.Scripts.Fights;
+namespace D3B.Bis.Scripts.Fights;
 
 /// <summary>Replays fights through the bot's fight state, and compares each cast a fighter chose with what the server announced.</summary>
 /// <remarks>
 /// A cast a fighter chose is the first of its sequence of a spell (client.md): what follows until that sequence closes is
 /// the cast's, the casts its effects trigger included, which the counts tell apart. D3B foresees the cast from the fight as
 /// it stood before it, through <see cref="SpellEffects"/>; the server's actions are grouped by target and kind and set
-/// against it. Each summon is set against the fighter D3B.Engine imagines from its grade and its summoner (D269), and the
+/// against it. Each summon is set against the fighter D3B.Bis.Engine imagines from its grade and its summoner (D269), and the
 /// character's casts are foreseen again with the heals and critical damage the server gives out of fights only (D272).
 /// </remarks>
 internal sealed class CastBench
@@ -150,7 +150,7 @@ internal sealed class CastBench
     private void Starts(FightState fight, IMessage message, long mapId)
     {
         // The marks on a fighter's cell as its turn begins, a glyph or a bombs' wall (9f4): which struck it and the life it
-        // lost before its turn's own effects, against what D3B.Engine imagines of them.
+        // lost before its turn's own effects, against what D3B.Bis.Engine imagines of them.
         switch (message)
         {
             case FightTurnEvent turn when fight.Phase is FightPhase.Fighting && fight.Fighters.TryGetValue(turn.FighterId, out var fighter) && fighter.IsAlive && fighter.Cell is not null:
@@ -300,7 +300,7 @@ internal sealed class CastBench
 
     private void Summoned(FightState before, FightState after, SummonedFighters summoned)
     {
-        // Each summon as D3B.Engine imagines it from its monster's grade and its summoner (Summons, 9f2), against the
+        // Each summon as D3B.Bis.Engine imagines it from its monster's grade and its summoner (Summons, 9f2), against the
         // characteristics the server gave it.
         foreach (var summon in summoned.Summons)
         {

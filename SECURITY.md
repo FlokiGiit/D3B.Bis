@@ -41,7 +41,7 @@ useful:
   protocol inspector hides it; only captures, which are off by default, record it. Any path through which a ticket
   leaks into a log, a page of the app, an error message, a toast or a file other than a capture.
 - **The client's configuration.** While D3B runs, it rewrites one line of the client's `version` file and writes a copy
-  of Ankama's configuration under `%LOCALAPPDATA%\D3B\client`. Anything that lets another party choose what that copy
+  of Ankama's configuration under `%LOCALAPPDATA%\D3B.Bis\client`. Anything that lets another party choose what that copy
   says, or leaves the client pointed somewhere unexpected once D3B stops.
 - **Untrusted input.** Frames from the server or the client, captures opened in the inspector, and packs, schemas and
   mappings, which the tools download and check against their SHA-256. A crafted input that crashes the app, hangs it,

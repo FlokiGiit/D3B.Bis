@@ -1,6 +1,6 @@
 using System.Text.RegularExpressions;
 
-namespace D3B.Hooks;
+namespace D3B.Bis.Hooks;
 
 /// <summary>
 /// The explorer agent quotes the official client and the references in <c>vendor/</c>, which Git must never see, so it

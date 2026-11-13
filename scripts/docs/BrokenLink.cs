@@ -1,4 +1,4 @@
-namespace D3B.Scripts.Docs;
+namespace D3B.Bis.Scripts.Docs;
 
 /// <summary>A link of a Markdown file that leads nowhere.</summary>
 /// <param name="File">The file the link is in, relative to the repository.</param>

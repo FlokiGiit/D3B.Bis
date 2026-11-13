@@ -13,15 +13,15 @@ A part of [the decisions](README.md); each decision has one line in [the index](
   every push, pull request and merge waits for an explicit go. So the setup was adapted, not copied.
 - **Hooks are C# file-based apps** in `.claude/hooks/`, declared in `.claude/settings.json` as `dotnet run --file`. Each entry file
   only reads Claude Code's JSON and reports; the decisions are in `.claude/hooks/shared/`, pulled in by `#:include` (D10), and
-  `tests/D3B.Hooks.Tests` compiles the same files, so that what is tested is what ships. D10 says the scripts have no tests; these
+  `tests/D3B.Bis.Hooks.Tests` compiles the same files, so that what is tested is what ships. D10 says the scripts have no tests; these
   guard rules instead of reading the client, so they have, and they follow D10's file conventions otherwise: they are listed in
-  `D3B.slnx` and CI builds each one. Measured on the owner's machine: `dotnet run --file` of a trivial app 0.19 s warm and 2.7 s the
+  `D3B.Bis.slnx` and CI builds each one. Measured on the owner's machine: `dotnet run --file` of a trivial app 0.19 s warm and 2.7 s the
   first time after an edit; `dotnet format whitespace <csproj> --include <file>` 1.8 s; `dotnet build` of the solution 17 s, of
-  `D3B.Core` 1.4 s.
+  `D3B.Bis.Core` 1.4 s.
 - **The five.** `guard-git` (Bash and PowerShell): refuses a push to `main`, a forced or wholesale push and `git reset --hard`;
   refuses an AI attribution (a `Co-Authored-By` naming Claude, a "Generated with" line) in a commit or a pull request, as the owner asked; asks before any other push, before `gh` publishes or merges (`pr`, `issue`, `release` and `repo` writes), before `git clean -f`
   and `git branch -D`. `guard-writes`: refuses a write of what the client or a machine produces (`.pack`, `.binpb`, `.d3bcap`,
-  `.db`, `.bundle`, `global-metadata.dat`), of `.proto` text outside `src/D3B.Protocol/` and `tests/`, and of `vendor/`;
+  `.db`, `.bundle`, `global-metadata.dat`), of `.proto` text outside `src/D3B.Bis.Protocol/` and `tests/`, and of `vendor/`;
   `artifacts/` is open. `format-file`: after a write, `dotnet format whitespace` of the file's project. `check-turn` (Stop):
   `dotnet build` when the turn left changed code, again only when a file changed since the last build (a fingerprint of the
   files and a green or red stamp in `artifacts/claude/`), so that Claude's fix is built and a repeated turn is not; a turn
@@ -31,7 +31,7 @@ A part of [the decisions](README.md); each decision has one line in [the index](
 - **A safety net, not a boundary.** A call wrapped in `bash -c "..."` is not seen; a heredoc's body is text, not commands. `CLAUDE.md` still says the rules; the hooks hold
   those with no exception.
 - **Skills** (`.claude/skills/`): `/decision`, `/ship` (stops before the push and asks), `/review`, `/close-session` (the report
-  and the prompt `CLAUDE.md` asks for), `/new-tool` (the listing in `D3B.slnx` and the CI step are easy to forget), and, loaded when
+  and the prompt `CLAUDE.md` asks for), `/new-tool` (the listing in `D3B.Bis.slnx` and the CI step are easy to forget), and, loaded when
   the task fits: `csharp` (how the source writes types, null, async, time, logging and collections, counted on 914 files),
   `test-first` (the loop, and the tests as the repository writes them), `studio-ui` (the studio's look, scale, texts in two
   languages, view models and headless tests, from the "Desktop app" section), `git` (the history's own habits: Conventional

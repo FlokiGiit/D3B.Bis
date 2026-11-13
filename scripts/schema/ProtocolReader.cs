@@ -4,7 +4,7 @@ using Cpp2IL.Core.Model.Contexts;
 using Google.Protobuf.Reflection;
 using FieldType = Google.Protobuf.Reflection.FieldDescriptorProto.Types.Type;
 
-namespace D3B.Scripts.Schema;
+namespace D3B.Bis.Scripts.Schema;
 
 /// <summary>Reads a protocol assembly of the client into a proto3 file descriptor, with its obfuscated names.</summary>
 /// <remarks>

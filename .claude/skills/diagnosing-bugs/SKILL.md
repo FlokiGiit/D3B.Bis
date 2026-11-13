@@ -24,9 +24,9 @@ Spend disproportionate effort here. **Be aggressive. Be creative. Refuse to give
 ### Ways to construct one, in roughly this order
 
 1. **Failing test** at whatever seam reaches the bug: unit, integration, e2e.
-2. **Replay a capture of the game.** `scripts/fights.cs` replays the captured fights against `D3B.Engine`, and `--turns` the AI's turns; `scripts/capture.cs` shows a capture's messages in order.
+2. **Replay a capture of the game.** `scripts/fights.cs` replays the captured fights against `D3B.Bis.Engine`, and `--turns` the AI's turns; `scripts/capture.cs` shows a capture's messages in order.
 3. **CLI invocation** with a fixture input, diffing stdout against a known-good snapshot.
-4. **Headless UI test** with Avalonia.Headless (`tests/D3B.App.Tests`) that drives the view and asserts on what it shows.
+4. **Headless UI test** with Avalonia.Headless (`tests/D3B.Bis.App.Tests`) that drives the view and asserts on what it shows.
 5. **Replay a captured trace.** Save a real network request / payload / event log to disk; replay it through the code path in isolation.
 6. **Throwaway harness.** Spin up a minimal subset of the system (one service, mocked deps) that exercises the bug code path with a single function call.
 7. **Property / fuzz loop.** If the bug is "sometimes wrong output", run 1000 random inputs and look for the failure mode.

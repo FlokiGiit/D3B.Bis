@@ -1,10 +1,10 @@
-using D3B.Data.Breeds;
-using D3B.Data.Characteristics;
-using D3B.Data.Effects;
-using D3B.Data.Monsters;
-using D3B.Data.Spells;
+using D3B.Bis.Data.Breeds;
+using D3B.Bis.Data.Characteristics;
+using D3B.Bis.Data.Effects;
+using D3B.Bis.Data.Monsters;
+using D3B.Bis.Data.Spells;
 
-namespace D3B.Scripts.Extract;
+namespace D3B.Bis.Scripts.Extract;
 
 /// <summary>The catalogs a fight needs, read together, whose texts the pack keeps.</summary>
 internal sealed class FightTables

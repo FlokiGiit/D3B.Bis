@@ -1,10 +1,10 @@
 using System.Globalization;
-using D3B.Data.Breeds;
-using D3B.Data.Characteristics;
-using D3B.Data.Spells;
-using D3B.Scripts.Unity;
+using D3B.Bis.Data.Breeds;
+using D3B.Bis.Data.Characteristics;
+using D3B.Bis.Data.Spells;
+using D3B.Bis.Scripts.Unity;
 
-namespace D3B.Scripts.Extract;
+namespace D3B.Bis.Scripts.Extract;
 
 /// <summary>Reads the breeds, their spells, roles and the cost of their characteristics.</summary>
 /// <remarks>

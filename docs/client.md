@@ -43,7 +43,7 @@ dotnet run --file scripts/inspect.cs -- layout Map/Data MapMetadata --references
 dotnet run --file scripts/inspect.cs -- objects job_assets_2x                 # the professions' icons, a texture and a sprite each
 dotnet run --file scripts/inspect.cs -- layout mapelements_assets_ MapElementsMetadata --references  # the element definitions
 dotnet run --file scripts/extract.cs -- --output <dir> --force        # extracts, counting maps, graph and tables, and checks them
-dotnet run --project src/D3B.Host -- --Network:Captures:Enabled true  # relays clients started from the launcher, logs each frame of their connection phase, and records them
+dotnet run --project src/D3B.Bis.Host -- --Network:Captures:Enabled true  # relays clients started from the launcher, logs each frame of their connection phase, and records them
 dotnet run --file scripts/client.cs                                   # which configuration the client reads, Ankama's or D3B's
 dotnet run --file scripts/capture.cs -- --frames                      # the captures' reads, frames and protobuf shapes, D3B's own frames apart, no value
 dotnet run --file scripts/schema.cs -- --proto <dir>                  # the protocol's obfuscated schema, counted, and as .proto text
@@ -207,7 +207,7 @@ Only interactive transitions name a skill and an element; the others have −1 i
 **Criteria.** 991 transitions carry one of 619 distinct criteria: 85 scrolls with an action, 67 map actions and 839
 interactive transitions, no plain scroll. They are in the client's condition syntax: two-letter codes, 47 of them,
 led by `Ad`, `Qo`, `Qa`, `PO` and `Qf`, each with an operator among `=`, `>`, `<` and `!`, and a value; 493 combine
-several with `&` and `|`, 383 with parentheses. The pack keeps them as text, and `D3B.Engine` reads them (D71): no group
+several with `&` and `|`, 383 with parentheses. The pack keeps them as text, and `D3B.Bis.Engine` reads them (D71): no group
 mixes `&` and `|`; a condition is a code, an operator and a value whose arguments are separated by commas, 2,261 of them
 `XX=n`, a few `XX=true` or naming an event such as `RV=5,monsterKilled,60`; 7 carry a context in brackets, `[413]MC=0`;
 22 groups are led by `#`, all but one a list of cells, `#(PC=4|PC=5|PC=18|PC=19)`. Those lists name the cells of the
@@ -605,7 +605,7 @@ that prints counts and sizes, and writes a few previews outside the repository.
 - **The pack** (D369): the 1,250 tiles encoded at JPEG 75, the owner's choice, 79,743,382 bytes, each a pack entry of its own,
   `worldmaps/<world>/<zoom as a percentage>/<tile>`, and the 40 worlds and 161 zooms one more, `worldmaps/catalog`; with them
   the pack of 3.7.13.17 is 105,494,687 bytes, format 10, 18,890 entries, extracted in 41 s, the same SHA-256 on two
-  extractions. Read back through `D3B.Data`, every tile decodes to the size its zoom gives it.
+  extractions. Read back through `D3B.Bis.Data`, every tile decodes to the size its zoom gives it.
 - **Cost.** The tiles decoded from BC7 and encoded again by SkiaSharp 3.119.4, no resampling: the sizes above, all 1,250
   tiles, in 112 s for the four encoders and the decoding. PNG, on 40 tiles drawn at random, weighs 525,584 bytes a tile,
   about 6 times JPEG 85. A tile of world 1 at zoom 1 weighs 166,824 bytes at JPEG 75 and 192,008 at 85. Raw RGBA is 4

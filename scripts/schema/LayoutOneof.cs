@@ -1,4 +1,4 @@
-namespace D3B.Scripts.Schema;
+namespace D3B.Bis.Scripts.Schema;
 
 /// <summary>A oneof of a message, as its metadata declares it: the property telling which field is set, and its enum.</summary>
 internal sealed class LayoutOneof

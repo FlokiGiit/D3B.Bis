@@ -1,7 +1,7 @@
 using Cpp2IL.Core.Model.Contexts;
 using FieldType = Google.Protobuf.Reflection.FieldDescriptorProto.Types.Type;
 
-namespace D3B.Scripts.Schema;
+namespace D3B.Bis.Scripts.Schema;
 
 /// <summary>How protobuf's C# code writes a field: the name its methods share, the protobuf type and the wire type.</summary>
 /// <remarks>

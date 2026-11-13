@@ -14,7 +14,7 @@ donjons, zaaps, etc."). Both choices below are the owner's, made when asked. Bui
   `uidarkstone_assets_all` (91 of the 92 graphics the hints name).
 - **Chosen by the owner: the hints and the client's pictures go in the pack, as format 12** (+247 KB on 111.6 MB). Rejected: only the
   table and D3B's own vector icons (the 18 workshops would look alike, and the owner asked for logos like the game's); doing nothing.
-  `HintCatalog` (`D3B.Data.Hints`: `Hint`, `HintCategory`, the pictures as an `IconTable` by `gfx`) is its own entry, `hints/catalog`, read
+  `HintCatalog` (`D3B.Bis.Data.Hints`: `Hint`, `HintCategory`, the pictures as an `IconTable` by `gfx`) is its own entry, `hints/catalog`, read
   by `GameTables.Hints`; `HintsExtractor` reads it, the 18 class places' 62-pixel RGBA32 textures set in the middle of 64, one texture
   held inline in DXT5; the names are among the texts the pack keeps. The extraction fails when a hint names a category or a text the
   client lacks; a graphic without a picture (475, one hint) is drawn with a plain mark.

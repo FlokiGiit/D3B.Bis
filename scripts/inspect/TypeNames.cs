@@ -1,7 +1,7 @@
 using AssetsTools.NET;
 using AssetsTools.NET.Extra;
 
-namespace D3B.Scripts.Inspect;
+namespace D3B.Bis.Scripts.Inspect;
 
 /// <summary>Names Unity types: the class of an object, or its script for a MonoBehaviour.</summary>
 internal static class TypeNames

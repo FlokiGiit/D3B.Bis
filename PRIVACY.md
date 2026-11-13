@@ -5,11 +5,11 @@ there, and what leaves your computer if you choose to send a bug report.
 
 ## What D3B keeps on your computer
 
-- **Captures of your game sessions**, in `%LOCALAPPDATA%\D3B\captures\game`: the bytes your game client and the game
+- **Captures of your game sessions**, in `%LOCALAPPDATA%\D3B.Bis\captures\game`: the bytes your game client and the game
   server exchanged, so that a bug can be replayed. A capture holds your session's login ticket and what the server told
   your client: your characters, their inventory and maps, and the names of the other players around them. It is kept 7
   days and up to 1 GB by default, then deleted; the Network settings change both and turn the recording off.
-- **A database and your settings** in `%LOCALAPPDATA%\D3B`: the accounts and characters D3B saw, what the bots learned, your
+- **A database and your settings** in `%LOCALAPPDATA%\D3B.Bis`: the accounts and characters D3B saw, what the bots learned, your
   profiles and routes.
 
 None of it leaves your computer by itself.

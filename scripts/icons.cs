@@ -7,10 +7,10 @@
 #:include icons/SvgStyle.cs
 
 using System.Globalization;
-using D3B.Scripts.Icons;
+using D3B.Bis.Scripts.Icons;
 
 // Takes the IntelliJ Platform's icons the app draws, the dark variants of platform/icons/src/expui in
-// JetBrains/intellij-community at a pinned revision, and writes them for Avalonia in src/D3B.App/Themes/IntelliJIcons.axaml
+// JetBrains/intellij-community at a pinned revision, and writes them for Avalonia in src/D3B.Bis.App/Themes/IntelliJIcons.axaml
 // (D305, D331). Each file's own notice is checked: an icon whose file does not say it is under the Apache 2.0 license is
 // refused, and nothing is written. JetBrains' products' logos are never among them.
 // Usage: dotnet run --file scripts/icons.cs -- [--revision <sha>] [--output <file>] [--check]; --help describes the options.

@@ -19,9 +19,9 @@ the rule and do not copy the code.
 ## Async
 
 - A `CancellationToken` goes through every async call chain (245 uses) and ends at the call that can stop.
-- `ConfigureAwait(false)` on every `await` in `D3B.Bot`, `D3B.Studio` and `D3B.Storage` (235 of 236, 34 of 34, 99 of 99). Not in
-  `D3B.App`, whose code goes back to the UI thread, nor in `D3B.Network`.
-- `async void` only for an Avalonia event handler, in a view's code-behind or a control of `D3B.App` (all 8 are there).
+- `ConfigureAwait(false)` on every `await` in `D3B.Bis.Bot`, `D3B.Bis.Studio` and `D3B.Bis.Storage` (235 of 236, 34 of 34, 99 of 99). Not in
+  `D3B.Bis.App`, whose code goes back to the UI thread, nor in `D3B.Bis.Network`.
+- `async void` only for an Avalonia event handler, in a view's code-behind or a control of `D3B.Bis.App` (all 8 are there).
 - A bot's state belongs to its actor: one `Channel<T>` inbox read by one loop, no lock on that state (D9; `docs/architecture.md`,
   "The actor"). Read that section before adding a `lock` (43 exist).
 
@@ -41,7 +41,7 @@ the rule and do not copy the code.
   clear code first; a speed claim comes with numbers (a `Stopwatch` harness in a script, or the replayed captures).
 - A regular expression is a `[GeneratedRegex]`.
 
-## The studio (`D3B.App`)
+## The studio (`D3B.Bis.App`)
 
 - View models use CommunityToolkit.Mvvm: `[ObservableProperty]` and `[RelayCommand]` on `partial` classes (463 and 192 uses).
   Views are `.axaml` with a thin code-behind; texts go through the `.resx` files, in French and English (D14).

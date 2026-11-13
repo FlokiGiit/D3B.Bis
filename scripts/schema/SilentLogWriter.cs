@@ -1,6 +1,6 @@
 using LibCpp2IL.Logging;
 
-namespace D3B.Scripts.Schema;
+namespace D3B.Bis.Scripts.Schema;
 
 /// <summary>Drops what LibCpp2IL logs, so that the tool's output is its own and failures surface as exceptions.</summary>
 internal sealed class SilentLogWriter : LogWriter

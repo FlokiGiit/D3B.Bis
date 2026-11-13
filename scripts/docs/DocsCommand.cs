@@ -1,6 +1,6 @@
 using System.CommandLine;
 
-namespace D3B.Scripts.Docs;
+namespace D3B.Bis.Scripts.Docs;
 
 /// <summary>The commands that look after the repository's Markdown files.</summary>
 internal static class DocsCommand

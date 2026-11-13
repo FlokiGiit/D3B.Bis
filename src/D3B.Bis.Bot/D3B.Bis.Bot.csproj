@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <NeutralLanguage>en</NeutralLanguage>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\D3B.Bis.Core\D3B.Bis.Core.csproj" />
+    <ProjectReference Include="..\D3B.Bis.Data\D3B.Bis.Data.csproj" />
+    <ProjectReference Include="..\D3B.Bis.Engine\D3B.Bis.Engine.csproj" />
+    <ProjectReference Include="..\D3B.Bis.Network\D3B.Bis.Network.csproj" />
+    <ProjectReference Include="..\D3B.Bis.Protocol\D3B.Bis.Protocol.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="D3B.Bis.App.Tests" />
+    <InternalsVisibleTo Include="D3B.Bis.Bot.Tests" />
+    <InternalsVisibleTo Include="D3B.Bis.Storage.Tests" />
+    <InternalsVisibleTo Include="D3B.Bis.Studio.Tests" />
+  </ItemGroup>
+
+</Project>

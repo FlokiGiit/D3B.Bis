@@ -39,8 +39,8 @@ body:
       label: How D3B runs
       options:
         - The installed app
-        - From source, the app (src/D3B.App)
-        - From source, the host alone (src/D3B.Host)
+        - From source, the app (src/D3B.Bis.App)
+        - From source, the host alone (src/D3B.Bis.Host)
         - A tool in scripts/
     validations:
       required: true

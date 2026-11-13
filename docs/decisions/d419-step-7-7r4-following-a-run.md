@@ -8,8 +8,8 @@ A part of [the decisions](README.md); each decision has one line in [the index](
 The owner answered five questions one at a time, each as the lead recommended: the seam, what the playhead is between two steps, several
 characters on one route, the scope, and how the trial in game is handled. Builds D295, D379, D386, D393, D395 to D397, D413.*
 
-- **The seam (the owner's first choice).** A run says where it is through `RouteRuns` in `D3B.Studio`, which the app reads every 250 ms as it
-  reads the bots; `D3B.Bot` does not learn routes (D393's border). `FollowRoute` registers the run when the route begins to play
+- **The seam (the owner's first choice).** A run says where it is through `RouteRuns` in `D3B.Bis.Studio`, which the app reads every 250 ms as it
+  reads the bots; `D3B.Bis.Bot` does not learn routes (D393's border). `FollowRoute` registers the run when the route begins to play
   (`RouteRuns.Begin`) and takes it off when the route ends, is cut or fails (`End`, in a `finally`); `Position` and `Positions` give a
   `RouteRunPosition` per character: the route, its step (from 1), whether the character is on its way or arrived, the actions played of
   the step's, the lap of a loop, and whether a route there and back is on its way back. The cursor outlives the run as before (a fight or a
@@ -58,7 +58,7 @@ characters on one route, the scope, and how the trial in game is handled. Builds
   actions a step plays named in the journal's line; the map's marker for a run on a route of another world than the one shown (it is
   left off while its world is not the layer shown); the Outliner's route rows unfolding by themselves to show the step.
 - **Rejected.**
-  - A route's position in `ActivityReport`: `D3B.Bot` would know routes, against D393's border (the owner's choice).
+  - A route's position in `ActivityReport`: `D3B.Bis.Bot` would know routes, against D393's border (the owner's choice).
   - The journal's events as the way the app learns the position: the app would rebuild the position and lose it when it opens late (the
     owner's choice).
   - A marker moved between columns by an estimate of the walk's time: it would be wrong at each zaap, wait or fight (the owner's choice).

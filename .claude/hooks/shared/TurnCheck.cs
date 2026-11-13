@@ -1,7 +1,7 @@
 using System.Security.Cryptography;
 using System.Text;
 
-namespace D3B.Hooks;
+namespace D3B.Bis.Hooks;
 
 /// <summary>What the Stop hook decides from the files a turn changed and from the build's output.</summary>
 internal static class TurnCheck

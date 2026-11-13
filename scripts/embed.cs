@@ -1,17 +1,17 @@
 #!/usr/bin/env dotnet
 #:package Google.Protobuf
 #:package System.CommandLine
-#:project ../src/D3B.Data/D3B.Data.csproj
-#:project ../src/D3B.Protocol/D3B.Protocol.csproj
+#:project ../src/D3B.Bis.Data/D3B.Bis.Data.csproj
+#:project ../src/D3B.Bis.Protocol/D3B.Bis.Protocol.csproj
 #:include embed/EmbedCommand.cs
 #:include unity/GitHubCli.cs
 
 using System.Globalization;
-using D3B.Scripts.Embed;
+using D3B.Bis.Scripts.Embed;
 
 // Puts the pack, the obfuscated schema and the protocol mapping of a client build beside a published app, in
 // <output>/<version>/, where the app looks once a file is not on this machine (D172). They come from the release
-// client-<version>, each checked against its SHA-256, or with --packs from a directory such as %LOCALAPPDATA%\D3B\data.
+// client-<version>, each checked against its SHA-256, or with --packs from a directory such as %LOCALAPPDATA%\D3B.Bis\data.
 // Either way they are checked as the host checks them: the pack opens as the build's, and the mapping holds against the
 // schema (D48).
 // Usage: dotnet run --file scripts/embed.cs -- --client-version <version> --output <dir> [--packs <dir>]; --help describes

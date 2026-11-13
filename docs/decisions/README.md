@@ -55,3 +55,4 @@ Each file holds the decisions of one group of [the index](../decisions-index.md)
 - [Bug reports, BR1 (D422)](d422-bug-reports-br1-keys.md): 1 decision, 2 KB.
 - [Bug reports, the cleaner (D423)](d423-bug-reports-cleaner.md): 1 decision, 3 KB.
 - [Step 9, the harvest and the zones of a map (D424, D425)](d424-step-9-the-harvests-zones.md): 2 decisions, 9 KB.
+- [D3B.Bis (D426)](d426-d3b-bis.md): 1 decision, 5 KB.

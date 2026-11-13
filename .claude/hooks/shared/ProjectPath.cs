@@ -1,6 +1,6 @@
 using System.Text.RegularExpressions;
 
-namespace D3B.Hooks;
+namespace D3B.Bis.Hooks;
 
 /// <summary>Paths as the hooks compare them: relative to the project, with forward slashes.</summary>
 internal static partial class ProjectPath

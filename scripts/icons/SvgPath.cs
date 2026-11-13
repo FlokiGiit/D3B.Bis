@@ -1,7 +1,7 @@
 using System.Globalization;
 using System.Text;
 
-namespace D3B.Scripts.Icons;
+namespace D3B.Bis.Scripts.Icons;
 
 /// <summary>Writes SVG's outlines in Avalonia's path syntax: a path's data, a rectangle and a circle.</summary>
 /// <remarks>

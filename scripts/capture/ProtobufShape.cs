@@ -1,6 +1,6 @@
 using Google.Protobuf.Reflection;
 
-namespace D3B.Scripts.Capture;
+namespace D3B.Bis.Scripts.Capture;
 
 /// <summary>Describes a protobuf message by its shape alone: field numbers, wire types and lengths, never values.</summary>
 /// <remarks>

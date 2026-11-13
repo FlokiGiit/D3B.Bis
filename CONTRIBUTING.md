@@ -15,7 +15,7 @@ Everyone taking part follows the [code of conduct](CODE_OF_CONDUCT.md). Vulnerab
    A pull request adding one is closed, whatever else it brings.
 2. **Nothing extracted from the official client is committed**: no assets, game data, dumps, packs, schemas, per-build
    mappings or `.proto` text written from a schema. Packs and mappings ship as release assets. What is ours is
-   committed: the readable `.proto` files in `src/D3B.Protocol` and the pinned pairs in `src/D3B.Protocol/Pins`.
+   committed: the readable `.proto` files in `src/D3B.Bis.Protocol` and the pinned pairs in `src/D3B.Bis.Protocol/Pins`.
 3. **Never attach a capture, a database or a full log.** A capture holds the account's login ticket, and `d3b.db` names
    your accounts and characters. To show what the protocol did, describe it with `scripts/capture.cs`, which prints a
    capture's structure, never its content.
@@ -55,14 +55,14 @@ To run the app from source, the host needs the installed client's pack, schema a
 
 - **Every feature is a module** (`IModule.Build(BotBuilder)`) that registers its services, activities, settings and
   pages. A new feature is a new module or grows an existing one; it does not reach into another module's internals.
-- **`src/D3B.Engine` is pure**: pathfinding, the rules of a fight, its effects and the AI's search, with no I/O, so that
+- **`src/D3B.Bis.Engine` is pure**: pathfinding, the rules of a fight, its effects and the AI's search, with no I/O, so that
   they are tested on data alone.
 - **`scripts/` holds the tools**, file-based apps that read the official client, or, for `icons.cs`, take the IntelliJ
   Platform's icons the studio draws. They follow their own conventions, below, and have no tests.
 - **Tests mirror `src/`**: one test project per project with logic, in `tests/`.
 - **`.claude/` holds the setup for Claude Code sessions**: skills, agents, and the hooks that guard the rules above
   (nothing extracted from the client is written, nothing is pushed without an answer). The hooks are C# file-based apps whose
-  logic is tested in `tests/D3B.Hooks.Tests`. You do not need Claude Code to contribute.
+  logic is tested in `tests/D3B.Bis.Hooks.Tests`. You do not need Claude Code to contribute.
 
 ## Conventions
 
@@ -95,7 +95,7 @@ live in `Directory.Packages.props` (central package management), never in a proj
   `scripts/unity/`.
 - `#:package` names no version, since central package management sets it. Add `#:property PublishAot=false` when a
   package is not AOT-compatible.
-- Every script file is listed in `D3B.slnx`, so that it shows in the IDE, and CI builds each tool.
+- Every script file is listed in `D3B.Bis.slnx`, so that it shows in the IDE, and CI builds each tool.
 
 ### Files
 

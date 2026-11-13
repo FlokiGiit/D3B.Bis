@@ -1,4 +1,4 @@
-namespace D3B.Scripts.Unity;
+namespace D3B.Bis.Scripts.Unity;
 
 /// <summary>The installed official client, as the Ankama launcher lays it out.</summary>
 internal sealed class ClientInstall

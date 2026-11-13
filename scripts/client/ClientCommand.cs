@@ -1,11 +1,11 @@
 using System.CommandLine;
 using System.Net;
 using System.Net.NetworkInformation;
-using D3B.Network.Clients;
-using D3B.Network.Relay;
-using D3B.Scripts.Unity;
+using D3B.Bis.Network.Clients;
+using D3B.Bis.Network.Relay;
+using D3B.Bis.Scripts.Unity;
 
-namespace D3B.Scripts.Client;
+namespace D3B.Bis.Scripts.Client;
 
 /// <summary>The commands that check where the client's configuration sends it, and give it Ankama's back.</summary>
 internal static class ClientCommand
@@ -23,7 +23,7 @@ internal static class ClientCommand
         };
         var directory = new Option<DirectoryInfo?>("--redirect-directory")
         {
-            Description = @"Where D3B keeps the client's configuration, as the host's Network:Redirect:Directory names it. Defaults to %LOCALAPPDATA%\D3B\client.",
+            Description = @"Where D3B keeps the client's configuration, as the host's Network:Redirect:Directory names it. Defaults to %LOCALAPPDATA%\D3B.Bis\client.",
             Recursive = true,
         };
         var address = new Option<string>("--address")
