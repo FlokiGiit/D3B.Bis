@@ -1,6 +1,7 @@
 using Avalonia;
 using D3B.Bis.App.Hosting;
 using D3B.Bis.App.Updates;
+using D3B.Bis.Storage;
 using Microsoft.Extensions.Configuration;
 using Velopack;
 
@@ -17,6 +18,9 @@ internal static class Program
     {
         // First of all: run by its installer, an update or its uninstaller, the app does what they ask and ends here (D171).
         VelopackApp.Build().Run();
+
+        // Before the preferences and the host are read: what D3B kept on this machine comes across at the first start.
+        PreviousInstall.Import(PreviousInstall.PreviousRoot, PreviousInstall.Root);
 
         // Before the host: it starts with the settings the app changed (D151).
         var preferences = AppPreferences.Load(AppPreferences.DefaultPath);
