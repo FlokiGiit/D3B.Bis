@@ -313,6 +313,9 @@ it grows. A client update before a session gets Q10's session first.
 
 - The project's Claude Code setup: `.claude/`, its hooks tested in `tests/D3B.Bis.Hooks.Tests`, and `CLAUDE.md`'s rewrite, done on
   2026-11-09 (D398).
+- **D3B.Bis** (D426), done on 2026-11-13: the projects and namespaces named `D3B.Bis.*`, a folder of its own with D3B's database, project and
+  preferences copied at the first start, D3B's formats and published packs kept, the repository `FlokiGiit/D3B.Bis`. Left: `main` pushed and
+  made the default branch by the owner, a `client-<version>` release of its own, an installer packed and tried beside D3B's.
 - **Bug reports with the player's capture** (D409 to D411), designed on 2026-11-09 and to do, in five sessions of their own, before
   the owner's next round of reports from players if he wants them to come with a capture. A report is a `.d3breport` zip, sent by a
   private Discord webhook; the game connection is recorded by default so that a capture exists when the bug does.
