@@ -27,6 +27,9 @@ internal sealed class TestActivity : BotActivity
     /// <summary>Gets or sets whether a step throws instead of waiting.</summary>
     public bool Throws { get; init; }
 
+    /// <summary>Gets or sets whether the activity fights its fights, which the run waits the end of.</summary>
+    public bool Fights { get; init; }
+
     /// <summary>Gets the number of steps started.</summary>
     public int Started => Volatile.Read(ref _started);
 
@@ -38,6 +41,8 @@ internal sealed class TestActivity : BotActivity
 
     /// <summary>Gets the interruptions the activity recovered the character after, in order.</summary>
     public ConcurrentQueue<Interruption> Recoveries { get; } = new();
+
+    public override bool FightsItsFights => Fights;
 
     public override async Task<bool> StepAsync(BotContext context, CancellationToken cancellationToken)
     {

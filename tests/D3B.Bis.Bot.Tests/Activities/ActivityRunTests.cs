@@ -370,6 +370,24 @@ public sealed class ActivityRunTests : IAsyncDisposable
         Assert.Throws<ObjectDisposedException>(() => bot.StartActivity(new TestActivity()));
     }
 
+    [Fact]
+    public async Task TheBotStoppingWhileTheActivityWaitsForItsFightsEndStopsTheActivity()
+    {
+        var (connection, bot) = await _play.EnterAsync(300);
+        var activity = new TestActivity { Fights = true };
+        var run = bot.StartActivity(activity);
+
+        await activity.SteppingAsync(bot);
+        connection.Server(new ContextDestroyEvent());
+        connection.Server(new ContextCreationEvent { Context = ContextCreationEvent.Types.GameContext.Fight });
+        await WaitForAsync(() => activity.Interruptions.Contains(Interruption.Fight));
+
+        await bot.DisposeAsync();
+
+        Assert.Equal(ActivityOutcome.Stopped, await run.Completion);
+        Assert.Null(run.Failure);
+    }
+
     private static async Task WaitForAsync(Func<bool> condition)
     {
         var deadline = DateTime.UtcNow + TimeSpan.FromSeconds(10);

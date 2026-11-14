@@ -287,7 +287,7 @@ public sealed class BotActor : IAsyncDisposable, IRequestWithholder
         var waiter = new BotWaiter(condition, cancellationToken);
 
         if (!_inbox.Writer.TryWrite(new Waiting(waiter)))
-            waiter.Fail(new ObjectDisposedException(nameof(BotActor), "The bot was stopped."));
+            waiter.Fail(Stopped());
 
         return waiter.Task;
     }
@@ -692,6 +692,12 @@ public sealed class BotActor : IAsyncDisposable, IRequestWithholder
         Write(BotEvent.Disconnected);
     }
 
+    private ObjectDisposedException Stopped()
+    {
+        // Named as ObjectDisposedException.ThrowIf(…, this) names it: an activity's run takes that name for the bot's stop.
+        return new ObjectDisposedException(GetType().FullName, "The bot was stopped.");
+    }
+
     private void Stop()
     {
         if (_behavior is { } behavior)
@@ -701,7 +707,7 @@ public sealed class BotActor : IAsyncDisposable, IRequestWithholder
             starting.Started.TrySetException(new BotInterruptedException(Interruption.Stopped));
 
         foreach (var waiter in _waiters)
-            waiter.Fail(new ObjectDisposedException(nameof(BotActor), "The bot was stopped."));
+            waiter.Fail(Stopped());
 
         _parked.Clear();
         _waiters.Clear();
