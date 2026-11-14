@@ -6,6 +6,7 @@ using D3B.Bis.Data.Tests;
 
 namespace D3B.Bis.App.Tests.ViewModels.Reports;
 
+[UiThread]
 public sealed class ReportSendTests : IDisposable
 {
     private readonly TemporaryDirectory _directory = new();
@@ -63,6 +64,9 @@ public sealed class ReportSendTests : IDisposable
         await dialog.SendCommand.ExecuteAsync(null);
 
         var request = Assert.Single(sink.Requests);
+
+        // What the sink reports is posted to the UI thread, as the studio's dialog has it: it shows once that thread ran it.
+        await Waiting.UntilAsync(() => dialog.SendProgress > 0, TimeSpan.FromSeconds(10));
 
         Assert.True(dialog.IsSent);
         Assert.False(dialog.IsSending);
