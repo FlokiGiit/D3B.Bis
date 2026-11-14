@@ -292,11 +292,13 @@ public sealed class BotActor : IAsyncDisposable, IRequestWithholder
         return waiter.Task;
     }
 
-    /// <summary>Stops the bot: its behavior is interrupted, and its inbox read to the end.</summary>
+    /// <summary>Stops the bot: its inbox takes nothing more and is read to the end, then its behavior is interrupted and whatever waits on it ends.</summary>
     /// <returns>A task that completes once the bot's loop is over.</returns>
     public async ValueTask DisposeAsync()
     {
-        Post(new Stopping());
+        // The stop is the inbox's completion and nothing else: one instant, before which a post is read and after which
+        // it is refused. Told by a message of the inbox, it would leave the posts that follow the message read after it,
+        // by a loop that already ended what waited.
         _inbox.Writer.TryComplete();
         await _loop.ConfigureAwait(false);
     }
@@ -421,6 +423,9 @@ public sealed class BotActor : IAsyncDisposable, IRequestWithholder
                 BotLog.HandlerFailed(_log, Key.CharacterId, exception);
             }
         }
+
+        // The inbox is completed and read: nothing can be parked or wait after this.
+        Stop();
     }
 
     private void Handle(BotInput input)
@@ -453,9 +458,6 @@ public sealed class BotActor : IAsyncDisposable, IRequestWithholder
                 break;
             case Detached detached:
                 OnDetached(detached.Session);
-                break;
-            case Stopping:
-                OnStopping();
                 break;
             case Settling settling:
                 _state = CharacterEvents.NotConfirmed(_state);
@@ -690,7 +692,7 @@ public sealed class BotActor : IAsyncDisposable, IRequestWithholder
         Write(BotEvent.Disconnected);
     }
 
-    private void OnStopping()
+    private void Stop()
     {
         if (_behavior is { } behavior)
             Interrupt(behavior, Interruption.Stopped);

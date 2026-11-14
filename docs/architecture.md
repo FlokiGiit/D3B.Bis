@@ -113,7 +113,10 @@ The bots run in `D3B.Bis.Bot`: what each part does today, with the decisions tha
   outlives its connections: a new one takes the old one's place, the state starting over from what the server sends.
 - **The actor**, `BotActor`: one `Channel<T>` inbox read by one loop, no lock on its state (D9; its inbox messages are `BotInput`, a condition waited for `BotWaiter`, D399). The inbox gets every
   message of its character's game connection, both sides, from the relay's read loops; the loop turns each into the next
-  state and tries it on the behaviors' expectations. Commands from the app come at step 5.
+  state and tries it on the behaviors' expectations. Commands from the app come at step 5. Stopping a bot
+  (`BotActor.DisposeAsync`) completes its inbox and posts nothing in it: what was posted before is read to the end, then
+  the loop, as it ends, interrupts the behavior and ends every wait and every start that waited; what is posted after is
+  refused. The stop is that one instant, so nothing is taken by a loop that already ended what waited.
 - **The state**, `CharacterState` in `D3B.Bis.Bot.Characters`: an immutable snapshot of what the server said of the
   character, its name and level, map, sub-area, cell and the path it walks, the map's own interactive elements and the
   use the character is in (D75), the map's NPCs, the dialog with one and the exchange with the storage (D80), the zaaps

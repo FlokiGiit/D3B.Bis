@@ -26,8 +26,6 @@ internal abstract record BotInput
 
     internal sealed record Detached(GameSession Session) : BotInput;
 
-    internal sealed record Stopping : BotInput;
-
     internal sealed record Settling(TaskCompletionSource Settled) : BotInput;
 
     internal sealed record Processing(TaskCompletionSource Processed) : BotInput;

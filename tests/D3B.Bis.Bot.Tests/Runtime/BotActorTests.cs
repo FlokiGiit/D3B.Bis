@@ -1,12 +1,23 @@
+using D3B.Bis.Bot.Banks;
+using D3B.Bis.Bot.Characters;
 using D3B.Bis.Bot.Runtime;
+using D3B.Bis.Engine.World;
 using D3B.Bis.Network.Relay;
 using D3B.Bis.Protocol.Game;
 using Google.Protobuf;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace D3B.Bis.Bot.Tests.Runtime;
 
 public sealed class BotActorTests : IAsyncDisposable
 {
+    // Measured on the code that posted its stop, then completed its inbox: an ask fell between the two at 39 to 56 stops
+    // of 100 (ten runs, beside 24 busy loops), so a hundred stops miss the race in fewer than one run in 10^20.
+    private const int Stops = 100;
+
+    // Each wait asked and not ended is tried again at every ask after it: few are enough to meet the stop.
+    private const int AsksAStop = 64;
+
     private static readonly Dictionary<string, IMessage> _byItself = new()
     {
         ["confirmation"] = new MapMovementConfirmRequest(),
@@ -311,6 +322,28 @@ public sealed class BotActorTests : IAsyncDisposable
     }
 
     [Fact]
+    public async Task AWaitAskedWhileTheBotStopsEndsWithIt()
+    {
+        var waits = await AskedWhileStoppingAsync(bot => bot.WaitUntilAsync(_ => false, TestContext.Current.CancellationToken));
+
+        // The stop is over: a wait still pending is one the bot took and nothing will end.
+        Assert.DoesNotContain(waits, wait => !wait.IsCompleted);
+        Assert.All(waits, wait => Assert.IsType<ObjectDisposedException>(wait.Exception?.InnerException));
+    }
+
+    [Fact]
+    public async Task AStartAskedWhileTheBotStopsEndsWithIt()
+    {
+        var starts = await AskedWhileStoppingAsync(bot => bot.RunWhenReadyAsync((_, _) => Task.FromResult(true), TestContext.Current.CancellationToken));
+
+        // A start the stop ended is told on another thread: one the bot took and nothing ends would wait for ever.
+        var ended = Task.WhenAll(starts.Select(async start => await Record.ExceptionAsync(() => start)));
+        var failures = await ended.WaitAsync(TimeSpan.FromSeconds(30), TestContext.Current.CancellationToken);
+
+        Assert.All(failures, failure => Assert.True(failure is ObjectDisposedException or BotInterruptedException { Reason: Interruption.Stopped }));
+    }
+
+    [Fact]
     public async Task TheCallerStoppingTheBehaviorIsNoInterruption()
     {
         var (_, bot) = await _play.EnterAsync(300);
@@ -327,6 +360,63 @@ public sealed class BotActorTests : IAsyncDisposable
 
         Assert.IsNotType<BotInterruptedException>(cancelled);
         Assert.False(bot.IsPaused);
+    }
+
+    /// <summary>Stops bots while a thread asks of each, and gives everything asked.</summary>
+    /// <remarks>
+    /// Nothing but a second thread can ask between two statements of a stop, so stop and asks are raced, bot after bot:
+    /// whichever comes first, what was asked must end. The asking thread asks from the stop's signal until it is refused.
+    /// </remarks>
+    private async Task<List<Task>> AskedWhileStoppingAsync(Func<BotActor, Task> ask)
+    {
+        var asked = new List<Task>();
+
+        for (var stop = 0; stop < Stops; stop++)
+        {
+            var bot = Idle();
+            var ready = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+            var stopping = false;
+            var asking = Task.Run(
+                () =>
+                {
+                    ready.SetResult();
+
+                    // Spinning, not waiting: its first ask must come as the stop goes, within the time a thread takes to wake.
+                    while (!Volatile.Read(ref stopping))
+                        Thread.SpinWait(1);
+
+                    for (var asks = 0; asks < AsksAStop; asks++)
+                    {
+                        var task = ask(bot);
+
+                        asked.Add(task);
+
+                        if (task.IsFaulted)
+                            break;
+                    }
+                },
+                TestContext.Current.CancellationToken);
+
+            await ready.Task.WaitAsync(TestContext.Current.CancellationToken);
+            Volatile.Write(ref stopping, true);
+            await bot.DisposeAsync();
+            await asking;
+        }
+
+        return asked;
+    }
+
+    /// <summary>A bot no game connection plays, made as the play's bots make theirs and stopped by its test.</summary>
+    private BotActor Idle()
+    {
+        return new BotActor(
+            CharacterState.Chosen(TestPlay.Key, TestPlay.Chosen().Success.Character),
+            _play.Maps,
+            new Lazy<WorldPathfinder>(() => new WorldPathfinder(_play.World.Graph, _play.World.Atlas)),
+            new Lazy<BankDirectory>(() => new BankDirectory(_play.Tables.Banks, _play.World.Graph, _play.World.Atlas)),
+            () => BotDelays.Measured,
+            _play.Time,
+            NullLogger<BotActor>.Instance);
     }
 
     /// <summary>A behavior that waits for a kamas update from the server, and gives the kamas it holds.</summary>
