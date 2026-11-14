@@ -11,8 +11,9 @@ namespace D3B.Bis.Bot.Tests.Runtime;
 
 public sealed class BotActorTests : IAsyncDisposable
 {
-    // Measured on the code that posted its stop, then completed its inbox: an ask fell between the two at 39 to 56 stops
-    // of 100 (ten runs, beside 24 busy loops), so a hundred stops miss the race in fewer than one run in 10^20.
+    // Measured on the code that posted its stop, then completed its inbox: an ask fell between the two at 40 to 58 stops
+    // of 100 on an idle machine (20 runs) and 39 to 56 beside 24 busy loops (10 runs), so a hundred stops miss the race in
+    // fewer than one run in 10^20.
     private const int Stops = 100;
 
     // Each wait asked and not ended is tried again at every ask after it: few are enough to meet the stop.
