@@ -10,6 +10,19 @@ public sealed class FrameRecorderTests
 {
     private readonly FrameRecorder _recorder = new(TimeProvider.System);
 
+    // D3B's frame is recorded once it went (D115), a moment after the connection has it: a server that answers at
+    // once, as a test's does, is recorded first. A test that reads the order answers once D3B's frame is recorded.
+    private async Task RecordedAsync(FrameSource source)
+    {
+        var deadline = DateTime.UtcNow + TimeSpan.FromSeconds(10);
+
+        while (!(_recorder.TryGet(TestPlay.Key, out var frames) && frames.All().Any(frame => frame.Source == source)))
+        {
+            Assert.True(DateTime.UtcNow < deadline, $"No frame of {source} was recorded in time.");
+            await Task.Delay(5, TestContext.Current.CancellationToken);
+        }
+    }
+
     [Fact]
     public async Task ABotsFramesAreRecordedFromItsConnectionsFirstFrameBothSidesAndD3BsOwn()
     {
@@ -17,6 +30,7 @@ public sealed class FrameRecorderTests
         var (connection, bot) = await play.EnterAsync(433);
         var walk = bot.WalkAsync(388, TestContext.Current.CancellationToken);
 
+        await RecordedAsync(FrameSource.D3B);
         await TestWalks.WalkedAsync(play, connection, 1);
         await walk;
 
