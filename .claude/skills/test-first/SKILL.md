@@ -37,6 +37,7 @@ Counted in `tests/` on 2026-11-09: 1,700 tests, almost all `[Fact]`, a `[Theory]
   is used. A double is a small class of the test project.
 - An async test passes `TestContext.Current.CancellationToken` to what it awaits.
 - Time under test is a `FakeTimeProvider` wherever the code takes a `TimeProvider`; waiting for something that runs uses the test project's `Waiting` helper, not a sleep.
+- A wait a bot asks beside the test is ended with `TestPlay.Time.EndAsync(delay)`, or awaited with `AskedAsync(delay)` before a smaller move: `Advance` rings only the timers already made, and a bot asks its wait after what the test saw of it.
 - The engine's rules are tested on data built by the test, or on fights as the captures measured them (`D3B.Bis.Engine.Tests`);
   `CsCheck` states a property there.
 - A view is tested headless: the `studio-ui` skill says how.

@@ -76,6 +76,7 @@ public sealed class BotDelaysTests
 
         var walk = bot.WalkAsync(300, TestContext.Current.CancellationToken);
 
+        await play.Time.AskedAsync(TimeSpan.FromSeconds(2));
         play.Time.Advance(TimeSpan.FromSeconds(2) - TimeSpan.FromMilliseconds(1));
         await Task.Delay(50, TestContext.Current.CancellationToken);
         Assert.Empty(connection.Sent);
@@ -96,13 +97,13 @@ public sealed class BotDelaysTests
 
         var walk = bot.WalkAsync(300, TestContext.Current.CancellationToken);
 
-        await Task.Delay(50, TestContext.Current.CancellationToken);
+        await play.Time.AskedAsync(BotDelays.Measured.Display);
         play.Bots.Delays = BotDelays.Measured with { Display = TimeSpan.FromSeconds(1) };
         play.Time.Advance(BotDelays.Measured.Display);
         await Task.Delay(50, TestContext.Current.CancellationToken);
         Assert.Empty(connection.Sent);
 
-        play.Time.Advance(TimeSpan.FromSeconds(1) - BotDelays.Measured.Display);
+        await play.Time.EndAsync(TimeSpan.FromSeconds(1) - BotDelays.Measured.Display);
         Assert.IsType<MapMovementRequest>(await connection.SentAsync(1));
         Assert.False(walk.IsCompleted);
     }

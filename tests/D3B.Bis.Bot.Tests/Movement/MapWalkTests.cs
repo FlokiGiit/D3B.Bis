@@ -101,6 +101,7 @@ public sealed class MapWalkTests
 
         var walk = bot.WalkAsync(300, TestContext.Current.CancellationToken);
 
+        await play.Time.AskedAsync(BotDelays.Measured.Display);
         play.Time.Advance(BotDelays.Measured.Display - TimeSpan.FromMilliseconds(1));
         await Task.Delay(50, TestContext.Current.CancellationToken);
         Assert.Empty(connection.Sent);

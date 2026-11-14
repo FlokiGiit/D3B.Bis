@@ -48,7 +48,7 @@ public sealed class BehaviorActivityTests : IAsyncDisposable
         await UntilAsync(() => Notes(bot).Count == 1);
         connection.Server(new KamasUpdateEvent { Kamas = 10 });
         await bot.ProcessedAsync();
-        _behaviors.Play.Time.Advance(TimeSpan.FromSeconds(60));
+        await _behaviors.Play.Time.EndAsync(TimeSpan.FromSeconds(60));
         await UntilAsync(() => Notes(bot).Count == 2);
 
         Assert.Equal(["poor", "rich"], Notes(bot));
@@ -65,7 +65,7 @@ public sealed class BehaviorActivityTests : IAsyncDisposable
             new BehaviorState("only", "Only") { Actions = Chain(Note("a", "a"), Node("w", "wait", ("Seconds", 5)), Note("b", "b")) }));
 
         await UntilAsync(() => Notes(bot).Count == 1);
-        _behaviors.Play.Time.Advance(TimeSpan.FromSeconds(5));
+        await _behaviors.Play.Time.EndAsync(TimeSpan.FromSeconds(5));
 
         Assert.Equal(ActivityOutcome.Done, await run.Completion);
         Assert.Equal(["a", "b"], Notes(bot));
@@ -87,7 +87,7 @@ public sealed class BehaviorActivityTests : IAsyncDisposable
         await UntilAsync(() => run.Status is ActivityStatus.Stepping);
 
         // The wait the player cut starts again whole: a minute more, then the way goes on.
-        _behaviors.Play.Time.Advance(TimeSpan.FromSeconds(60));
+        await _behaviors.Play.Time.EndAsync(TimeSpan.FromSeconds(60));
 
         Assert.Equal(ActivityOutcome.Done, await run.Completion);
         Assert.Equal(["a", "b"], Notes(bot));
@@ -102,7 +102,7 @@ public sealed class BehaviorActivityTests : IAsyncDisposable
             new BehaviorState("loop", "Loop") { Repeat = StepRepeat.Forever, Actions = Chain(Note("a", "again"), Node("w", "wait", ("Seconds", 1))) }));
 
         await UntilAsync(() => Notes(bot).Count == 1);
-        _behaviors.Play.Time.Advance(TimeSpan.FromSeconds(1));
+        await _behaviors.Play.Time.EndAsync(TimeSpan.FromSeconds(1));
         await UntilAsync(() => Notes(bot).Count == 2);
         run.Stop();
         await run.Completion;
@@ -147,7 +147,7 @@ public sealed class BehaviorActivityTests : IAsyncDisposable
             }));
 
         await UntilAsync(() => run.Status is ActivityStatus.Stepping);
-        _behaviors.Play.Time.Advance(TimeSpan.FromSeconds(1));
+        await _behaviors.Play.Time.EndAsync(TimeSpan.FromSeconds(1));
         await UntilAsync(() => run.Status is ActivityStatus.Stepping);
         Assert.Empty(Notes(bot));
 
@@ -197,7 +197,7 @@ public sealed class BehaviorActivityTests : IAsyncDisposable
             new BehaviorState("list", "List") { Repeat = StepRepeat.Until(new NodeCall("kamas.atLeast", Values(("Amount", 10)))), Actions = Chain(Note("a", "a"), Node("w", "wait", ("Seconds", 1))) }));
 
         await UntilAsync(() => Notes(bot).Count == 1);
-        _behaviors.Play.Time.Advance(TimeSpan.FromSeconds(1));
+        await _behaviors.Play.Time.EndAsync(TimeSpan.FromSeconds(1));
         await UntilAsync(() => Notes(bot).Count == 2);
 
         connection.Server(new KamasUpdateEvent { Kamas = 50 });
@@ -349,7 +349,7 @@ public sealed class BehaviorActivityTests : IAsyncDisposable
             new BehaviorState("only", "Only") { Actions = Chain(Note("a", "a"), Node("w", "wait", ("Seconds", 5))) }));
 
         await UntilAsync(() => Notes(bot).Count == 1);
-        _behaviors.Play.Time.Advance(TimeSpan.FromSeconds(5));
+        await _behaviors.Play.Time.EndAsync(TimeSpan.FromSeconds(5));
         await run.Completion;
 
         var trace = bot.Trace.All();
@@ -415,7 +415,7 @@ public sealed class BehaviorActivityTests : IAsyncDisposable
         Assert.Equal((1, 3), (progress?.Done, progress?.Total));
         Assert.Equal([2L, 3L], progress?.Text.Values.Select(value => value.Id));
 
-        _behaviors.Play.Time.Advance(TimeSpan.FromSeconds(60));
+        await _behaviors.Play.Time.EndAsync(TimeSpan.FromSeconds(60));
 
         Assert.Equal(ActivityOutcome.Done, await run.Completion);
         Assert.Equal(["a", "b"], Notes(bot));
@@ -429,10 +429,10 @@ public sealed class BehaviorActivityTests : IAsyncDisposable
             new BehaviorState("loop", "Loop") { Repeat = StepRepeat.Forever, Actions = Chain(Node("w", "wait", ("Seconds", 1)), Node("v", "wait", ("Seconds", 60))) }));
 
         await UntilAsync(() => run.Status is ActivityStatus.Stepping);
-        _behaviors.Play.Time.Advance(TimeSpan.FromSeconds(1));
+        await _behaviors.Play.Time.EndAsync(TimeSpan.FromSeconds(1));
         await UntilAsync(() => run.Activity.Report?.Progress?.Done == 1);
 
-        _behaviors.Play.Time.Advance(TimeSpan.FromSeconds(60));
+        await _behaviors.Play.Time.EndAsync(TimeSpan.FromSeconds(60));
         await UntilAsync(() => run.Activity.Report?.Progress?.Done == 0);
 
         run.Stop();

@@ -1279,7 +1279,10 @@ character's (D279). The character's spells by the
   fighters, a fight's and a missing map, and what a cell holds, in both languages; its drawing without a screen, a pixel of each mark checked in each
   theme's palette and the cell under the pointer described; its layout's cells found back from their centres (D120 to
   D122).
-- Time is controlled through `FakeTimeProvider`.
+- Time is controlled through `FakeTimeProvider`. The bots' tests move `TestPlay.Time`, a `TestClock`: a fake clock that knows the
+  timers asked of it. Moving a fake clock rings only the timers already made, and what a test sees of a bot (a status, a note, a
+  frame sent) comes before the bot asks its next wait: a test that means to end a wait a bot asks calls `EndAsync` with the wait's
+  delay, or `AskedAsync` before it moves the clock by less, and never `Advance` on such a signal alone.
 - The Claude Code hooks (D398) are tested where they ship from: `tests/D3B.Bis.Hooks.Tests` compiles the files of
   `.claude/hooks/shared/`, which hold every decision, and checks them on commands and paths as Claude Code sends them: which
   pushes are refused or asked, which writes are refused, which changes need a build, a build that fails only on files the

@@ -39,7 +39,7 @@ public sealed class FollowRouteTests : IAsyncDisposable
         Assert.Equal((route.Id, 0, 0, 1), (position.Route, position.Anchor, position.Played, position.Actions));
         Assert.Equal(0, run.Activity.Report?.Progress?.Done);
 
-        _behaviors.Play.Time.Advance(TimeSpan.FromSeconds(60));
+        await _behaviors.Play.Time.EndAsync(TimeSpan.FromSeconds(60));
 
         Assert.Equal(ActivityOutcome.Done, await run.Completion);
         Assert.Null(runs.Position(bot.State.Key));

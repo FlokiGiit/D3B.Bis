@@ -52,6 +52,7 @@ public sealed class ActivityRunTests : IAsyncDisposable
         await WaitForAsync(() => run.Steps is 1);
 
         // The client's display time at least, measured: the next step starts once it passed.
+        await _play.Time.AskedAsync(BotDelays.Measured.BetweenSteps);
         _play.Time.Advance(BotDelays.Measured.BetweenSteps - TimeSpan.FromMilliseconds(1));
         await Task.Delay(20, TestContext.Current.CancellationToken);
         Assert.Equal(1, activity.Started);
@@ -265,7 +266,7 @@ public sealed class ActivityRunTests : IAsyncDisposable
         connection.Server(new MapCurrentEvent { MapId = TestPlay.MapId });
         connection.Server(TestPlay.Information(358));
         await bot.ProcessedAsync();
-        _play.Time.Advance(BotDelays.Measured.BetweenSteps);
+        await _play.Time.EndAsync(BotDelays.Measured.BetweenSteps);
 
         Assert.Equal(2, await activity.SteppingAsync(bot));
         Assert.Equal([Interruption.Fight], activity.Interruptions);

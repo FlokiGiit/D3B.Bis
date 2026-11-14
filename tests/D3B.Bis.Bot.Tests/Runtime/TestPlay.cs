@@ -25,7 +25,6 @@ using D3B.Bis.Protocol.Game;
 using D3B.Bis.Protocol.Translation;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Testing;
-using Microsoft.Extensions.Time.Testing;
 
 namespace D3B.Bis.Bot.Tests.Runtime;
 
@@ -134,7 +133,7 @@ internal sealed class TestPlay : IAsyncDisposable
 
     public static GameAccount SubscribedAccount { get; } = Account with { SubscriptionEnd = DateTimeOffset.MaxValue };
 
-    public FakeTimeProvider Time { get; } = new();
+    public TestClock Time { get; } = new();
 
     public FakeLogCollector Log { get; } = new();
 
