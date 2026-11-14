@@ -30,6 +30,10 @@ internal sealed class TestClock : FakeTimeProvider
     }
 
     /// <summary>Waits until a wait that ends a delay from now is asked of the clock: moving the clock then ends it.</summary>
+    /// <remarks>
+    /// A wait is told by when it ends alone: two that end at the same instant, as a display time and a time between two
+    /// steps of 500 ms asked together, are one to the test.
+    /// </remarks>
     public async Task AskedAsync(TimeSpan delay)
     {
         var deadline = DateTime.UtcNow + TimeSpan.FromSeconds(10);
