@@ -302,8 +302,9 @@ public sealed class BotActorTests : IAsyncDisposable
 
         await bot.DisposeAsync();
 
-        await Assert.ThrowsAsync<ObjectDisposedException>(() => stopped);
-        await Assert.ThrowsAsync<ObjectDisposedException>(() => bot.WaitUntilAsync(_ => true, TestContext.Current.CancellationToken));
+        // An activity's run takes a wait the stop ends for a stop by this name, the one ObjectDisposedException.ThrowIf gives.
+        Assert.Equal(typeof(BotActor).FullName, (await Assert.ThrowsAsync<ObjectDisposedException>(() => stopped)).ObjectName);
+        Assert.Equal(typeof(BotActor).FullName, (await Assert.ThrowsAsync<ObjectDisposedException>(() => bot.WaitUntilAsync(_ => true, TestContext.Current.CancellationToken))).ObjectName);
     }
 
     [Fact]
