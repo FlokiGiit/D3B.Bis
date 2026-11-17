@@ -579,3 +579,8 @@ or refines another says so in its own entry. Add a line here with every new deci
 
 - [D441](decisions/d441-the-app-ships-no-clients-files.md#d441-the-app-ships-no-clients-files-the-installed-app-prepares-them-from-the-client-on-its-first-start-and-at-each-update-of-ankamas) The app ships no client's files: the installed app prepares them from the client on its first start and at each update of Ankama's (2026-11-17)
   - Publishing this repository's `client-<version>` releases and embedding them, taking AerafalDev/D3B's releases.
+
+## The repository public (D442)
+
+- [D442](decisions/d442-the-repository-public.md#d442-flokigiitd3bbis-is-made-public-then-released-as-v0100-the-first-app-without-the-clients-files) FlokiGiit/D3B.Bis is made public, then released as v0.10.0, the first app without the client's files (2026-11-17)
+  - Staying private, a public repository for the releases alone.
