@@ -195,6 +195,10 @@ internal sealed partial class MainViewModel : ObservableObject
     [ObservableProperty]
     public partial string OnlineText { get; private set; } = "";
 
+    /// <summary>Gets the app's version and the client build the host runs for, else the one the app ships, under the welcome's logo.</summary>
+    [ObservableProperty]
+    public partial string VersionText { get; private set; } = "";
+
     /// <summary>Gets whether everything is saved: no profile's tab with changes not saved.</summary>
     [ObservableProperty]
     public partial bool IsSaved { get; private set; } = true;
@@ -202,8 +206,6 @@ internal sealed partial class MainViewModel : ObservableObject
     /// <summary>Gets whether the host does not run, which the panels that read it say.</summary>
     public bool IsNotRunning => !IsRunning;
 
-    /// <summary>Gets the app's version and the client build it ships, under the welcome's logo.</summary>
-    public string VersionText => _localizer.Format("HomeVersion", Updates.Version, Updates.ClientVersion);
 
     // The world's tab undoes what the route or the zone selected in it does: its map is theirs (D397).
     private IUndoable? Undoable => Editor.Selected?.Content switch
@@ -340,6 +342,9 @@ internal sealed partial class MainViewModel : ObservableObject
             _ => "",
         };
         ClientText = _localizer.Format("StatusClient", build ?? Updates.ClientVersion);
+
+        // The app prepares the files of a build it does not ship (D440): the build it ships says little once the host runs.
+        VersionText = _localizer.Format("HomeVersion", Updates.Version, build ?? Updates.ClientVersion);
 
         // The profiles first: the bots' cards offer them, and the characters name them.
         Profiles.Refresh(services);
@@ -600,7 +605,6 @@ internal sealed partial class MainViewModel : ObservableObject
         Sequences.Retell();
         World.Relabel();
         Editor.Refresh();
-        OnPropertyChanged(nameof(VersionText));
     }
 
     private void RefreshPages(IServiceProvider? services)

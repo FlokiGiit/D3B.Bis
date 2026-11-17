@@ -621,7 +621,8 @@ D356), the pages of D101 and D162 gone.
   neighbour then shown. A tab that reads the host shows where the host stands until it runs (`HostStateView`). Route and zone
   have no tab: they are selected in the world's (D397).
 - **The home page** (D406, `HomeViewModel` and `HomeView`, in `D3B.Bis.App.ViewModels.Home`; the view's context is `MainViewModel`,
-  which holds the host's state it shows): the logo, the version, a pill of where the host stands and the banners of a host
+  which holds the host's state it shows): the logo, the version and the client build the host runs for (the one the app ships until
+  it runs, D440), a pill of where the host stands and the banners of a host
   starting, of a client whose files are missing (D440, below) and of a host that failed; quick actions (new profile, route, zone, the
   project's folder, the settings, the first four disabled until the host runs); the characters (`HomeCharacterViewModel`, online
   first, a click chooses one without leaving the page, a double click opens its tab); the six assets of the project changed last

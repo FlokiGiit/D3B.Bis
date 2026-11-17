@@ -1,6 +1,7 @@
 using D3B.Bis.App.Controls;
 using D3B.Bis.App.Hosting;
 using D3B.Bis.App.Localization;
+using D3B.Bis.App.Updates;
 using D3B.Bis.App.ViewModels;
 using D3B.Bis.Bot.Hosting;
 using D3B.Bis.Bot.Tests;
@@ -51,6 +52,31 @@ public sealed class MainViewModelTests : IAsyncDisposable
         Assert.Equal("Not started", main.HostTitle);
         Assert.Equal(Tone.Danger, main.HostTone);
         Assert.Equal("No pack for client 3.7.12.12.", main.HostFailure);
+    }
+
+    [Fact]
+    public async Task TheHomePageNamesTheClientTheHostRunsForRatherThanTheOneTheAppShips()
+    {
+        using var host = TestHosts.Of(_play);
+        var main = new MainViewModel(await TestHosts.RunningAsync(host), _localizer);
+
+        main.Refresh();
+
+        Assert.NotEqual(TestInstall.Version, AppRelease.ClientVersion);
+        Assert.Equal($"{AppRelease.Version} · client {TestInstall.Version}", main.VersionText);
+    }
+
+    [Fact]
+    public async Task AHostThatDidNotStartLeavesTheHomePageNamingTheClientTheAppShips()
+    {
+        var runner = new HostRunner(_ => Task.FromResult(new BotHostStart(null, "No pack for client 3.7.12.12.")));
+        var main = new MainViewModel(runner, _localizer);
+
+        runner.Start();
+        await Waiting.UntilAsync(() => runner.Status is HostStatus.Failed, TimeSpan.FromSeconds(10));
+        main.Refresh();
+
+        Assert.Equal($"{AppRelease.Version} · client {AppRelease.ClientVersion}", main.VersionText);
     }
 
     [Fact]
