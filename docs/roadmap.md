@@ -17,7 +17,7 @@ done when its code, the tests it needs and its docs are in, and every check is g
 | 8 | MITM mode | Dropped: merged into step 3 (D23) |
 | 9 | Fights | In progress, before the blueprints (D169): 9a to 9e3, 9f's states, 9f2's summons, 9f3's bombs, 9f4's marks, 9f5's marks weighed, 9g to 9g6 done, one AI for every character (D244), Incarnam left through its portal (D253); set aside after 9f5 for step 7's studio, every session of it first (D292, D306), but for the owner's reports from game, answered as they come: the hunt attacking every group (D387), its tour leaving interiors out (D388), the AI fleeing less (D390), the harvest and the hunt rotating through sub-areas and the harvest varying its professions (D391, D392), the AI after the players' reports (D407), the harvest and the zones of a map (D424: a resource in another zone is out of reach; D425: the tour goes there through the world graph, out and back, once per tour); then the Roublard measured in game against big enemies, the Féca's glyphs and 9f's other mechanisms (D291) |
 | 10 | Several accounts and groups | To do |
-| 11 | Marketplace and crafting | To do |
+| 11 | Marketplace and crafting | The marketplace dropped by the owner (D439); crafting to do |
 | 12 | Treasure hunts and dungeons | To do |
 | 13 | The owner's profession scripts | To do |
 
@@ -297,7 +297,8 @@ it grows. A client update before a session gets Q10's session first.
 
 ## 11. Marketplace and crafting
 
-- Reading prices, selling, collecting sales, crafting with recipe checks.
+- Crafting with recipe checks.
+- The marketplace is dropped (D439): the owner sells by hand. Its measures (D427) stay on the branch `feat/market-protocol`.
 
 ## 12. Treasure hunts and dungeons
 

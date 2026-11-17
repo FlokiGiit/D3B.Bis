@@ -564,3 +564,8 @@ or refines another says so in its own entry. Add a line here with every new deci
 
 - [D426](decisions/d426-d3b-bis.md#d426-d3bbis-continues-d3b-in-a-repository-of-its-own-its-projects-and-namespaces-under-d3bbis-its-files-in-a-folder-of-its-own-d3bs-formats-kept) D3B.Bis continues D3B in a repository of its own, its projects and namespaces under D3B.Bis, its files in a folder of its own, D3B's formats kept (2026-11-13)
   - Keeping `%LOCALAPPDATA%\D3B`, moving D3B's files, storing the new type names in the packs, renaming the magics and extensions, rewriting D3B throughout the docs.
+
+## The marketplace dropped (D439)
+
+- [D439](decisions/d439-the-marketplace-dropped.md#d439-the-owner-drops-the-marketplace-the-bot-neither-follows-prices-nor-sells-the-work-of-d427-to-d438-stays-on-branches-never-merged-the-fixes-found-on-the-way-are-kept) The owner drops the marketplace: the bot neither follows prices nor sells, the work of D427 to D438 stays on branches never merged, the fixes found on the way are kept (2026-11-17)
+  - Keeping the following of prices alone, reverting the marketplace on top of its branches, deleting the branches on `origin` now.
