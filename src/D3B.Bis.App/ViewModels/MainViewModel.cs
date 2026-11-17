@@ -195,7 +195,7 @@ internal sealed partial class MainViewModel : ObservableObject
     [ObservableProperty]
     public partial string OnlineText { get; private set; } = "";
 
-    /// <summary>Gets the app's version and the client build the host runs for, else the one the app ships, under the welcome's logo.</summary>
+    /// <summary>Gets the app's version and the client build the host read, under the welcome's logo.</summary>
     [ObservableProperty]
     public partial string VersionText { get; private set; } = "";
 
@@ -277,7 +277,7 @@ internal sealed partial class MainViewModel : ObservableObject
         Characters.RunBlock = RunBlock;
         Search = new SearchViewModel(localizer, SearchItems);
         Bots.Choose = RunBlock.Choose;
-        ClientText = localizer.Format("StatusClient", Updates.ClientVersion);
+        ClientText = localizer["ClientNotRead"];
         Followed = new FollowedRuns(() => Bots.Items.Where(bot => bot.Route is not null).Select(bot => new FollowedRun(bot.Route!, bot.Name, bot.Initials, bot.PortraitColor)));
         Routes.Followed = Followed;
         World = new WorldViewportViewModel(localizer, Routes, Zones, Selection, () => Bots.Items.Select(bot => new WorldCharacterSnapshot(bot.Bot.Key, bot.Name, bot.Initials, bot.PortraitColor, bot.Bot.State.MapId, bot.IsPlaying || bot.IsFighting)), () => RunBlock.IsPlaying ? RunBlock.Name : null, Followed);
@@ -341,10 +341,11 @@ internal sealed partial class MainViewModel : ObservableObject
             HostStatus.Failed => _localizer["HostFailedDetail"],
             _ => "",
         };
-        ClientText = _localizer.Format("StatusClient", build ?? Updates.ClientVersion);
+        // The app ships no client's files (D441): the build is the one the host runs for, or the one whose files it lacked.
+        var client = build ?? _host.MissingBuild;
 
-        // The app prepares the files of a build it does not ship (D440): the build it ships says little once the host runs.
-        VersionText = _localizer.Format("HomeVersion", Updates.Version, build ?? Updates.ClientVersion);
+        ClientText = client is null ? _localizer["ClientNotRead"] : _localizer.Format("StatusClient", client);
+        VersionText = client is null ? Updates.Version : _localizer.Format("HomeVersion", Updates.Version, client);
 
         // The profiles first: the bots' cards offer them, and the characters name them.
         Profiles.Refresh(services);

@@ -44,9 +44,6 @@ internal sealed partial class UpdatesViewModel : ObservableObject
     /// <summary>Gets the app's version.</summary>
     public string Version { get; } = AppRelease.Version;
 
-    /// <summary>Gets the client build whose files the app ships.</summary>
-    public string ClientVersion { get; } = AppRelease.ClientVersion;
-
     /// <summary>Gets whether the app runs installed, which alone updates itself.</summary>
     public bool IsInstalled => _updates?.IsInstalled ?? false;
 

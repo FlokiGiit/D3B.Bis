@@ -574,3 +574,8 @@ or refines another says so in its own entry. Add a line here with every new deci
 
 - [D440](decisions/d440-the-clients-files-in-the-app.md#d440-the-app-prepares-the-installed-clients-pack-schema-and-mapping-itself-in-its-own-process-from-a-library-the-tools-wrap-it-downloads-nothing) The app prepares the installed client's pack, schema and mapping itself, in its own process, from a library the tools wrap; it downloads nothing (2026-11-17)
   - Downloading the build's files from a release, a child process or an executable beside the app, keeping the downloader for `scripts/embed.cs`.
+
+## The app ships no client's files (D441)
+
+- [D441](decisions/d441-the-app-ships-no-clients-files.md#d441-the-app-ships-no-clients-files-the-installed-app-prepares-them-from-the-client-on-its-first-start-and-at-each-update-of-ankamas) The app ships no client's files: the installed app prepares them from the client on its first start and at each update of Ankama's (2026-11-17)
+  - Publishing this repository's `client-<version>` releases and embedding them, taking AerafalDev/D3B's releases.

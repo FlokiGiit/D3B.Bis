@@ -316,7 +316,8 @@ it grows. A client update before a session gets Q10's session first.
   2026-11-09 (D398).
 - **The client's files made by the app** (D440), done on 2026-11-17 on `feat/client-update-in-app`: the readers of the client in
   `src/D3B.Bis.Extraction`, the tools wrapping it, the home page's banner preparing a new build's pack, schema and mapping in the app's
-  process, the release downloader gone. Left: an installer built by CI with the library, tried on a player's machine.
+  process, the release downloader gone. Then the app ships no client's files (D441): its release is the app alone. Left: an installer
+  built by CI with the library, tried on a player's machine.
 - **D3B.Bis** (D426), done on 2026-11-13: the projects and namespaces named `D3B.Bis.*`, a folder of its own with D3B's database, project and
   preferences copied at the first start, D3B's formats and published packs kept, the repository `FlokiGiit/D3B.Bis`. Left: `main` pushed and
   made the default branch by the owner, a `client-<version>` release of its own, an installer packed and tried beside D3B's.
