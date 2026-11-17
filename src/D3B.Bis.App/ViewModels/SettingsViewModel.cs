@@ -8,6 +8,7 @@ using D3B.Bis.App.ViewModels.AppSettings;
 using D3B.Bis.Bot.Banks;
 using D3B.Bis.Bot.Data;
 using D3B.Bis.Bot.Runtime;
+using D3B.Bis.Data;
 using D3B.Bis.Network.Captures;
 using D3B.Bis.Network.Relay;
 using D3B.Bis.Storage;
@@ -298,7 +299,7 @@ internal sealed partial class SettingsViewModel : ObservableObject
         SettingsPath = preferences?.Path ?? AppPreferences.DefaultPath;
         LicencesPath = File.Exists(notices) ? notices : NoticesPage;
         PackPath = localizer["PackPathUnknown"];
-        ClientLine = localizer.Format("AboutClientLine", Updates.ClientVersion);
+        ClientLine = localizer["ClientNotRead"];
         Sections = [.. Enum.GetValues<SettingsSection>().Select(section => new SettingsSectionViewModel(localizer, section))];
         Selected = Sections[0];
         Selected.IsSelected = true;
@@ -349,6 +350,9 @@ internal sealed partial class SettingsViewModel : ObservableObject
         IsFrench = _localizer.Culture.Equals(Localizer.French);
         IsEnglish = !IsFrench;
 
+        // The app ships no client's files (D441): the build is the one the host read, once it runs.
+        ClientLine = services?.GetService<ClientBuild>()?.Version is { } build ? _localizer.Format("AboutClientLine", build) : _localizer["ClientNotRead"];
+
         if (!_localizer.Culture.Equals(_labelled))
         {
             foreach (var delay in Delays())
@@ -360,7 +364,6 @@ internal sealed partial class SettingsViewModel : ObservableObject
             foreach (var section in Sections)
                 section.Relabel();
 
-            ClientLine = _localizer.Format("AboutClientLine", Updates.ClientVersion);
             _labelled = _localizer.Culture;
             Search();
         }

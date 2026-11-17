@@ -18,7 +18,7 @@ internal static class EmbedCommand
     {
         var version = new Option<string>("--client-version")
         {
-            Description = "The client build whose files the app ships, the ClientVersion property of src/D3B.Bis.App.",
+            Description = "The client build whose files to put beside an app.",
             Required = true,
         };
         var output = new Option<DirectoryInfo>("--output")

@@ -568,7 +568,7 @@ Built at step 2 (D24 to D33):
   `client-<version>`, each asset with its SHA-256 beside it, never committed (D10, D11, D24, D39). `ClientRelease`
   names them; `scripts/release.cs` publishes a build's pack, schema and mapping together, once the mapping holds, never
   replacing an asset already published (D33, D50). The app's release workflow takes them from there with
-  `scripts/embed.cs` and the GitHub CLI, checked, to ship them beside the app (D172).
+  `scripts/embed.cs` and the GitHub CLI, checked, to put them beside an app; since D441 the release workflow ships none.
 - The data module (`DataModule`, in `D3B.Bis.Bot`, D31) registers, as singletons every bot shares, the installed
   `ClientBuild`, the `PackSource` that finds its pack, the `GamePack`, opened once and closed with the host, and the
   stores reading it: `GameTexts`, `GameMaps`, `GameWorld` and `GameTables`. The configuration names the client
@@ -621,7 +621,8 @@ D356), the pages of D101 and D162 gone.
   neighbour then shown. A tab that reads the host shows where the host stands until it runs (`HostStateView`). Route and zone
   have no tab: they are selected in the world's (D397).
 - **The home page** (D406, `HomeViewModel` and `HomeView`, in `D3B.Bis.App.ViewModels.Home`; the view's context is `MainViewModel`,
-  which holds the host's state it shows): the logo, the version, a pill of where the host stands and the banners of a host
+  which holds the host's state it shows): the logo, the version and the client build the host read (the one it runs for, else the one
+  whose files it lacked, D441), a pill of where the host stands and the banners of a host
   starting, of a client whose files are missing (D440, below) and of a host that failed; quick actions (new profile, route, zone, the
   project's folder, the settings, the first four disabled until the host runs); the characters (`HomeCharacterViewModel`, online
   first, a click chooses one without leaving the page, a double click opens its tab); the six assets of the project changed last
@@ -812,16 +813,15 @@ D356), the pages of D101 and D162 gone.
   activity's report rings the elements it wants and the one it goes for and marks the exit it heads to, and its tour's
   mini-map, gone through, probable, to see, without a resource, growing back and isolated (D131, D138, D145, D149).
 - **Published** (D171): pushing a tag `v<version>` has `.github/workflows/release.yml` publish the app self-contained for
-  win-x64, put the pack, schema and mapping of the build `ClientVersion` names in `data/<version>/` beside it with
-  `scripts/embed.cs` (D172), and pack it with Velopack into the release `v<version>`: an installer, a portable zip, full and
-  delta packages. Installed per user into `%LOCALAPPDATA%\D3B.Bis.App`, apart from `%LOCALAPPDATA%\D3B.Bis`, which uninstalling
+  win-x64 and pack it with Velopack into the release `v<version>`: an installer, a portable zip, full and
+  delta packages. It ships no client's files (D441): the installed app prepares them on its first start (D440). Installed per user into `%LOCALAPPDATA%\D3B.Bis.App`, apart from `%LOCALAPPDATA%\D3B.Bis`, which uninstalling
   keeps. `LICENSE` and `THIRD-PARTY-NOTICES.md` ship beside it.
 - **Updates** (D173, `D3B.Bis.App.Updates`): `Program` lets Velopack run first, as an install, an update or an uninstall asks;
   `AppUpdates` checks the repository's releases as the app starts (`VelopackUpdateClient`, or the folder `Updates:Source`
   names), downloads a newer version at once, and installs it when the user restarts from the window's banner, asked first
   while bots play, or once the window is gone and the host stopped. `UpdatesViewModel` says it in the banner and in the
-  settings' About section, with the app's version and the client build it ships (`AppRelease`). Run from its code, the app
-  does not check.
+  settings' About section, with the app's version (`AppRelease`) and the client build the host read (D441). Run from its code,
+  the app does not check.
 - **The client's files** (D440, `ClientFiles` in `D3B.Bis.App.Updates`, `ClientFilesViewModel`): when the host lacks the installed
   build's pack, schema or mapping, installed or run from its code, the home page's banner names the client's new version
   instead of the host's message, with Update. Update runs `ClientPreparation` with `InstalledClientSteps` on a thread of the app's

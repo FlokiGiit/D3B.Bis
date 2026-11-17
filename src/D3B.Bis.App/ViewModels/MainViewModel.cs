@@ -195,6 +195,10 @@ internal sealed partial class MainViewModel : ObservableObject
     [ObservableProperty]
     public partial string OnlineText { get; private set; } = "";
 
+    /// <summary>Gets the app's version and the client build the host read, under the welcome's logo.</summary>
+    [ObservableProperty]
+    public partial string VersionText { get; private set; } = "";
+
     /// <summary>Gets whether everything is saved: no profile's tab with changes not saved.</summary>
     [ObservableProperty]
     public partial bool IsSaved { get; private set; } = true;
@@ -202,8 +206,6 @@ internal sealed partial class MainViewModel : ObservableObject
     /// <summary>Gets whether the host does not run, which the panels that read it say.</summary>
     public bool IsNotRunning => !IsRunning;
 
-    /// <summary>Gets the app's version and the client build it ships, under the welcome's logo.</summary>
-    public string VersionText => _localizer.Format("HomeVersion", Updates.Version, Updates.ClientVersion);
 
     // The world's tab undoes what the route or the zone selected in it does: its map is theirs (D397).
     private IUndoable? Undoable => Editor.Selected?.Content switch
@@ -275,7 +277,7 @@ internal sealed partial class MainViewModel : ObservableObject
         Characters.RunBlock = RunBlock;
         Search = new SearchViewModel(localizer, SearchItems);
         Bots.Choose = RunBlock.Choose;
-        ClientText = localizer.Format("StatusClient", Updates.ClientVersion);
+        ClientText = localizer["ClientNotRead"];
         Followed = new FollowedRuns(() => Bots.Items.Where(bot => bot.Route is not null).Select(bot => new FollowedRun(bot.Route!, bot.Name, bot.Initials, bot.PortraitColor)));
         Routes.Followed = Followed;
         World = new WorldViewportViewModel(localizer, Routes, Zones, Selection, () => Bots.Items.Select(bot => new WorldCharacterSnapshot(bot.Bot.Key, bot.Name, bot.Initials, bot.PortraitColor, bot.Bot.State.MapId, bot.IsPlaying || bot.IsFighting)), () => RunBlock.IsPlaying ? RunBlock.Name : null, Followed);
@@ -339,7 +341,11 @@ internal sealed partial class MainViewModel : ObservableObject
             HostStatus.Failed => _localizer["HostFailedDetail"],
             _ => "",
         };
-        ClientText = _localizer.Format("StatusClient", build ?? Updates.ClientVersion);
+        // The app ships no client's files (D441): the build is the one the host runs for, or the one whose files it lacked.
+        var client = build ?? _host.MissingBuild;
+
+        ClientText = client is null ? _localizer["ClientNotRead"] : _localizer.Format("StatusClient", client);
+        VersionText = client is null ? Updates.Version : _localizer.Format("HomeVersion", Updates.Version, client);
 
         // The profiles first: the bots' cards offer them, and the characters name them.
         Profiles.Refresh(services);
@@ -600,7 +606,6 @@ internal sealed partial class MainViewModel : ObservableObject
         Sequences.Retell();
         World.Relabel();
         Editor.Refresh();
-        OnPropertyChanged(nameof(VersionText));
     }
 
     private void RefreshPages(IServiceProvider? services)

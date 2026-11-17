@@ -78,12 +78,12 @@ and groups, the marketplace and crafting. The [roadmap](docs/roadmap.md) has the
    menu. The installer is not signed yet: if Windows SmartScreen stops it, choose *More info*, then *Run anyway*.
    A portable zip is in the same release.
 
-Each version of D3B ships the data of one client build, extracted from the official client: its maps, items, spells and
-texts, and the mapping of its protocol. When Ankama updates the client, the home page says so: its *Update* button prepares
-the new build's files on your PC from the installed client, in about a minute, then offers to restart D3B. Should Ankama have changed
-the game's protocol, the banner says so, and the version of D3B that follows it comes out afterwards. D3B checks for a new
-version when it starts, downloads it, and installs it when you restart it from its banner or close it. Its settings' About
-section shows its version and the client build it ships.
+D3B needs data read from the official client: its maps, items, spells and texts, and the mapping of its protocol. It ships
+none: on its first start, and whenever Ankama updates the client, the home page offers to prepare them on your PC from the
+installed client, in about a minute, then to restart D3B. Should Ankama have changed the game's protocol, the banner says
+so, and the version of D3B that follows it comes out afterwards. D3B checks for a new version when it starts, downloads it,
+and installs it when you restart it from its banner or close it. Its settings' About section shows its version and the
+client build it runs for.
 
 D3B keeps its database, settings and captures in `%LOCALAPPDATA%\D3B.Bis`. Uninstalling it from Windows' settings removes the
 app and keeps that folder.

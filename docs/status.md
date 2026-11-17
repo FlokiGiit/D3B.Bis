@@ -5,7 +5,7 @@ owed. The reasons are in [the decisions](decisions/README.md), found through [de
 their sessions are in [roadmap.md](roadmap.md); how the code is built is in [architecture.md](architecture.md). Whoever closes
 a session updates this page, the roadmap and the index.
 
-As of 2026-11-17, after D440 (the app prepares the installed client's pack, schema and mapping itself when Ankama updates the client, from `src/D3B.Bis.Extraction`, which the tools now wrap; it downloads nothing), D439 (the owner drops the marketplace: its work, D427 to D438, stays on branches never merged; the unsteady tests, the bot's stop race and the stopped activity they found are fixed here), D426 (D3B.Bis continues D3B in a repository of its own: projects and namespaces `D3B.Bis.*`, files in `%LOCALAPPDATA%\D3B.Bis`, D3B's formats and published packs kept), D425 (the harvest's tour goes into another zone of a map, out and back through the world graph), D424 (a resource in another zone of its map is out of reach, no longer used from afar), D421 (7r6, a step of a list repeats and plays another list), D420 (the Pandawa no longer swaps Sobre and Saoul instead of striking), D419 (7r4, following a run), D418 (7r5b, the profile as an asset editor), D415 (7r5 part 1, the zones read by the harvest and the hunt), D417 (the harvest's tour weighs the character's level) and D416 (it leaves the houses of a town alone), D414 (hints on the world map), D413 (7r3, the Sequencer) and D408 (the fight AI after the players' reports, D407, summons a last resort; the home page, D406; banking by general settings, D405; D394, session 7d4, merged into 7r2's branch). App 0.8.1, client build 3.7.13.17, pack format 11 published, 12 extracted and not published (D414), mapping format 17.
+As of 2026-11-17, after D442 (the repository public, released as v0.10.0), D441 (the app ships no client's files: its release is the app alone, which prepares them on its first start), D440 (the app prepares the installed client's pack, schema and mapping itself when Ankama updates the client, from `src/D3B.Bis.Extraction`, which the tools now wrap; it downloads nothing), D439 (the owner drops the marketplace: its work, D427 to D438, stays on branches never merged; the unsteady tests, the bot's stop race and the stopped activity they found are fixed here), D426 (D3B.Bis continues D3B in a repository of its own: projects and namespaces `D3B.Bis.*`, files in `%LOCALAPPDATA%\D3B.Bis`, D3B's formats and published packs kept), D425 (the harvest's tour goes into another zone of a map, out and back through the world graph), D424 (a resource in another zone of its map is out of reach, no longer used from afar), D421 (7r6, a step of a list repeats and plays another list), D420 (the Pandawa no longer swaps Sobre and Saoul instead of striking), D419 (7r4, following a run), D418 (7r5b, the profile as an asset editor), D415 (7r5 part 1, the zones read by the harvest and the hunt), D417 (the harvest's tour weighs the character's level) and D416 (it leaves the houses of a town alone), D414 (hints on the world map), D413 (7r3, the Sequencer) and D408 (the fight AI after the players' reports, D407, summons a last resort; the home page, D406; banking by general settings, D405; D394, session 7d4, merged into 7r2's branch). App 0.8.1, client build 3.7.13.17, pack format 11 published, 12 extracted and not published (D414), mapping format 17.
 
 ## What exists
 
@@ -35,6 +35,8 @@ As of 2026-11-17, after D440 (the app prepares the installed client's pack, sche
   the app's process, shows the step and its progress, then offers the restart; a mapping that no longer holds turns the banner red,
   "the game's protocol changed", with what failed in `preparation.log`. The tools `extract.cs`, `schema.cs` and `mapping.cs` are
   command lines over the same library, their files the same byte for byte on 3.7.14.18.
+- **The app ships no client's files** (D441): the release workflow packs the app alone; the home page, the status bar and the About section
+  name the build the host read. No release has been made since: the next tag `v<version>` is the first without data.
 - **Published**: the installer and updates through Velopack (D171); the client build's pack, schema and mapping as the release
   `client-3.7.13.17` (D365).
 
@@ -49,9 +51,9 @@ As of 2026-11-17, after D440 (the app prepares the installed client's pack, sche
 - D3B.Bis (D426) was built, tested and started on the owner's machine while D3B 0.9.1 ran: the window opened, the pack of format 12 and the
   mapping of format 17 fetched from D3B's release were read, D3B's database, project and preferences came across, and the host stopped at the
   relay's address, which D3B held. Not done: a session through a client with D3B closed, an installer packed and installed beside D3B's, an
-  update, a report sent. The repository is `FlokiGiit/D3B.Bis`, private (`ClientRelease.DefaultRepository`): it has no release yet, so the
-  tools take D3B's client release with `--repository AerafalDev/D3B`, the app finds no update and no report channel, and a private
-  repository's releases will need a token the app does not have.
+  update, a report sent. The repository is `FlokiGiit/D3B.Bis` (`ClientRelease.DefaultRepository`), public since D442, its first release
+  `v0.10.0`, which ships no client's files (D441); it has no `client-<version>` release, so the tools that read one take D3B's with
+  `--repository AerafalDev/D3B`. The report channel's asset is not published yet.
 
 - The harvest and the zones of a map (D424): a player's report ("it tries but cannot, unless it stands in front of the resource or comes back from
   another side"), read in the code and measured on the pack (864 maps with more than one zone, 3,673 element and zone pairs on 607 maps), fixed and

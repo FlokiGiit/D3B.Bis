@@ -38,15 +38,12 @@ jobs:
           dotnet restore
           dotnet tool restore
 
-      - name: Read the versions
+      - name: Read the version
         run: |
           $tag = $env:GITHUB_REF_NAME
           if ($tag -notmatch '^v(\d+\.\d+\.\d+(-[0-9A-Za-z.]+)?)$') { throw "The tag $tag is not v followed by a version." }
           $version = $Matches[1]
-          $client = (dotnet msbuild src/D3B.Bis.App/D3B.Bis.App.csproj -getProperty:ClientVersion).Trim()
-          if ($client -notmatch '^\d+(\.\d+)+$') { throw "src/D3B.Bis.App names no client build: '$client'." }
           "VERSION=$version" | Out-File $env:GITHUB_ENV -Append
-          "CLIENT_VERSION=$client" | Out-File $env:GITHUB_ENV -Append
 
       - name: Build
         run: dotnet build --no-restore -c Release
@@ -56,11 +53,6 @@ jobs:
 
       - name: Publish the app
         run: dotnet publish src/D3B.Bis.App -c Release -r win-x64 --self-contained -o publish
-
-      - name: Embed the client build's files
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: dotnet run --file scripts/embed.cs -- --client-version $env:CLIENT_VERSION --output publish/data
 
       - name: Download the previous release, for the delta
         continue-on-error: true
