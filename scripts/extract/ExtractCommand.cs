@@ -1,26 +1,7 @@
 using System.CommandLine;
-using System.Diagnostics;
-using System.Reflection;
-using System.Security.Cryptography;
-using D3B.Bis.Data;
-using D3B.Bis.Data.Banks;
-using D3B.Bis.Data.Hints;
-using D3B.Bis.Data.Npcs;
-using D3B.Bis.Data.Breeds;
-using D3B.Bis.Data.Characteristics;
-using D3B.Bis.Data.Effects;
-using D3B.Bis.Data.Icons;
-using D3B.Bis.Data.Interactives;
-using D3B.Bis.Data.Items;
-using D3B.Bis.Data.Jobs;
-using D3B.Bis.Data.Maps;
-using D3B.Bis.Data.Monsters;
 using D3B.Bis.Data.Packs;
-using D3B.Bis.Data.Spells;
-using D3B.Bis.Data.Texts;
-using D3B.Bis.Data.World;
-using D3B.Bis.Data.WorldMaps;
-using D3B.Bis.Scripts.Unity;
+using D3B.Bis.Extraction.Packs;
+using D3B.Bis.Extraction.Unity;
 
 namespace D3B.Bis.Scripts.Extract;
 
@@ -80,155 +61,15 @@ internal static class ExtractCommand
 
         try
         {
-            return Extract(client, root, force, level);
+            PackExtraction.Extract(client, root, Console.Out, null, force, level);
+
+            return 0;
         }
         catch (Exception exception) when (exception is IOException or InvalidDataException or UnauthorizedAccessException)
         {
             Console.Error.WriteLine($"The extraction failed: {exception.Message}");
 
             return 1;
-        }
-    }
-
-    private static int Extract(ClientInstall client, string root, bool force, int level)
-    {
-        var stopwatch = Stopwatch.StartNew();
-        var build = ClientBuild.Read(client.Root);
-        var manifest = LauncherManifest.Load(client);
-        var inputs = TextsExtractor.Inputs(client)
-            .Concat(MapsExtractor.Inputs(client))
-            .Concat(WorldExtractor.Inputs(client))
-            .Concat(ItemsExtractor.Inputs(client))
-            .Concat(JobsExtractor.Inputs(client))
-            .Concat(InteractivesExtractor.Inputs(client))
-            .Concat(BanksExtractor.Inputs(client))
-            .Concat(NpcsExtractor.Inputs(client))
-            .Concat(HintsExtractor.Inputs(client))
-            .Concat(IconsExtractor.Inputs(client))
-            .Concat(EffectsExtractor.Inputs(client))
-            .Concat(CharacteristicsExtractor.Inputs(client))
-            .Concat(SpellsExtractor.Inputs(client))
-            .Concat(StatesExtractor.Inputs(client))
-            .Concat(MonstersExtractor.Inputs(client))
-            .Concat(BreedsExtractor.Inputs(client))
-            .Concat(WorldMapsExtractor.Inputs(client))
-            .Distinct(StringComparer.OrdinalIgnoreCase);
-        var fingerprint = InputFingerprint.Compute(client, manifest, inputs);
-        var extractor = typeof(GamePack).Assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion ?? "unknown";
-        var path = PackLocations.PathOf(root, build);
-
-        Console.WriteLine($"Client: {client.Root}, version {build}");
-
-        if (!force && IsUpToDate(path, fingerprint, extractor))
-        {
-            Console.WriteLine($"Up to date: {path} was made from the same files by the same extractor. --force extracts again.");
-
-            return 0;
-        }
-
-        // Everything is read and checked before the pack is opened, so that a client the extractor misreads leaves no file.
-        var reading = Stopwatch.StartNew();
-        var maps = MapsExtractor.Read(client);
-        var graph = WorldExtractor.ReadGraph(client);
-        var effects = EffectsExtractor.Read(client);
-        var (items, weapons) = ItemsExtractor.Read(client, effects);
-        var jobs = JobsExtractor.Read(client, items);
-        var characteristics = CharacteristicsExtractor.Read(client, TextsExtractor.Held(client));
-        var spells = SpellsExtractor.Read(client, effects);
-        var states = StatesExtractor.Read(client, spells);
-        var (monsters, monsterSubAreas) = MonstersExtractor.Read(client, spells);
-        var breeds = BreedsExtractor.Read(client, spells, characteristics);
-        var atlas = WorldExtractor.ReadAtlas(client, items, jobs, monsters, monsterSubAreas);
-        var interactives = InteractivesExtractor.Read(client);
-        var banks = BanksExtractor.Read(client, atlas, graph);
-        var npcs = NpcsExtractor.Read(client, TextsExtractor.Held(client));
-        var hints = HintsExtractor.Read(client, TextsExtractor.Held(client));
-        var icons = IconsExtractor.Read(client, items, jobs, spells, breeds, monsters, atlas);
-        var fights = new FightTables(spells, states, effects, monsters, breeds, characteristics);
-        var (worldMaps, worldMapTiles) = WorldMapsExtractor.Read(client);
-
-        WorldExtractor.Check(graph, atlas, maps);
-
-        var texts = TextsExtractor.Read(client, TextsExtractor.Named(atlas, items, jobs, interactives, banks, npcs, hints, fights, worldMaps));
-
-        Console.WriteLine($"Read in {reading.Elapsed.TotalSeconds:F1} s");
-
-        var info = new PackInfo
-        {
-            ClientVersion = build.Version,
-            ClientBuildDate = build.BuildDate,
-            Fingerprint = fingerprint,
-            ExtractorVersion = extractor,
-        };
-        var temporary = path + ".tmp";
-
-        Directory.CreateDirectory(Path.GetDirectoryName(path)!);
-
-        var writing = Stopwatch.StartNew();
-
-        // Written aside, then moved: the host never sees a pack half written under the name it looks for.
-        using (var stream = new FileStream(temporary, FileMode.Create, FileAccess.Write, FileShare.None))
-        using (var writer = new PackWriter(stream, info, level))
-        {
-            foreach (var table in texts)
-                writer.Add(TextTable.EntryName(table.Language), table);
-
-            writer.Add(WorldAtlas.EntryName, atlas);
-            writer.Add(WorldGraph.EntryName, graph);
-            writer.Add(ItemCatalog.EntryName, items);
-            writer.Add(WeaponCatalog.EntryName, weapons);
-            writer.Add(JobCatalog.EntryName, jobs);
-            writer.Add(InteractiveCatalog.EntryName, interactives);
-            writer.Add(BankCatalog.EntryName, banks);
-            writer.Add(NpcCatalog.EntryName, npcs);
-            writer.Add(IconCatalog.EntryName, icons);
-            writer.Add(HintCatalog.EntryName, hints);
-            writer.Add(SpellCatalog.EntryName, spells);
-            writer.Add(SpellStateCatalog.EntryName, states);
-            writer.Add(EffectCatalog.EntryName, effects);
-            writer.Add(MonsterCatalog.EntryName, monsters);
-            writer.Add(BreedCatalog.EntryName, breeds);
-            writer.Add(CharacteristicCatalog.EntryName, characteristics);
-            writer.Add(WorldMapCatalog.EntryName, worldMaps);
-
-            foreach (var map in maps)
-                writer.Add(MapData.EntryName(map.Id), map);
-
-            // Already JPEG files: zstd finds nothing to take out, so each tile is its own small frame, read alone.
-            foreach (var (name, jpeg) in worldMapTiles)
-                writer.Add(name, jpeg);
-
-            writer.Complete();
-        }
-
-        Console.WriteLine($"Written in {writing.Elapsed.TotalSeconds:F1} s");
-
-        File.Move(temporary, path, true);
-
-        using var written = File.OpenRead(path);
-
-        Console.WriteLine($"Pack: {path}, {written.Length:N0} bytes, format {GamePack.FormatVersion}, extracted in {stopwatch.Elapsed.TotalSeconds:F1} s");
-        Console.WriteLine($"Fingerprint: {fingerprint}");
-        Console.WriteLine($"SHA-256: {Convert.ToHexStringLower(SHA256.HashData(written))}");
-
-        return 0;
-    }
-
-    private static bool IsUpToDate(string path, string fingerprint, string extractor)
-    {
-        if (!File.Exists(path))
-            return false;
-
-        try
-        {
-            using var existing = GamePack.Open(path);
-
-            return existing.Info.Fingerprint == fingerprint && existing.Info.ExtractorVersion == extractor;
-        }
-        catch (PackFormatException)
-        {
-            // A pack this extractor cannot read is replaced.
-            return false;
         }
     }
 }

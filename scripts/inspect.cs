@@ -1,5 +1,6 @@
 #!/usr/bin/env dotnet
 #:package AssetsTools.NET
+#:project ../src/D3B.Bis.Extraction/D3B.Bis.Extraction.csproj
 #:package System.CommandLine
 #:include inspect/BundleBlock.cs
 #:include inspect/BundleCompression.cs
@@ -26,9 +27,6 @@
 #:include inspect/TypeNames.cs
 #:include inspect/TypesCommand.cs
 #:include inspect/ValueWriter.cs
-#:include unity/ClientInstall.cs
-#:include unity/I18nFile.cs
-#:include unity/UnityBundle.cs
 
 using System.CommandLine;
 using System.Globalization;

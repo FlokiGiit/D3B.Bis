@@ -86,21 +86,7 @@ public sealed class UpdatesViewModelTests
     }
 
     [Fact]
-    public async Task AnInstalledAppSaysTheClientBuildItDoesNotShip()
-    {
-        var runner = new HostRunner(_ => Task.FromResult(new BotHostStart(null, "No pack for client 3.7.13.1.", "3.7.13.1")));
-        var main = new MainViewModel(runner, _localizer, null, new AppUpdates(new FakeUpdateClient()));
-
-        runner.Start();
-        await Waiting.UntilAsync(() => runner.Status is HostStatus.Failed, TimeSpan.FromSeconds(10));
-        main.Refresh();
-
-        Assert.True(main.IsMissingBuild);
-        Assert.StartsWith($"The launcher installed client 3.7.13.1; D3B {AppRelease.Version} ships the data of client {AppRelease.ClientVersion}.", main.MissingBuildText, StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public async Task AnAppRunFromItsCodeShowsWhatTheHostSaid()
+    public async Task AnAppThatDownloadsNoClientFilesShowsWhatTheHostSaid()
     {
         var runner = new HostRunner(_ => Task.FromResult(new BotHostStart(null, "No pack for client 3.7.13.1.", "3.7.13.1")));
         var main = new MainViewModel(runner, _localizer, null, new AppUpdates(new FakeUpdateClient { IsInstalled = false }));
@@ -109,7 +95,8 @@ public sealed class UpdatesViewModelTests
         await Waiting.UntilAsync(() => runner.Status is HostStatus.Failed, TimeSpan.FromSeconds(10));
         main.Refresh();
 
-        Assert.False(main.IsMissingBuild);
+        Assert.False(main.ClientFiles.IsShown);
+        Assert.True(main.ShowsHostFailure);
         Assert.Equal("No pack for client 3.7.13.1.", main.HostFailure);
     }
 

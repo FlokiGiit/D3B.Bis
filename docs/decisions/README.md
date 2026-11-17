@@ -57,3 +57,4 @@ Each file holds the decisions of one group of [the index](../decisions-index.md)
 - [Step 9, the harvest and the zones of a map (D424, D425)](d424-step-9-the-harvests-zones.md): 2 decisions, 9 KB.
 - [D3B.Bis (D426)](d426-d3b-bis.md): 1 decision, 5 KB.
 - [The marketplace dropped (D439)](d439-the-marketplace-dropped.md): 1 decision, 3 KB.
+- [The client's files prepared by the app (D440)](d440-the-clients-files-in-the-app.md): 1 decision, 4 KB.

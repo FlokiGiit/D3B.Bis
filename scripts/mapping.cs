@@ -4,10 +4,9 @@
 #:project ../src/D3B.Bis.Data/D3B.Bis.Data.csproj
 #:project ../src/D3B.Bis.Network/D3B.Bis.Network.csproj
 #:project ../src/D3B.Bis.Protocol/D3B.Bis.Protocol.csproj
+#:project ../src/D3B.Bis.Extraction/D3B.Bis.Extraction.csproj
 #:include mapping/CaptureFrames.cs
 #:include mapping/MappingCommand.cs
-#:include mapping/PinProposals.cs
-#:include unity/ClientInstall.cs
 
 using System.Globalization;
 using D3B.Bis.Scripts.Mapping;

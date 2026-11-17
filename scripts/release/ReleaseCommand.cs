@@ -2,6 +2,7 @@ using System.CommandLine;
 using D3B.Bis.Data;
 using D3B.Bis.Data.Packs;
 using D3B.Bis.Data.Releases;
+using D3B.Bis.Extraction.Unity;
 using D3B.Bis.Protocol.Mapping;
 using D3B.Bis.Protocol.Translation;
 using D3B.Bis.Scripts.Unity;

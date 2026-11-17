@@ -27,6 +27,9 @@ internal sealed partial class App : Application
     /// <summary>Gets the app's updates, checked as it starts (D173).</summary>
     public AppUpdates? Updates { get; init; }
 
+    /// <summary>Gets the preparation of the installed client's files on this PC, once Ankama updated the client (D440).</summary>
+    public ClientFiles? ClientFiles { get; init; }
+
     /// <summary>Configures what the app draws with, the same with a screen and without one.</summary>
     /// <param name="builder">The app's builder.</param>
     /// <returns>The builder.</returns>
@@ -63,7 +66,7 @@ internal sealed partial class App : Application
                 Localizer.Instance.Use(CultureInfo.GetCultureInfo(language));
 
             // Closing the window stops the host, then installs the version downloaded and starts the app again (D173).
-            var main = new MainViewModel(host, Localizer.Instance, Preferences, Updates, () => desktop.Shutdown());
+            var main = new MainViewModel(host, Localizer.Instance, Preferences, Updates, () => desktop.Shutdown(), ClientFiles);
 
             main.Refresh();
             desktop.MainWindow = new MainWindow { DataContext = main };

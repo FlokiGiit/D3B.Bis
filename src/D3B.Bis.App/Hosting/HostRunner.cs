@@ -28,6 +28,8 @@ internal sealed class HostRunner
     private volatile IHost? _host;
     private volatile string? _failure;
     private volatile string? _missingBuild;
+    private volatile string? _dataDirectory;
+    private volatile string? _clientDirectory;
     private int _status = (int)HostStatus.Starting;
 
     /// <summary>Gets where the host stands.</summary>
@@ -38,6 +40,12 @@ internal sealed class HostRunner
 
     /// <summary>Gets the installed client's build, once the host did not start for lack of its pack, schema or mapping (D172).</summary>
     public string? MissingBuild => _missingBuild;
+
+    /// <summary>Gets where the host looks first for a build's files, once <see cref="MissingBuild"/> is set: where the app prepares them (D440).</summary>
+    public string? DataDirectory => _dataDirectory;
+
+    /// <summary>Gets the installed client's directory, once <see cref="MissingBuild"/> is set: what the app prepares the files from (D440).</summary>
+    public string? ClientDirectory => _clientDirectory;
 
     /// <summary>Gets the host's services while it runs, else <see langword="null"/>.</summary>
     public IServiceProvider? Services => Status is HostStatus.Running ? _host?.Services : null;
@@ -98,6 +106,8 @@ internal sealed class HostRunner
             else
             {
                 _missingBuild = start.MissingBuild;
+                _dataDirectory = start.DataDirectory;
+                _clientDirectory = start.ClientDirectory;
                 Fail(start.Failure);
             }
         }

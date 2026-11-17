@@ -52,9 +52,9 @@ The repository is the only memory between sessions: never assume an earlier sess
   goes in the docs.
 - Code comments explain why a constraint exists, not what the code does.
 - Tools (D10): a file-based app in `scripts/` whose entry file starts with `#!/usr/bin/env dotnet` (CA2266), with its
-  code pulled in through `#:include` from a lowercase folder (`scripts/unity/` for what several tools share),
-  `#:package` without a version (central package management), and `#:property PublishAot=false` when a package is not
-  AOT-compatible. Every script file is listed in the solution, so that it shows in the IDE. `/new-tool` has the steps.
+  code pulled in through `#:include` from a lowercase folder (`scripts/unity/` for what several tools share, and
+  `src/D3B.Bis.Extraction`, a `#:project`, for the client's readers the app runs too, D440), `#:package` without a
+  version (central package management), and `#:property PublishAot=false` when a package is not AOT-compatible. Every script file is listed in the solution, so that it shows in the IDE. `/new-tool` has the steps.
 - `CONTRIBUTING.md` restates these conventions and the C# style below for outside contributors, and the README the
   commands below for users: a change here changes them too (D204).
 

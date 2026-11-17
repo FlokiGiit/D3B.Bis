@@ -1,16 +1,13 @@
 using System.Buffers;
 using System.CommandLine;
-using System.Diagnostics;
 using System.Globalization;
-using System.Reflection;
-using System.Security.Cryptography;
 using D3B.Bis.Data;
 using D3B.Bis.Data.Packs;
+using D3B.Bis.Extraction.Mapping;
+using D3B.Bis.Extraction.Unity;
 using D3B.Bis.Network.Relay;
 using D3B.Bis.Protocol.Mapping;
-using D3B.Bis.Protocol.Readable;
 using D3B.Bis.Protocol.Translation;
-using D3B.Bis.Scripts.Unity;
 using Google.Protobuf;
 using Google.Protobuf.Reflection;
 
@@ -125,7 +122,6 @@ internal static class MappingCommand
 
     private static int Map(ClientBuild build, string root, string schemaPath, string pinsDirectory, string[] capturePaths, bool json)
     {
-        var stopwatch = Stopwatch.StartNew();
         var schema = ProtocolSchema.Load(schemaPath);
         var pinsPath = PinnedPairsFile.PathOf(pinsDirectory, build.Version);
         var pins = File.Exists(pinsPath) ? PinnedPairsFile.Read(pinsPath, build.Version) : null;
@@ -154,77 +150,17 @@ internal static class MappingCommand
             game = captured;
         }
 
-        var matcher = new ProtocolMatcher(ReadableProtocol.Files, schema, ReadableProtocol.Scopes);
-        var result = matcher.Match(pins, anchors);
+        var outcome = MappingMaker.Make(build, root, schema, pins, anchors, payloads, Console.Out, !failed, json);
 
-        Console.WriteLine($"Matching: {result.Messages.Count} messages paired, {Evidence(result.Messages.Select(match => match.Evidence))}; {result.Enums.Count} enums, {Evidence(result.Enums.Select(match => match.Evidence))}");
-
-        foreach (var match in result.Messages.Where(match => match.Score is not null))
-            Console.WriteLine($"  scored: {match.Readable.FullName} is .{match.Obfuscated.FullName}, {match.Score:F2}");
-
-        foreach (var match in result.Enums.Where(match => match.Score is not null))
-            Console.WriteLine($"  scored: {match.Readable.FullName} is .{match.Obfuscated.FullName}, {match.Score:F2}");
-
-        foreach (var proposal in PinProposals.For(result, schema, payloads))
-            Console.WriteLine($"  unpaired: {proposal}");
-
-        foreach (var conflict in result.Conflicts)
-            Console.WriteLine($"  conflict: {conflict}");
-
-        failed |= result.Conflicts.Count > 0;
-
-        var tool = typeof(ProtocolMatcher).Assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion ?? "unknown";
-        var mapping = result.ToMapping(build.Version, schema.Sha256, ReadableProtocol.Digest, tool);
-        var audit = ContractAudit.Audit(ReadableProtocol.Files, schema, mapping);
-
-        Console.WriteLine($"Audit: {audit.Messages} messages, {audit.Fields} fields, {audit.Enums} enums and {audit.Values} values checked; {audit.Failures.Count} failures, {audit.Notes.Count} notes, {audit.Unread.Count} partial messages");
-
-        foreach (var failure in audit.Failures)
-            Console.WriteLine($"  failure: {failure}");
-
-        foreach (var note in audit.Notes)
-            Console.WriteLine($"  note: {note}");
-
-        foreach (var line in audit.Unread)
-            Console.WriteLine($"  partial: {line}");
-
-        // The bot builds what the client sends, whole: a message the captures show the client sending cannot be partial.
-        var carriedByClient = payloads.Where(payload => payload.FromClient > 0).Select(payload => payload.Message).ToHashSet();
-
-        foreach (var match in result.Messages.Where(match => carriedByClient.Contains(match.Obfuscated) && match.Readable.GetOptions()?.GetExtension(OptionsExtensions.Partial) is true))
-        {
-            Console.WriteLine($"  failure: {match.Readable.FullName} is partial, and the captures show the client sending it.");
-            failed = true;
-        }
-
-        // The host refuses these too (D47): a mapping it would not start on is not written.
-        var renumbered = ProtocolTranslation.Renumbered(mapping);
-
-        Console.WriteLine($"Numbers: {(renumbered.Count is 0 ? "every readable field and value has its own number on the wire" : $"{renumbered.Count} renumbered, which D3B does not translate")}");
-
-        foreach (var line in renumbered)
-            Console.WriteLine($"  renumbered: {line}");
-
-        failed |= renumbered.Count > 0;
-
-        if (json)
-            Console.WriteLine(new JsonFormatter(JsonFormatter.Settings.Default.WithIndentation()).Format(mapping));
-
-        if (failed || !audit.Passed)
+        if (!outcome.Holds)
         {
             Console.Error.WriteLine("The mapping does not hold, and was not written: pin what the structure leaves open, or fix the readable .proto files.");
 
             return 1;
         }
 
-        var path = MappingFile.PathOf(root, build.Version);
-        var bytes = MappingFile.Write(path, mapping);
-
-        Console.WriteLine($"Mapping: {path}, {bytes.Length:N0} bytes, format {MappingFile.FormatVersion}, in {stopwatch.Elapsed.TotalSeconds:F1} s");
-        Console.WriteLine($"SHA-256: {Convert.ToHexStringLower(SHA256.HashData(bytes))}");
-
         if (game.Count > 0)
-            Translate(ProtocolTranslation.Create(schema, mapping), game);
+            Translate(ProtocolTranslation.Create(schema, outcome.Mapping), game);
 
         return 0;
     }
@@ -271,24 +207,5 @@ internal static class MappingCommand
 
         foreach (var problem in misread.Select(frame => frame.Problem).Distinct().Take(10))
             Console.WriteLine($"  not understood: {problem}");
-    }
-
-    private static string Evidence(IEnumerable<MatchEvidence> evidence)
-    {
-        var counts = evidence.GroupBy(kind => kind).OrderBy(group => group.Key).Select(group => $"{group.Count()} by {Name(group.Key)}").ToList();
-
-        return counts.Count is 0 ? "none" : string.Join(", ", counts);
-    }
-
-    private static string Name(MatchEvidence evidence)
-    {
-        return evidence switch
-        {
-            MatchEvidence.Pin => "pin",
-            MatchEvidence.Capture => "capture",
-            MatchEvidence.Field => "field",
-            MatchEvidence.Score => "score",
-            _ => "nothing",
-        };
     }
 }

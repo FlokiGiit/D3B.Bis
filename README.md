@@ -79,10 +79,11 @@ and groups, the marketplace and crafting. The [roadmap](docs/roadmap.md) has the
    A portable zip is in the same release.
 
 Each version of D3B ships the data of one client build, extracted from the official client: its maps, items, spells and
-texts, and the mapping of its protocol. When Ankama updates the client, D3B says it does not know that build yet; the
-version of D3B for it comes out afterwards. D3B checks for a new version when it starts, downloads it, and installs it
-when you restart it from its banner or close it. Its settings' About section shows its version and the client build it
-ships.
+texts, and the mapping of its protocol. When Ankama updates the client, the home page says so: its *Update* button prepares
+the new build's files on your PC from the installed client, in about a minute, then offers to restart D3B. Should Ankama have changed
+the game's protocol, the banner says so, and the version of D3B that follows it comes out afterwards. D3B checks for a new
+version when it starts, downloads it, and installs it when you restart it from its banner or close it. Its settings' About
+section shows its version and the client build it ships.
 
 D3B keeps its database, settings and captures in `%LOCALAPPDATA%\D3B.Bis`. Uninstalling it from Windows' settings removes the
 app and keeps that folder.
@@ -124,8 +125,9 @@ dotnet run --project src/D3B.Bis.Host     # the same host without the app, until
 ```
 
 The host needs the data pack, the protocol schema and the mapping of the installed client's build, in the formats the
-code reads. It looks for them in `%LOCALAPPDATA%\D3B.Bis\data`, then beside the published app. Run from source, take them
-from the build's release `client-<version>`, with the [GitHub CLI](https://cli.github.com) signed in:
+code reads. It looks for them in `%LOCALAPPDATA%\D3B.Bis\data`, then beside the published app. Run from source, the app's
+home page offers to prepare them from the installed client, as the tools below do; or take them from the build's release
+`client-<version>`, with the [GitHub CLI](https://cli.github.com) signed in:
 
 ```powershell
 dotnet run --file scripts/embed.cs -- --client-version 3.7.13.17 --output "$env:LOCALAPPDATA\D3B.Bis\data" --repository AerafalDev/D3B
@@ -136,7 +138,8 @@ holds the formats this code reads. Without it the tool looks in this repository'
 
 The tool checks the files, and says so when the release lacks a format your checkout reads, as happens while a format
 change on `main` waits for its upload. When Ankama updates the client, the maintainer extracts and maps the new build
-with the tools below, then publishes its release; mapping a build also needs captures of it.
+with the tools below, then publishes its release; the mapping published is made with captures of the build, the one the
+app prepares with the pins of the latest build alone.
 
 Both the app and the host keep the accounts their relay sees, what their bots learn, such as the placement cells of every
 fight they see begin with the map fought on and the one left, and the variables each character keeps, in

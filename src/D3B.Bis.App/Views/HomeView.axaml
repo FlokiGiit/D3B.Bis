@@ -134,40 +134,43 @@
                 </StackPanel>
 
                 <Border
-                    Classes="Banner Info"
-                    IsVisible="{Binding IsMissingBuild}"
+                    Classes="Banner"
+                    Classes.Danger="{Binding ClientFiles.IsBlocked}"
+                    Classes.Info="{Binding !ClientFiles.IsBlocked}"
+                    IsVisible="{Binding ClientFiles.IsShown}"
                     Padding="16">
                     <StackPanel Spacing="12">
                         <TextBlock
                             Classes="Bright"
                             FontWeight="SemiBold"
-                            Text="{l:Tr MissingBuildTitle}" />
-                        <TextBlock Text="{Binding MissingBuildText}" TextWrapping="Wrap" />
-                        <c:StatusPill Text="{Binding Updates.StatusText}" Tone="{Binding Updates.StatusTone}" />
+                            Text="{Binding ClientFiles.Title}" />
+                        <TextBlock Text="{Binding ClientFiles.Text}" TextWrapping="Wrap" />
+                        <ProgressBar
+                            Classes="Meter Info"
+                            IsVisible="{Binding ClientFiles.IsPreparing}"
+                            Value="{Binding ClientFiles.Progress}" />
                         <StackPanel
                             HorizontalAlignment="Right"
                             Orientation="Horizontal"
                             Spacing="8">
                             <Button
-                                Classes="Outline"
-                                Command="{Binding Updates.CheckCommand}"
-                                Content="{l:Tr UpdateCheck}" />
+                                Classes="Primary"
+                                Command="{Binding ClientFiles.UpdateCommand}"
+                                Content="{Binding ClientFiles.UpdateLabel}"
+                                IsVisible="{Binding ClientFiles.ShowsUpdate}" />
                             <Button
                                 Classes="Primary"
-                                Command="{Binding Updates.RestartCommand}"
-                                Content="{l:Tr UpdateNow}"
-                                IsVisible="{Binding Updates.IsReady}" />
+                                Command="{Binding ClientFiles.RestartCommand}"
+                                Content="{l:Tr ClientFilesRestart}"
+                                IsVisible="{Binding ClientFiles.IsReady}" />
                         </StackPanel>
                     </StackPanel>
                 </Border>
 
-                <Border Classes="Banner Danger" Padding="16">
-                    <Border.IsVisible>
-                        <MultiBinding Converter="{x:Static BoolConverters.And}">
-                            <Binding Path="IsFailed" />
-                            <Binding Path="!IsMissingBuild" />
-                        </MultiBinding>
-                    </Border.IsVisible>
+                <Border
+                    Classes="Banner Danger"
+                    IsVisible="{Binding ShowsHostFailure}"
+                    Padding="16">
                     <StackPanel Spacing="12">
                         <StackPanel Orientation="Horizontal" Spacing="8">
                             <c:Icon Drawing="{StaticResource Status.Error}" VerticalAlignment="Center" />

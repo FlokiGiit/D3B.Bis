@@ -8,6 +8,12 @@ public sealed class DataUnavailableException : Exception
     /// <remarks>The app tells such a build apart, which a newer version of D3B ships (D172).</remarks>
     public string? MissingBuild { get; init; }
 
+    /// <summary>Gets where the build's files go on this machine, once <see cref="MissingBuild"/> is set: where the app prepares them (D440).</summary>
+    public string? DataDirectory { get; init; }
+
+    /// <summary>Gets the installed client's directory, once <see cref="MissingBuild"/> is set: what the app prepares the files from (D440).</summary>
+    public string? ClientDirectory { get; init; }
+
     /// <summary>Initializes a new instance of the <see cref="DataUnavailableException"/> class.</summary>
     public DataUnavailableException()
     {

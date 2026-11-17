@@ -96,6 +96,32 @@ public sealed class BotHostTests : IDisposable
     }
 
     [Fact]
+    public async Task AHostLackingItsBuildsFilesSaysWhereTheyGoOnThisMachine()
+    {
+        var withoutPack = await BotHost.StartAsync(CreateBuilder(), TestContext.Current.CancellationToken).WaitAsync(_timeout, TestContext.Current.CancellationToken);
+
+        _install.WritePack();
+
+        var withoutMapping = await BotHost.StartAsync(CreateBuilder(), TestContext.Current.CancellationToken).WaitAsync(_timeout, TestContext.Current.CancellationToken);
+
+        Assert.Equal(_install.PacksDirectory, withoutPack.DataDirectory);
+        Assert.Equal(_install.PacksDirectory, withoutMapping.DataDirectory);
+    }
+
+    [Fact]
+    public async Task AHostLackingItsBuildsFilesSaysWhichClientTheyAreMadeFrom()
+    {
+        var withoutPack = await BotHost.StartAsync(CreateBuilder(), TestContext.Current.CancellationToken).WaitAsync(_timeout, TestContext.Current.CancellationToken);
+
+        _install.WritePack();
+
+        var withoutMapping = await BotHost.StartAsync(CreateBuilder(), TestContext.Current.CancellationToken).WaitAsync(_timeout, TestContext.Current.CancellationToken);
+
+        Assert.Equal(_install.ClientDirectory, withoutPack.ClientDirectory);
+        Assert.Equal(_install.ClientDirectory, withoutMapping.ClientDirectory);
+    }
+
+    [Fact]
     public async Task AMappingThatDoesNotHoldNamesNoBuildMissing()
     {
         _install.WritePack();
