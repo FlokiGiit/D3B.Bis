@@ -6,7 +6,7 @@
 #:include shared/ProjectFile.cs
 #:include shared/ProjectPath.cs
 
-using D3B.Hooks;
+using D3B.Bis.Hooks;
 
 // PostToolUse on Edit and Write: fixes the whitespace of the C# file just written, so that dotnet format
 // --verify-no-changes stays green. The style rules are the build's, which the Stop hook runs.

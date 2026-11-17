@@ -2,7 +2,7 @@ using System.CommandLine;
 using AssetsTools.NET;
 using AssetsTools.NET.Extra;
 
-namespace D3B.Scripts.Inspect;
+namespace D3B.Bis.Scripts.Inspect;
 
 /// <summary><c>layout</c>: the type tree of one type, the layout its objects are serialized with.</summary>
 internal static class LayoutCommand

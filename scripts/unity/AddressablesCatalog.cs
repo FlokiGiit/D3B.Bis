@@ -1,7 +1,7 @@
 using System.Buffers.Binary;
 using System.Text.RegularExpressions;
 
-namespace D3B.Scripts.Unity;
+namespace D3B.Bis.Scripts.Unity;
 
 /// <summary>The addresses of an Addressables group's binary catalog, <c>catalog_1.0.bin</c>, by the key a bundle's container names the asset with.</summary>
 /// <remarks>

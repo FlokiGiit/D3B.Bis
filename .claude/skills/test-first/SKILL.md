@@ -8,9 +8,9 @@ A test is red before the code that makes it green, and it fails for the reason t
 ## The loop
 
 1. Name the behavior as a sentence the owner could read: that is the test's name, `AModuleTypeIsBuiltOnce`.
-2. Write that one test, through the public type, in the test project that mirrors the code: `tests/D3B.<Project>.Tests`.
+2. Write that one test, through the public type, in the test project that mirrors the code: `tests/D3B.Bis.<Project>.Tests`.
 3. Run it and watch it fail for the right reason:
-   `dotnet test --project tests/D3B.Engine.Tests --filter-method "*AModuleTypeIsBuiltOnce"`. `--filter-class` takes a class,
+   `dotnet test --project tests/D3B.Bis.Engine.Tests --filter-method "*AModuleTypeIsBuiltOnce"`. `--filter-class` takes a class,
    `--list-tests` lists them, `--no-build` skips the build.
 4. Write the least code that turns it green; run the project's tests.
 5. Next behavior, next test. One slice at a time: writing every test first tests an imagined shape.
@@ -30,14 +30,15 @@ A bug fix starts with a test that fails on the bug.
 
 Counted in `tests/` on 2026-11-09: 1,700 tests, almost all `[Fact]`, a `[Theory]` where one rule has many inputs.
 
-- One test project per project with logic, mirroring its folders (`tests/D3B.Bot.Tests/Harvesting` for
-  `src/D3B.Bot/Harvesting`). A helper that several tests share lives in the test project, beside them: `TestHosts`,
-  `TestGameData`, `TestStore`, `Waiting` in `D3B.App.Tests`; `TestInstall` in `D3B.Bot.Tests`.
+- One test project per project with logic, mirroring its folders (`tests/D3B.Bis.Bot.Tests/Harvesting` for
+  `src/D3B.Bis.Bot/Harvesting`). A helper that several tests share lives in the test project, beside them: `TestHosts`,
+  `TestGameData`, `TestStore`, `Waiting` in `D3B.Bis.App.Tests`; `TestInstall` in `D3B.Bis.Bot.Tests`.
 - Assertions are xUnit's own (`Assert.Equal`, `Assert.Null`, `Assert.Single`); no assertion library and no mocking library
   is used. A double is a small class of the test project.
 - An async test passes `TestContext.Current.CancellationToken` to what it awaits.
 - Time under test is a `FakeTimeProvider` wherever the code takes a `TimeProvider`; waiting for something that runs uses the test project's `Waiting` helper, not a sleep.
-- The engine's rules are tested on data built by the test, or on fights as the captures measured them (`D3B.Engine.Tests`);
+- A wait a bot asks beside the test is ended with `TestPlay.Time.EndAsync(delay)`, or awaited with `AskedAsync(delay)` before a smaller move: `Advance` rings only the timers already made, and a bot asks its wait after what the test saw of it.
+- The engine's rules are tested on data built by the test, or on fights as the captures measured them (`D3B.Bis.Engine.Tests`);
   `CsCheck` states a property there.
 - A view is tested headless: the `studio-ui` skill says how.
 - Test methods are PascalCase sentences that state the behavior, `TheRunBlockShowsOnlyTheButtonsTheChosenCharactersStateAllows`,
@@ -46,6 +47,6 @@ Counted in `tests/` on 2026-11-09: 1,700 tests, almost all `[Fact]`, a `[Theory]
 ## Where tests do not go
 
 `scripts/` tools have none (D10). Behavior that only shows in the game cannot be tested: say how it was checked, on which
-client build, in the pull request. A guard of a rule (`.claude/hooks/`) is tested in `tests/D3B.Hooks.Tests`.
+client build, in the pull request. A guard of a rule (`.claude/hooks/`) is tested in `tests/D3B.Bis.Hooks.Tests`.
 
 Done when the new test was seen red, then green, and `dotnet test` passes.

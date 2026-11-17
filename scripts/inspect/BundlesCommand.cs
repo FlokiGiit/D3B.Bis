@@ -1,6 +1,6 @@
 using System.CommandLine;
 
-namespace D3B.Scripts.Inspect;
+namespace D3B.Bis.Scripts.Inspect;
 
 /// <summary><c>bundles</c>: how each bundle is stored, from its header.</summary>
 internal static class BundlesCommand

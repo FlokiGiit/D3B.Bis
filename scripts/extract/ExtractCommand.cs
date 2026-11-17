@@ -2,27 +2,27 @@ using System.CommandLine;
 using System.Diagnostics;
 using System.Reflection;
 using System.Security.Cryptography;
-using D3B.Data;
-using D3B.Data.Banks;
-using D3B.Data.Hints;
-using D3B.Data.Npcs;
-using D3B.Data.Breeds;
-using D3B.Data.Characteristics;
-using D3B.Data.Effects;
-using D3B.Data.Icons;
-using D3B.Data.Interactives;
-using D3B.Data.Items;
-using D3B.Data.Jobs;
-using D3B.Data.Maps;
-using D3B.Data.Monsters;
-using D3B.Data.Packs;
-using D3B.Data.Spells;
-using D3B.Data.Texts;
-using D3B.Data.World;
-using D3B.Data.WorldMaps;
-using D3B.Scripts.Unity;
+using D3B.Bis.Data;
+using D3B.Bis.Data.Banks;
+using D3B.Bis.Data.Hints;
+using D3B.Bis.Data.Npcs;
+using D3B.Bis.Data.Breeds;
+using D3B.Bis.Data.Characteristics;
+using D3B.Bis.Data.Effects;
+using D3B.Bis.Data.Icons;
+using D3B.Bis.Data.Interactives;
+using D3B.Bis.Data.Items;
+using D3B.Bis.Data.Jobs;
+using D3B.Bis.Data.Maps;
+using D3B.Bis.Data.Monsters;
+using D3B.Bis.Data.Packs;
+using D3B.Bis.Data.Spells;
+using D3B.Bis.Data.Texts;
+using D3B.Bis.Data.World;
+using D3B.Bis.Data.WorldMaps;
+using D3B.Bis.Scripts.Unity;
 
-namespace D3B.Scripts.Extract;
+namespace D3B.Bis.Scripts.Extract;
 
 /// <summary>The command that extracts the installed client's game data into the pack of its build.</summary>
 internal static class ExtractCommand
@@ -35,7 +35,7 @@ internal static class ExtractCommand
         };
         var output = new Option<DirectoryInfo?>("--output")
         {
-            Description = @"The directory packs are kept in, one directory per client version. Defaults to %LOCALAPPDATA%\D3B\data, where the host looks first.",
+            Description = @"The directory packs are kept in, one directory per client version. Defaults to %LOCALAPPDATA%\D3B.Bis\data, where the host looks first.",
         };
         var force = new Option<bool>("--force")
         {

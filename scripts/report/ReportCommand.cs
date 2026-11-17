@@ -1,10 +1,10 @@
 using System.CommandLine;
 using System.Diagnostics;
 using System.Globalization;
-using D3B.Bot.Reports;
-using D3B.Network.Captures;
+using D3B.Bis.Bot.Reports;
+using D3B.Bis.Network.Captures;
 
-namespace D3B.Scripts.Report;
+namespace D3B.Bis.Scripts.Report;
 
 /// <summary>The command that unpacks and describes a bug report, which anyone could have posted: bounded, checked, never run.</summary>
 internal static class ReportCommand
@@ -142,7 +142,7 @@ internal static class ReportCommand
     {
         for (var directory = new DirectoryInfo(Directory.GetCurrentDirectory()); directory is not null; directory = directory.Parent)
         {
-            if (File.Exists(Path.Combine(directory.FullName, "D3B.slnx")))
+            if (File.Exists(Path.Combine(directory.FullName, "D3B.Bis.slnx")))
                 return directory.FullName;
         }
 

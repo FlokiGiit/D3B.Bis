@@ -1,4 +1,4 @@
-namespace D3B.Scripts.Inspect;
+namespace D3B.Bis.Scripts.Inspect;
 
 /// <summary>A plain-text table: left-aligned text columns, right-aligned numeric ones.</summary>
 internal sealed class TextTable

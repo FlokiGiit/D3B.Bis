@@ -1,11 +1,11 @@
 using System.Buffers;
-using D3B.Network.Captures;
-using D3B.Network.Framing;
-using D3B.Protocol.Game;
-using D3B.Protocol.Translation;
+using D3B.Bis.Network.Captures;
+using D3B.Bis.Network.Framing;
+using D3B.Bis.Protocol.Game;
+using D3B.Bis.Protocol.Translation;
 using Google.Protobuf;
 
-namespace D3B.Scripts.Fights;
+namespace D3B.Bis.Scripts.Fights;
 
 /// <summary>The messages the server sent a game connection, read through the translation, in the order they came.</summary>
 internal static class CapturedFights

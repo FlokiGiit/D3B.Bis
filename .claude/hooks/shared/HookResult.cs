@@ -1,6 +1,6 @@
 using System.Text.Json.Nodes;
 
-namespace D3B.Hooks;
+namespace D3B.Bis.Hooks;
 
 /// <summary>Turns a guard's verdict into what Claude Code reads from a hook: an exit code and, to ask, a JSON answer.</summary>
 internal static class HookResult

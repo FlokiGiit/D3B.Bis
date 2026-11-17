@@ -1,6 +1,6 @@
 using AssetsTools.NET;
 
-namespace D3B.Scripts.Inspect;
+namespace D3B.Bis.Scripts.Inspect;
 
 /// <summary>What the header of a UnityFS bundle says, read without decompressing its data.</summary>
 /// <param name="Bundle">The bundle.</param>

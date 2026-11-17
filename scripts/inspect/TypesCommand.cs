@@ -1,7 +1,7 @@
 using System.CommandLine;
 using AssetsTools.NET;
 
-namespace D3B.Scripts.Inspect;
+namespace D3B.Bis.Scripts.Inspect;
 
 /// <summary><c>types</c>: which types the serialized files of each area hold, and how much of each.</summary>
 internal static class TypesCommand

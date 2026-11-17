@@ -1,7 +1,7 @@
-using D3B.Data.Npcs;
-using D3B.Scripts.Unity;
+using D3B.Bis.Data.Npcs;
+using D3B.Bis.Scripts.Unity;
 
-namespace D3B.Scripts.Extract;
+namespace D3B.Bis.Scripts.Extract;
 
 /// <summary>Reads the non-player characters, and the texts of the questions they ask and the replies they offer.</summary>
 /// <remarks>

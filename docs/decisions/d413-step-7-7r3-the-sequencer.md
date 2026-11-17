@@ -9,7 +9,7 @@ sessions). The owner chose, when asked, to build 7r3 now and as planned, and tha
 Details for the step selected; they added, mid-session, that the accessibility and the shortcuts are to be strengthened too.
 Builds D295, D299, D371, D375, D378, D395 to D397.*
 
-- **A clip is derived, never stored** (`RouteClips`, `RouteClip`, in `D3B.Studio.Routes`). It is the longest run of consecutive steps
+- **A clip is derived, never stored** (`RouteClips`, `RouteClip`, in `D3B.Bis.Studio.Routes`). It is the longest run of consecutive steps
   that hold an equal action (`RouteAnchor.SameCall`), so that `RouteAnchor.Actions` and the route's file are as D378 made them. Three
   cases the mockup did not draw, each with its rule: two equal actions on one step are two clips, never one (a `Layer`); two
   different actions of one kind on a step (harvest ash, harvest oak) stand in lanes of their track; the order of a step's actions, which

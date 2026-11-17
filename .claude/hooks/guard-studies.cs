@@ -6,7 +6,7 @@
 #:include shared/ProjectPath.cs
 #:include shared/StudyGuard.cs
 
-using D3B.Hooks;
+using D3B.Bis.Hooks;
 
 // PreToolUse of the explorer agent only: it writes under artifacts/studies/ and its shell only reads, so that what it
 // quotes from the client and from vendor/ stays out of Git. The logic is in shared/StudyGuard.cs, with its tests.

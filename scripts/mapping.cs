@@ -1,19 +1,19 @@
 #!/usr/bin/env dotnet
 #:package Google.Protobuf
 #:package System.CommandLine
-#:project ../src/D3B.Data/D3B.Data.csproj
-#:project ../src/D3B.Network/D3B.Network.csproj
-#:project ../src/D3B.Protocol/D3B.Protocol.csproj
+#:project ../src/D3B.Bis.Data/D3B.Bis.Data.csproj
+#:project ../src/D3B.Bis.Network/D3B.Bis.Network.csproj
+#:project ../src/D3B.Bis.Protocol/D3B.Bis.Protocol.csproj
 #:include mapping/CaptureFrames.cs
 #:include mapping/MappingCommand.cs
 #:include mapping/PinProposals.cs
 #:include unity/ClientInstall.cs
 
 using System.Globalization;
-using D3B.Scripts.Mapping;
+using D3B.Bis.Scripts.Mapping;
 
 // Writes the mapping of the installed client's build: which obfuscated message, field and enum value each message of
-// D3B's readable protocol is (D11). It matches the readable .proto files of src/D3B.Protocol with the build's schema,
+// D3B's readable protocol is (D11). It matches the readable .proto files of src/D3B.Bis.Protocol with the build's schema,
 // which scripts/schema.cs writes, from the build's pinned pairs, the anchors its captures give, the fields of every pair,
 // and structural scores; then it audits the mapping against both, and writes it only when every readable message and
 // field has a counterpart that fits (D43, D44).

@@ -1,6 +1,6 @@
 using System.Text.Json;
 
-namespace D3B.Hooks;
+namespace D3B.Bis.Hooks;
 
 /// <summary>The fields of Claude Code's hook input the project's hooks read; the rest of the JSON is ignored.</summary>
 internal sealed class HookInput

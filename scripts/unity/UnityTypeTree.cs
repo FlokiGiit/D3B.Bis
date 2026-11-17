@@ -1,6 +1,6 @@
 using AssetsTools.NET;
 
-namespace D3B.Scripts.Unity;
+namespace D3B.Bis.Scripts.Unity;
 
 /// <summary>The type tree of a serialized type, flattened with the children of each node, to read objects without building them.</summary>
 /// <remarks>

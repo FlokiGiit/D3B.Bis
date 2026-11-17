@@ -1,8 +1,8 @@
 using System.Security.Cryptography;
 using System.Text;
-using D3B.Scripts.Unity;
+using D3B.Bis.Scripts.Unity;
 
-namespace D3B.Scripts.Extract;
+namespace D3B.Bis.Scripts.Extract;
 
 /// <summary>The fingerprint of the client files a pack is extracted from (D24).</summary>
 /// <remarks>

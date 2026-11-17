@@ -5,7 +5,7 @@ owed. The reasons are in [the decisions](decisions/README.md), found through [de
 their sessions are in [roadmap.md](roadmap.md); how the code is built is in [architecture.md](architecture.md). Whoever closes
 a session updates this page, the roadmap and the index.
 
-As of 2026-11-10, after D425 (the harvest's tour goes into another zone of a map, out and back through the world graph), D424 (a resource in another zone of its map is out of reach, no longer used from afar), D421 (7r6, a step of a list repeats and plays another list), D420 (the Pandawa no longer swaps Sobre and Saoul instead of striking), D419 (7r4, following a run), D418 (7r5b, the profile as an asset editor), D415 (7r5 part 1, the zones read by the harvest and the hunt), D417 (the harvest's tour weighs the character's level) and D416 (it leaves the houses of a town alone), D414 (hints on the world map), D413 (7r3, the Sequencer) and D408 (the fight AI after the players' reports, D407, summons a last resort; the home page, D406; banking by general settings, D405; D394, session 7d4, merged into 7r2's branch). App 0.8.1, client build 3.7.13.17, pack format 11 published, 12 extracted and not published (D414), mapping format 17.
+As of 2026-11-17, after D439 (the owner drops the marketplace: its work, D427 to D438, stays on branches never merged; the unsteady tests, the bot's stop race and the stopped activity they found are fixed here), D426 (D3B.Bis continues D3B in a repository of its own: projects and namespaces `D3B.Bis.*`, files in `%LOCALAPPDATA%\D3B.Bis`, D3B's formats and published packs kept), D425 (the harvest's tour goes into another zone of a map, out and back through the world graph), D424 (a resource in another zone of its map is out of reach, no longer used from afar), D421 (7r6, a step of a list repeats and plays another list), D420 (the Pandawa no longer swaps Sobre and Saoul instead of striking), D419 (7r4, following a run), D418 (7r5b, the profile as an asset editor), D415 (7r5 part 1, the zones read by the harvest and the hunt), D417 (the harvest's tour weighs the character's level) and D416 (it leaves the houses of a town alone), D414 (hints on the world map), D413 (7r3, the Sequencer) and D408 (the fight AI after the players' reports, D407, summons a last resort; the home page, D406; banking by general settings, D405; D394, session 7d4, merged into 7r2's branch). App 0.8.1, client build 3.7.13.17, pack format 11 published, 12 extracted and not published (D414), mapping format 17.
 
 ## What exists
 
@@ -28,12 +28,19 @@ As of 2026-11-10, after D425 (the harvest's tour goes into another zone of a map
   map beside the form to pick the zone or the sub-areas of its place.
 - **A versioned Claude Code setup** (D398): `.claude/` holds C# hooks that ask before a push or a `gh` write and refuse
   what the client produces, skills for C#, the studio's UI, tests, Git and the rest, and two agents. The hooks are tested in
-  `tests/D3B.Hooks.Tests`; the write guard and the Git guard were seen refusing inside a session, the "ask" answers and the
+  `tests/D3B.Bis.Hooks.Tests`; the write guard and the Git guard were seen refusing inside a session, the "ask" answers and the
   Stop hook's block not yet.
 - **Published**: the installer and updates through Velopack (D171); the client build's pack, schema and mapping as the release
   `client-3.7.13.17` (D365).
 
 ## Not measured in game
+
+- D3B.Bis (D426) was built, tested and started on the owner's machine while D3B 0.9.1 ran: the window opened, the pack of format 12 and the
+  mapping of format 17 fetched from D3B's release were read, D3B's database, project and preferences came across, and the host stopped at the
+  relay's address, which D3B held. Not done: a session through a client with D3B closed, an installer packed and installed beside D3B's, an
+  update, a report sent. The repository is `FlokiGiit/D3B.Bis`, private (`ClientRelease.DefaultRepository`): it has no release yet, so the
+  tools take D3B's client release with `--repository AerafalDev/D3B`, the app finds no update and no report channel, and a private
+  repository's releases will need a token the app does not have.
 
 - The harvest and the zones of a map (D424): a player's report ("it tries but cannot, unless it stands in front of the resource or comes back from
   another side"), read in the code and measured on the pack (864 maps with more than one zone, 3,673 element and zone pairs on 607 maps), fixed and
@@ -130,7 +137,7 @@ As of 2026-11-10, after D425 (the harvest's tour goes into another zone of a map
 3. **Session 7d4b**: recording while playing and Simplify (D299, D394), once the events it reads are measured.
 4. **7e and 7e2**: the canvas of behaviors, then 7f to 7i (nodes and planning, debugging, the AI's fight preferences, sharing).
    The breeds, set aside since 9f5, come back once these are done (D306).
-5. **Then** step 9's remaining mechanisms, and steps 10 to 13 (several accounts, marketplace and crafting, treasure hunts and
+5. **Then** step 9's remaining mechanisms, and steps 10 to 13 (several accounts, crafting, the marketplace dropped by the owner (D439), treasure hunts and
    dungeons, the owner's profession scripts).
 
 The measure in game is worth a session of its own before 7e grows the code further.
@@ -143,13 +150,90 @@ Q16 (casts and walks the server refuses that the rules allow), Q17 (a build that
 
 ## Known debt
 
-- `D3B.Bot` is about 17,900 lines in 224 files and `D3B.Studio` about 6,300 in 141 (D393). The border is the compiler's, one way:
-  `D3B.Studio` references `D3B.Bot`, which knows nothing of it. Left over: `D3B.Studio.Routes` reaches the harvest and the fight
-  through `MapHarvest` and `MapFight`, now public, so a module of `D3B.Bot` cannot declare nodes (the node API is the studio's):
-  a future module in a project of its own can. Nine members and types of `D3B.Bot` became public so that the studio could use them
+- The tests were not steady on the owner's machine (seen 2026-11-13 with the game and D3B running, on D3B's binaries of `df9a242` as on
+  D3B.Bis's, so it predates D426). Diagnosed on 2026-11-13 and fixed the day after (branch `fix/steady-tests`, 2,375 tests): each defect
+  was reproduced in a loop and its cause shown by a probe, since removed. Six tests had four causes, each in the test and fixed there,
+  `src/` unchanged; a fifth cause is the product's, fixed the same day on the branch `fix/bot-stop-race` (the last item). After the
+  fixes `dotnet test` was green ten runs in ten in the foreground.
+  - **A fake clock moved before the wait it should end is asked.** `FakeTimeProvider.Advance` rings the timers already made; one made
+    after is due later and never rings. `BehaviorActivityTests.AListThatRepeatsReportsItsFirstStepAgainWhenItStartsOver` advanced once
+    the run said `Stepping`, which `ActivityRun` says before the step asks for its wait (red 8 runs in 20 of the test alone).
+    `FollowRouteTests.ACharacterIsFollowingItsRouteOnlyWhileTheRoutePlaysInTheListOfSteps` did it on the route's position, then awaited
+    the run's end with no limit: it was the process of `D3B.Bis.Studio.Tests` that never ended.
+    `BotDelaysTests.ARequestOnANewMapWaitsTheDisplayTimeChosenForTheBotsAlreadyMade` advanced while `BotContext.SendAsync` was between
+    reading the clock and making its timer. Fixed: `TestPlay.Time` is a `TestClock`, a fake clock that knows the timers asked of it; a
+    test ends a wait with `EndAsync`, or waits for it with `AskedAsync` before a smaller move (the list's test: green 40 runs in 40).
+    Converted with the three, for the same pattern: the eight other advances of `BehaviorActivityTests` made on a note or a status,
+    `MapWalkTests.AWalkOnANewMapWaitsUntilTheClientDrewIt`, `BotDelaysTests.ADisplayTimeRaisedWhileARequestWaitsHoldsItLonger`,
+    `ActivityRunTests.TheNextStepWaitsTheTimeBetweenTwoActions` and `AFightBegunBetweenTwoStepsIsTheActivitysAsOneThatCutAStep`.
+  - **A value written from the thread pool and read at once.**
+    `ReportSendTests.AReportSentSaysSoWithItsCodeCannotBeSentTwiceAndCarriesTheMessageAndTheManifest` ran with no synchronization
+    context, so the dialog's `Progress<long>` posted `SendProgress` to the pool and the test read 0 (red in 15 full runs in 15 of
+    `D3B.Bis.App.Tests`). Fixed: the class carries `[UiThread]` and the test waits for the posted value before it asserts it, the
+    assertion unchanged (green 12 full runs in 12).
+  - **An async lambda given to the headless session's synchronous `Dispatch`.**
+    `HarvestViewsTests.AGivenProfileIsReadOnlyAndItsCopyIsTheProjectsOwnWithItsValues`: Avalonia.Headless shuts the test's dispatcher
+    down as the lambda returns its pending task, and a dispatcher shut down drops what is posted to it. When the save's write ended
+    asynchronously its continuation was lost: it was the process of `D3B.Bis.App.Tests` that never ended (2 full runs in 11). Fixed:
+    the file has the `Func<Task<T>>` helper, which pumps the dispatcher until the task ends, as five other test files have.
+  - **An order the product does not promise.** `FrameRecorderTests.ABotsFramesAreRecordedFromItsConnectionsFirstFrameBothSidesAndD3BsOwn`
+    answered as the server as soon as the frame was on the fake wire, and `GameSession.SendAsync` tells the observers once the frame
+    went (D115): the answer was recorded first (4 runs in 20 under load). Fixed: the test answers once D3B's frame is recorded; D115
+    is unchanged.
+  - **Advances of a fake clock not converted, on purpose.** The loops that move the clock until what they wait for happened ring a
+    timer made late at their next turn: `TestWalks.SentAsync` and `AdvanceUntilDoneAsync`, `MapWalkTests.AdvanceUntilDoneAsync`,
+    `FightPlayTests.SentAsync`, `BehaviorSequencesTests.AdvanceUntilAsync`, and the loops of `WorldTravelTests`, `HarvestActivityTests`,
+    `HarvestActivityZonesTests`, `FollowRouteTests.ALoopFollowedByAStepThatRepeatsPlaysOneLapForEachPassThenTheNextStep` and
+    `BehaviorActivityTests` (two, each after a converted advance). The advances after which a test asserts that nothing happened stay
+    true with a timer made late, for a weaker reason: `ElementUseTests.AHarvestWalksNextToTheElementThenUsesItUntilItsEnd`,
+    `FightPlayTests.OutOfAnActivityTheBotLeavesTheFightToThePlayer` and `ThePlayersCastPausesTheBotAndTheFightIsThePlayers`, and the
+    advance made while the bot is paused in `BehaviorActivityTests.AnActionAnInterruptionCutIsPlayedAgainButNotWhatWasPlayedBefore`.
+    `BotJournalTests.AWalkAskedForItselfIsWrittenOnceOverWithHowItEndedAndHowLongItTook` moves the clock to time a walk, and no wait
+    ends on it; `BotActorTests.AnExpectationEndsAfterItsDelayByTheBotsClock` asks its wait before it signals. `TestPlay.EnterAsync`
+    moves the clock by the display time once the bot took the map in, for every test that enters a map: it ends no wait, but a bot
+    whose behavior already waited to send would make its timer late; no test has one today. `TestClock` tells a wait by when it
+    ends alone, so two waits that end at the same instant are one to a test; no converted test has two. The other clocks have no bot
+    waiting on them (regrowths, the NPC learner, captures, storage, the app's views).
+  - **A bot stopped while something asked to wait on it never ended: the product's, fixed on 2026-11-14 (`fix/bot-stop-race`).**
+    `BotActor.DisposeAsync` posted `Stopping`, then completed the inbox: a wait or a start posted between the two was taken by the
+    loop after `OnStopping` had failed the others, and nothing ended it. `FightPilot.RunAsync`, woken as a test's fight ends or
+    pauses, asked its next wait there, and `Bots.DisposeAsync` awaited the pilot for ever: `FightPlayTests`'s
+    `TheTurnsEndTheClientSendsByItselfIsWithheldAndTheAIPlaysOn`, `ThePlayersTurnsEndGoesToTheServerAndPausesTheBot` and
+    `ThePlayersCastPausesTheBotAndTheFightIsThePlayers` never ended. `Bots` is the host's own (`BotsModule`): a host disposing its
+    services went through the same code. Fixed: the stop is the inbox's completion alone; what was posted before is read, the loop
+    ends the behavior, the waits and the parked starts as it ends, and a post made after is refused (architecture, "The actor"; D9
+    unchanged). `BotActorTests.AWaitAskedWhileTheBotStopsEndsWithIt` and `AStartAskedWhileTheBotStopsEndsWithIt` race a thread's
+    asks against 100 stops, no delay added: on the old code an ask fell between the two statements at 40 to 58 stops of 100 on an
+    idle machine (20 runs) and 39 to 56 under load, so both were red at every run; green 20 in 20 with the fix. They race real
+    threads: forcing the order would need a seam between two statements the fixed code no longer has. Not measured on a runner
+    of two cores. Under load, the executable under `timeout`
+    beside 12 busy loops: the old code hung 1 run in 55, the fix 0 in 50; beside 24 busy loops the old code hung 0 in 55. The
+    rate depends on the load, and the earlier 3 in 55 was not met again: those runs bound the race loosely, the two tests are
+    the proof. `ActivityRunTests.TheBotStoppingEndsTheActivityWhetherItStepsOrWaits`, seen never ending once, is the same race in
+    its waiting case: the test stops the bot once the run says `Waiting`, which the run says before it posts its start; a probe
+    that put that start after `Stopping` left the run never ending on the old code. Not seen in a loop.
+  - **A wait the stop ends was not taken for a stop by an activity's run: found by the review of `fix/bot-stop-race`, fixed on
+    2026-11-14 (`fix/stopped-activity`).** `BotActor` failed a wait with `ObjectDisposedException(nameof(BotActor), …)`, whose
+    `ObjectName` is `BotActor`, and `ActivityRun` takes a stop for one only when `ObjectName` is `typeof(BotActor).FullName`, as
+    `ObjectDisposedException.ThrowIf` names it. An activity that fights its fights, stopped while `FoughtAsync` waits for the fight's
+    end, therefore ended `Failed` with the exception as its `Failure`, not `Stopped`. `BotActor` now names the stopped bot by its
+    type's full name, as `ThrowIf(…, this)` does, for both the wait refused after the stop and the waits the stop ends.
+    `ActivityRunTests.TheBotStoppingWhileTheActivityWaitsForItsFightsEndStopsTheActivity` shows it, seen `Failed` on the old code;
+    `BotActorTests.AWaitEndsWithItsTokenOrTheBot` holds the name for both, seen red with the refused wait's old name put back.
+    `ActivityRun`'s two filters are the only code that reads that name. A step's own wait was never hit, since `RunBehaviorAsync`
+    turns what an interrupted behavior meets into `BotInterruptedException`.
+
+  The loops ran the test executables with xunit's `-longRunning`, alone, every project at once as `dotnet test` does, and beside busy
+  loops for the load. A `dotnet test` is run in the foreground: beside the Stop hook's `dotnet build`, a test process loses its
+  assemblies.
+
+- `D3B.Bis.Bot` is about 17,900 lines in 224 files and `D3B.Bis.Studio` about 6,300 in 141 (D393). The border is the compiler's, one way:
+  `D3B.Bis.Studio` references `D3B.Bis.Bot`, which knows nothing of it. Left over: `D3B.Bis.Studio.Routes` reaches the harvest and the fight
+  through `MapHarvest` and `MapFight`, now public, so a module of `D3B.Bis.Bot` cannot declare nodes (the node API is the studio's):
+  a future module in a project of its own can. Nine members and types of `D3B.Bis.Bot` became public so that the studio could use them
   (`BotContext.Actor`, `BotActor.Time`, `Log`, `PauseAfterStep`, `SettingDefinition.TryRead`, `ActivitySettingsBuilder`'s
   constructor and `Build`, `MapHarvest`, `MapFight`): a narrower seam would be a task of its own.
-- Files over 900 lines (D399): none any more. `FightJudge` (890, from 1,365: its pure turn arithmetic is `JudgeTurns`, its damage tables and landing caches `JudgeTables`, its odds `JudgeOdds`; its score's terms, threat, approach, marks and buffs stay in it, cut only with the replay of the captured fights, `scripts/fights.cs --turns`, compared before and after) and `RouteEditorViewModel` (886, from 1,238: its texts, map scene, step rows, action forms, undo history, path planning, typed anchor, trace and world menu are cut). `AssetsViewModel` (885), `Imagination` (864, its pure fighter helpers are `ImaginedFighters`), `WorldMapView` (848, its hit test is `WorldMapHitTesting`), `BotActor` (723) and `HarvestActivity` (709) are cut. `D3B.Bot` stays one project: its core (`Runtime`, `Activities`, `Banks`, `Movement`, `Journal`, `Characters`) refers to itself both ways, `Harvesting` and `Fighting` are the leaves.
+- Files over 900 lines (D399): none any more. `FightJudge` (890, from 1,365: its pure turn arithmetic is `JudgeTurns`, its damage tables and landing caches `JudgeTables`, its odds `JudgeOdds`; its score's terms, threat, approach, marks and buffs stay in it, cut only with the replay of the captured fights, `scripts/fights.cs --turns`, compared before and after) and `RouteEditorViewModel` (886, from 1,238: its texts, map scene, step rows, action forms, undo history, path planning, typed anchor, trace and world menu are cut). `AssetsViewModel` (885), `Imagination` (864, its pure fighter helpers are `ImaginedFighters`), `WorldMapView` (848, its hit test is `WorldMapHitTesting`), `BotActor` (723) and `HarvestActivity` (709) are cut. `D3B.Bis.Bot` stays one project: its core (`Runtime`, `Activities`, `Banks`, `Movement`, `Journal`, `Characters`) refers to itself both ways, `Harvesting` and `Fighting` are the leaves.
 - Undo has two histories: the route editor keeps its own snapshots (D375), the list of steps, the profile and the zone editors use
   `UndoHistory` (D394). Moving the route onto it is a change of no use by itself; do it when the route editor is next opened for another reason.
 - The zones are read by the harvest and the hunt as a place (D415) and by their editor; a zone is not yet a filter of the Automatic place, and the nodes and conditions of 7f do not read them.

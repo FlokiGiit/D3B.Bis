@@ -1,6 +1,6 @@
 using Cpp2IL.Core.Model.Contexts;
 
-namespace D3B.Scripts.Schema;
+namespace D3B.Bis.Scripts.Schema;
 
 /// <summary>How a message's code writes its fields, read from its machine code and checked against its metadata.</summary>
 /// <remarks>

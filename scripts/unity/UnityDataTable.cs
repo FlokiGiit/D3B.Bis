@@ -1,6 +1,6 @@
 using AssetsTools.NET.Extra;
 
-namespace D3B.Scripts.Unity;
+namespace D3B.Bis.Scripts.Unity;
 
 /// <summary>A game data table: the one <c>DataRoot</c> of <c>Content/Data/data_assets_&lt;name&gt;dataroot.asset.bundle</c>.</summary>
 /// <remarks>

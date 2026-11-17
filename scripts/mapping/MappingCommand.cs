@@ -4,17 +4,17 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Reflection;
 using System.Security.Cryptography;
-using D3B.Data;
-using D3B.Data.Packs;
-using D3B.Network.Relay;
-using D3B.Protocol.Mapping;
-using D3B.Protocol.Readable;
-using D3B.Protocol.Translation;
-using D3B.Scripts.Unity;
+using D3B.Bis.Data;
+using D3B.Bis.Data.Packs;
+using D3B.Bis.Network.Relay;
+using D3B.Bis.Protocol.Mapping;
+using D3B.Bis.Protocol.Readable;
+using D3B.Bis.Protocol.Translation;
+using D3B.Bis.Scripts.Unity;
 using Google.Protobuf;
 using Google.Protobuf.Reflection;
 
-namespace D3B.Scripts.Mapping;
+namespace D3B.Bis.Scripts.Mapping;
 
 /// <summary>The command that matches D3B's readable protocol with a build's schema, audits the result and writes the mapping.</summary>
 internal static class MappingCommand
@@ -31,15 +31,15 @@ internal static class MappingCommand
         };
         var data = new Option<DirectoryInfo?>("--data")
         {
-            Description = @"The directory packs, schemas and mappings are kept in, one directory per client version. Defaults to %LOCALAPPDATA%\D3B\data.",
+            Description = @"The directory packs, schemas and mappings are kept in, one directory per client version. Defaults to %LOCALAPPDATA%\D3B.Bis\data.",
         };
         var pins = new Option<DirectoryInfo?>("--pins")
         {
-            Description = "The directory of pinned pairs, one <client version>.json per build. Defaults to src/D3B.Protocol/Pins.",
+            Description = "The directory of pinned pairs, one <client version>.json per build. Defaults to src/D3B.Bis.Protocol/Pins.",
         };
         var captures = new Option<string[]>("--captures")
         {
-            Description = @"Captures of the build, which the anchors are measured in: directories as the host writes them, the game's in their game directory, or files. Defaults to %LOCALAPPDATA%\D3B\captures.",
+            Description = @"Captures of the build, which the anchors are measured in: directories as the host writes them, the game's in their game directory, or files. Defaults to %LOCALAPPDATA%\D3B.Bis\captures.",
             AllowMultipleArgumentsPerToken = true,
         };
         var withoutCaptures = new Option<bool>("--without-captures")
@@ -76,7 +76,7 @@ internal static class MappingCommand
     {
         var scripts = AppContext.GetData("EntryPointFileDirectoryPath") as string ?? Path.Combine(Directory.GetCurrentDirectory(), "scripts");
 
-        return Path.GetFullPath(Path.Combine(scripts, "..", "src", "D3B.Protocol", "Pins"));
+        return Path.GetFullPath(Path.Combine(scripts, "..", "src", "D3B.Bis.Protocol", "Pins"));
     }
 
     private static int Run(DirectoryInfo? clientDirectory, string? version, string root, string pinsDirectory, string[] capturePaths, bool json)

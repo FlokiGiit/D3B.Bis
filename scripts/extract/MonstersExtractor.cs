@@ -1,9 +1,9 @@
 using System.Globalization;
-using D3B.Data.Monsters;
-using D3B.Data.Spells;
-using D3B.Scripts.Unity;
+using D3B.Bis.Data.Monsters;
+using D3B.Bis.Data.Spells;
+using D3B.Bis.Scripts.Unity;
 
-namespace D3B.Scripts.Extract;
+namespace D3B.Bis.Scripts.Extract;
 
 /// <summary>Reads the monsters, their grades, spells and characteristic ratios, and their races; and the sub-areas each lists as its own.</summary>
 /// <remarks>

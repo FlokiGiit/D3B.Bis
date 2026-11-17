@@ -2,7 +2,7 @@ using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
 
-namespace D3B.Scripts.Icons;
+namespace D3B.Bis.Scripts.Icons;
 
 /// <summary>An IntelliJ icon read from its SVG file: the notice it carries and its shapes on a grid of 16.</summary>
 /// <remarks>

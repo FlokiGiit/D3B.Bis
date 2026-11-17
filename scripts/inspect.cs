@@ -33,7 +33,7 @@
 using System.CommandLine;
 using System.Globalization;
 using System.Text;
-using D3B.Scripts.Inspect;
+using D3B.Bis.Scripts.Inspect;
 
 // Describes the official client per area: bundles, types, objects, type layouts and texts.
 // Usage: dotnet run --file scripts/inspect.cs -- <command> [arguments] [options]; --help describes each command.

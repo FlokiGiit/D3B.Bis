@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Diagnostics.Testing" />
+    <PackageReference Include="Microsoft.Extensions.TimeProvider.Testing" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\D3B.Bis.Network\D3B.Bis.Network.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\D3B.Bis.Data.Tests\TemporaryDirectory.cs" Link="TemporaryDirectory.cs" />
+  </ItemGroup>
+
+</Project>

@@ -1,8 +1,8 @@
-using D3B.Data.Items;
-using D3B.Data.Jobs;
-using D3B.Scripts.Unity;
+using D3B.Bis.Data.Items;
+using D3B.Bis.Data.Jobs;
+using D3B.Bis.Scripts.Unity;
 
-namespace D3B.Scripts.Extract;
+namespace D3B.Bis.Scripts.Extract;
 
 /// <summary>Reads the jobs and the skills, checked against the items they gather.</summary>
 /// <remarks>

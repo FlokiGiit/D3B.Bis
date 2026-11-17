@@ -3,7 +3,7 @@
 #:package AssetsTools.NET
 #:package SkiaSharp
 #:package System.CommandLine
-#:project ../src/D3B.Data/D3B.Data.csproj
+#:project ../src/D3B.Bis.Data/D3B.Bis.Data.csproj
 #:include extract/BanksExtractor.cs
 #:include extract/BreedsExtractor.cs
 #:include extract/CharacteristicsExtractor.cs
@@ -41,7 +41,7 @@
 #:include unity/UnityTypeTree.cs
 
 using System.Globalization;
-using D3B.Scripts.Extract;
+using D3B.Bis.Scripts.Extract;
 
 // Extracts the game data of the installed client into the pack of its build (D10, D24): every map with its cells and
 // interactive elements and their graphics, the world graph, the atlas of map positions, sub-areas and their resources, areas

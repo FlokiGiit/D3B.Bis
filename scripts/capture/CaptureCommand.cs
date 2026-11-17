@@ -1,13 +1,13 @@
 using System.Buffers;
 using System.CommandLine;
-using D3B.Network.Captures;
-using D3B.Network.Framing;
-using D3B.Network.Relay;
-using D3B.Protocol.Mapping;
+using D3B.Bis.Network.Captures;
+using D3B.Bis.Network.Framing;
+using D3B.Bis.Network.Relay;
+using D3B.Bis.Protocol.Mapping;
 using Google.Protobuf;
 using Google.Protobuf.Reflection;
 
-namespace D3B.Scripts.Capture;
+namespace D3B.Bis.Scripts.Capture;
 
 /// <summary>The command that describes captures by their structure: reads, frames, sizes and shapes, never content.</summary>
 internal static class CaptureCommand
@@ -16,7 +16,7 @@ internal static class CaptureCommand
     {
         var paths = new Argument<string[]>("paths")
         {
-            Description = @"Capture files, or directories of them. Defaults to %LOCALAPPDATA%\D3B\captures, where the host records them.",
+            Description = @"Capture files, or directories of them. Defaults to %LOCALAPPDATA%\D3B.Bis\captures, where the host records them.",
             Arity = ArgumentArity.ZeroOrMore,
         };
         var frames = new Option<bool>("--frames")
@@ -25,7 +25,7 @@ internal static class CaptureCommand
         };
         var schema = new Option<FileInfo?>("--schema")
         {
-            Description = @"A schema scripts/schema.cs wrote, such as %LOCALAPPDATA%\D3B\data\<version>\schema-1.binpb: says which of its messages read every frame, and with --frames the type and name of every field there.",
+            Description = @"A schema scripts/schema.cs wrote, such as %LOCALAPPDATA%\D3B.Bis\data\<version>\schema-1.binpb: says which of its messages read every frame, and with --frames the type and name of every field there.",
         };
         var messages = new Option<bool>("--messages")
         {
@@ -33,7 +33,7 @@ internal static class CaptureCommand
         };
         var mapping = new Option<FileInfo?>("--mapping")
         {
-            Description = @"A build's mapping, such as %LOCALAPPDATA%\D3B\data\<version>\mapping-<format>.binpb: with --messages, also names each message the readable protocol pairs.",
+            Description = @"A build's mapping, such as %LOCALAPPDATA%\D3B.Bis\data\<version>\mapping-<format>.binpb: with --messages, also names each message the readable protocol pairs.",
         };
         var command = new RootCommand("Describes D3B's captures of relayed connections by their structure, never their content (D37).")
         {

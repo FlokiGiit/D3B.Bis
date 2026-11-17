@@ -1,4 +1,4 @@
-namespace D3B.Hooks;
+namespace D3B.Bis.Hooks;
 
 /// <summary>Which files the format hook formats: the C# of the projects, not generated code nor build output.</summary>
 internal static class FormatTarget

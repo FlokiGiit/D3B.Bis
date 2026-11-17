@@ -1,7 +1,7 @@
-using D3B.Data.Effects;
-using D3B.Scripts.Unity;
+using D3B.Bis.Data.Effects;
+using D3B.Bis.Scripts.Unity;
 
-namespace D3B.Scripts.Extract;
+namespace D3B.Bis.Scripts.Extract;
 
 /// <summary>Reads the effects spells and items name.</summary>
 /// <remarks>

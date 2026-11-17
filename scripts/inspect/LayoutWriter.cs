@@ -1,6 +1,6 @@
 using AssetsTools.NET;
 
-namespace D3B.Scripts.Inspect;
+namespace D3B.Bis.Scripts.Inspect;
 
 /// <summary>Writes the type tree of a type: the layout its objects are serialized with.</summary>
 /// <remarks>

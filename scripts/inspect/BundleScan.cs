@@ -1,6 +1,6 @@
 using System.Diagnostics;
 
-namespace D3B.Scripts.Inspect;
+namespace D3B.Bis.Scripts.Inspect;
 
 /// <summary>Reads many bundles in parallel, keeps their order, and reports the ones that fail without stopping.</summary>
 internal static class BundleScan

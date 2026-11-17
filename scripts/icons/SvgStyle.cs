@@ -1,7 +1,7 @@
 using System.Globalization;
 using System.Xml.Linq;
 
-namespace D3B.Scripts.Icons;
+namespace D3B.Bis.Scripts.Icons;
 
 /// <summary>The presentation an SVG element inherits from its parents: fill, stroke and their opacity.</summary>
 internal sealed record SvgStyle(string Fill, string Stroke, double StrokeWidth, string LineCap, string LineJoin, string FillRule, double Opacity)

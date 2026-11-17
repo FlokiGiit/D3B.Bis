@@ -1,19 +1,19 @@
 using System.Collections.Immutable;
 using System.Diagnostics;
-using D3B.Bot.Characters;
-using D3B.Bot.Fights;
-using D3B.Data;
-using D3B.Data.Maps;
-using D3B.Data.Spells;
-using D3B.Engine.Effects;
-using D3B.Engine.Fights;
-using D3B.Engine.Maps;
-using D3B.Engine.Tactics;
-using D3B.Network.Relay;
-using D3B.Protocol.Game;
+using D3B.Bis.Bot.Characters;
+using D3B.Bis.Bot.Fights;
+using D3B.Bis.Data;
+using D3B.Bis.Data.Maps;
+using D3B.Bis.Data.Spells;
+using D3B.Bis.Engine.Effects;
+using D3B.Bis.Engine.Fights;
+using D3B.Bis.Engine.Maps;
+using D3B.Bis.Engine.Tactics;
+using D3B.Bis.Network.Relay;
+using D3B.Bis.Protocol.Game;
 using Google.Protobuf;
 
-namespace D3B.Scripts.Fights;
+namespace D3B.Bis.Scripts.Fights;
 
 /// <summary>Replays every turn the characters played in the captures through the fight's AI, and sets what it foresaw against what happened.</summary>
 /// <remarks>

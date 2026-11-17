@@ -1,7 +1,7 @@
 using Google.Protobuf;
 using Google.Protobuf.Reflection;
 
-namespace D3B.Scripts.Capture;
+namespace D3B.Bis.Scripts.Capture;
 
 /// <summary>A protocol schema, a <c>FileDescriptorSet</c> such as <c>scripts/schema.cs</c> writes, matched against frames by structure.</summary>
 /// <remarks>

@@ -1,15 +1,15 @@
-using D3B.Data.Banks;
-using D3B.Data.Hints;
-using D3B.Data.Interactives;
-using D3B.Data.Items;
-using D3B.Data.Jobs;
-using D3B.Data.Npcs;
-using D3B.Data.Texts;
-using D3B.Data.World;
-using D3B.Data.WorldMaps;
-using D3B.Scripts.Unity;
+using D3B.Bis.Data.Banks;
+using D3B.Bis.Data.Hints;
+using D3B.Bis.Data.Interactives;
+using D3B.Bis.Data.Items;
+using D3B.Bis.Data.Jobs;
+using D3B.Bis.Data.Npcs;
+using D3B.Bis.Data.Texts;
+using D3B.Bis.Data.World;
+using D3B.Bis.Data.WorldMaps;
+using D3B.Bis.Scripts.Unity;
 
-namespace D3B.Scripts.Extract;
+namespace D3B.Bis.Scripts.Extract;
 
 /// <summary>Reads, in each language of <see cref="TextLanguages.All"/>, the numbered texts the pack's tables name.</summary>
 /// <remarks>

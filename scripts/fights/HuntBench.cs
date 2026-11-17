@@ -1,16 +1,16 @@
 using System.Globalization;
-using D3B.Bot.Characters;
-using D3B.Bot.Fighting;
-using D3B.Data;
-using D3B.Data.Maps;
-using D3B.Engine.Fights;
-using D3B.Engine.Tactics;
-using D3B.Network.Captures;
-using D3B.Network.Relay;
-using D3B.Protocol.Game;
+using D3B.Bis.Bot.Characters;
+using D3B.Bis.Bot.Fighting;
+using D3B.Bis.Data;
+using D3B.Bis.Data.Maps;
+using D3B.Bis.Engine.Fights;
+using D3B.Bis.Engine.Tactics;
+using D3B.Bis.Network.Captures;
+using D3B.Bis.Network.Relay;
+using D3B.Bis.Protocol.Game;
 using Google.Protobuf;
 
-namespace D3B.Scripts.Fights;
+namespace D3B.Bis.Scripts.Fights;
 
 /// <summary>Counts what came of the attacks on monster groups in the captures, the fighting activity's and the player's: the walks before each, the server's answer, the AI's judgement of the group against the fight's outcome, and the pace between fights (D245).</summary>
 /// <remarks>

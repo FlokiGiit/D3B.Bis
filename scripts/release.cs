@@ -1,9 +1,9 @@
 #!/usr/bin/env dotnet
 #:package Google.Protobuf
 #:package System.CommandLine
-#:project ../src/D3B.Bot/D3B.Bot.csproj
-#:project ../src/D3B.Data/D3B.Data.csproj
-#:project ../src/D3B.Protocol/D3B.Protocol.csproj
+#:project ../src/D3B.Bis.Bot/D3B.Bis.Bot.csproj
+#:project ../src/D3B.Bis.Data/D3B.Bis.Data.csproj
+#:project ../src/D3B.Bis.Protocol/D3B.Bis.Protocol.csproj
 #:include unity/GitHubCli.cs
 #:include release/ReleaseAsset.cs
 #:include release/ReleaseCommand.cs
@@ -11,7 +11,7 @@
 #:include unity/ClientInstall.cs
 
 using System.Globalization;
-using D3B.Scripts.Release;
+using D3B.Bis.Scripts.Release;
 
 // Publishes the pack, the obfuscated schema and the protocol mapping of a client build as assets of the release
 // client-<version> (D24, D33, D50), each with its SHA-256 beside it: the release is created when it does not exist, and

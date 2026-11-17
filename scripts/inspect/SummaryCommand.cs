@@ -2,7 +2,7 @@ using System.CommandLine;
 using System.Text.Json;
 using AssetsTools.NET.Extra;
 
-namespace D3B.Scripts.Inspect;
+namespace D3B.Bis.Scripts.Inspect;
 
 /// <summary><c>summary</c>: the client's versions, then its bundles and other files per area.</summary>
 internal static class SummaryCommand

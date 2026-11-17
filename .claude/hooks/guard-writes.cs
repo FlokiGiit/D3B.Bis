@@ -6,7 +6,7 @@
 #:include shared/ProjectPath.cs
 #:include shared/WriteGuard.cs
 
-using D3B.Hooks;
+using D3B.Bis.Hooks;
 
 // PreToolUse on Edit, Write and NotebookEdit: refuses to write what is extracted from the official client, and the
 // references in vendor/. The logic is in shared/WriteGuard.cs, with its tests.

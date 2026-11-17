@@ -1,4 +1,4 @@
-namespace D3B.Scripts.Unity;
+namespace D3B.Bis.Scripts.Unity;
 
 /// <summary>Reads one object of a registry of managed references, with a reader at its first field.</summary>
 /// <param name="id">The object's identifier, which references to it name.</param>

@@ -2,7 +2,7 @@ using System.Globalization;
 using System.Reflection;
 using Cpp2IL.Core.Model.Contexts;
 
-namespace D3B.Scripts.Schema;
+namespace D3B.Bis.Scripts.Schema;
 
 /// <summary>A message's fields and oneofs, read from the members protobuf's C# generator gives every message.</summary>
 /// <remarks>

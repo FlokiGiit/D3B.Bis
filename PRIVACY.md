@@ -5,11 +5,11 @@ there, and what leaves your computer if you choose to send a bug report.
 
 ## What D3B keeps on your computer
 
-- **Captures of your game sessions**, in `%LOCALAPPDATA%\D3B\captures\game`: the bytes your game client and the game
+- **Captures of your game sessions**, in `%LOCALAPPDATA%\D3B.Bis\captures\game`: the bytes your game client and the game
   server exchanged, so that a bug can be replayed. A capture holds your session's login ticket and what the server told
   your client: your characters, their inventory and maps, and the names of the other players around them. It is kept 7
   days and up to 1 GB by default, then deleted; the Network settings change both and turn the recording off.
-- **A database and your settings** in `%LOCALAPPDATA%\D3B`: the accounts and characters D3B saw, what the bots learned, your
+- **A database and your settings** in `%LOCALAPPDATA%\D3B.Bis`: the accounts and characters D3B saw, what the bots learned, your
   profiles and routes.
 
 None of it leaves your computer by itself.
@@ -33,7 +33,10 @@ The report also says the app's version, the client build, the area of the bug an
 
 ## Where it goes and who reads it
 
-A report is posted to a private channel of a Discord server that only D3B's maintainers read. Discord is a third party
+D3B.Bis has published no channel yet (D426): pressing Send finds none, says so, and the report stays a file on your
+computer, which you hand over yourself or not at all. Once a channel is published, what follows holds.
+
+A report is posted to a private channel of a Discord server that only D3B.Bis's maintainers read. Discord is a third party
 with its own [privacy policy](https://discord.com/privacy): it stores the file for as long as the maintainers leave it.
 The maintainers delete a report once its bug is fixed and at the latest 90 days after they received it.
 
@@ -47,7 +50,7 @@ and is never committed to the repository or used in a public test.
 
 - Send nothing: turn the recording off, or never use Report a bug.
 - Send less: uncheck any part in the preview, except the capture of a bug of the game.
-- Ask for a deletion: give the maintainers the report's code (`D3B-XXXX-XX`, shown when it is saved) on
-  [Discord](https://discord.com/invite/6A6Vw9Mn24) or in an issue, and it is deleted.
+- Ask for a deletion: give the maintainers the report's code (`D3B-XXXX-XX`, shown when it is saved) in an issue, and it
+  is deleted.
 
 D3B is not affiliated with Ankama. Questions about this page: open an issue or ask on Discord.

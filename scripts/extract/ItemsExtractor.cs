@@ -1,9 +1,9 @@
-using D3B.Data.Effects;
-using D3B.Data.Items;
-using D3B.Data.Spells;
-using D3B.Scripts.Unity;
+using D3B.Bis.Data.Effects;
+using D3B.Bis.Data.Items;
+using D3B.Bis.Data.Spells;
+using D3B.Bis.Scripts.Unity;
 
-namespace D3B.Scripts.Extract;
+namespace D3B.Bis.Scripts.Extract;
 
 /// <summary>Reads the items and their types, and the weapons with their effects and their types' zones.</summary>
 /// <remarks>

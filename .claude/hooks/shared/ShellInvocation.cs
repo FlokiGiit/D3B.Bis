@@ -1,4 +1,4 @@
-namespace D3B.Hooks;
+namespace D3B.Bis.Hooks;
 
 /// <summary>A <c>git</c> or <c>gh</c> call read from one segment of a shell command, git's global options skipped.</summary>
 internal sealed class ShellInvocation

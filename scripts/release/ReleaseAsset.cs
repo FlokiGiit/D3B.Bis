@@ -1,7 +1,7 @@
 using System.Security.Cryptography;
-using D3B.Data.Releases;
+using D3B.Bis.Data.Releases;
 
-namespace D3B.Scripts.Release;
+namespace D3B.Bis.Scripts.Release;
 
 /// <summary>A file made from a client build, to publish as an asset of its release with its SHA-256 beside it (D24).</summary>
 internal sealed class ReleaseAsset

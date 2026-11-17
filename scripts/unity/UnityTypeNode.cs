@@ -1,4 +1,4 @@
-namespace D3B.Scripts.Unity;
+namespace D3B.Bis.Scripts.Unity;
 
 /// <summary>A node of a <see cref="UnityTypeTree"/>: a field, its type, and how it is laid out.</summary>
 internal sealed class UnityTypeNode

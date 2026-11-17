@@ -9,7 +9,7 @@
 #:include shared/ShellCommand.cs
 #:include shared/ShellInvocation.cs
 
-using D3B.Hooks;
+using D3B.Bis.Hooks;
 
 // PreToolUse on Bash and PowerShell: refuses a push to main, a forced push and git reset --hard, and asks the owner
 // before any other push and before gh publishes or merges anything. The logic is in shared/GitGuard.cs, with its tests.

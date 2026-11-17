@@ -1,4 +1,4 @@
-namespace D3B.Scripts.Icons;
+namespace D3B.Bis.Scripts.Icons;
 
 /// <summary>One shape of an icon: its outline as a path, what fills it and what strokes it, on the icon's grid of 16.</summary>
 /// <param name="Data">The outline, in Avalonia's path syntax, its fill rule first.</param>

@@ -1,15 +1,15 @@
 using System.CommandLine;
 using System.Diagnostics;
 using System.Security.Cryptography;
-using D3B.Data;
-using D3B.Data.Packs;
-using D3B.Protocol.Mapping;
-using D3B.Scripts.Unity;
+using D3B.Bis.Data;
+using D3B.Bis.Data.Packs;
+using D3B.Bis.Protocol.Mapping;
+using D3B.Bis.Scripts.Unity;
 using Google.Protobuf;
 using Google.Protobuf.Reflection;
 using Google.Protobuf.WellKnownTypes;
 
-namespace D3B.Scripts.Schema;
+namespace D3B.Bis.Scripts.Schema;
 
 /// <summary>The command that reads the installed client's protocol and writes its obfuscated schema.</summary>
 internal static class SchemaCommand
@@ -28,7 +28,7 @@ internal static class SchemaCommand
         };
         var output = new Option<DirectoryInfo?>("--output")
         {
-            Description = @"The directory schemas are kept in, one directory per client version, beside the packs. Defaults to %LOCALAPPDATA%\D3B\data.",
+            Description = @"The directory schemas are kept in, one directory per client version, beside the packs. Defaults to %LOCALAPPDATA%\D3B.Bis\data.",
         };
         var proto = new Option<DirectoryInfo?>("--proto")
         {

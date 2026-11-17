@@ -4,7 +4,7 @@
 #:include shared/ProcessRunner.cs
 #:include shared/TurnCheck.cs
 
-using D3B.Hooks;
+using D3B.Bis.Hooks;
 
 // Stop: builds the solution when the turn left changed code, since warnings are errors and the analyzers hold the style.
 // It builds again only when a file changed, so that Claude's fix is checked and a repeated turn is not; it lets a build

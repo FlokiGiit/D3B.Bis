@@ -1,7 +1,7 @@
 using System.Diagnostics;
 using System.Text.RegularExpressions;
 
-namespace D3B.Scripts.Docs;
+namespace D3B.Bis.Scripts.Docs;
 
 /// <summary>Reads the Markdown files of the repository and finds the links to a file or a heading that does not exist.</summary>
 internal static partial class LinkChecker

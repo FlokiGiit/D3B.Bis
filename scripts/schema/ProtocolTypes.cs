@@ -1,6 +1,6 @@
 using Cpp2IL.Core.Model.Contexts;
 
-namespace D3B.Scripts.Schema;
+namespace D3B.Bis.Scripts.Schema;
 
 /// <summary>What protobuf's C# code makes of a protocol's types, told from the client's metadata.</summary>
 internal static class ProtocolTypes

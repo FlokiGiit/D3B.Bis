@@ -1,4 +1,4 @@
-namespace D3B.Hooks;
+namespace D3B.Bis.Hooks;
 
 /// <summary>What a guard does with a tool call it does not let through silently.</summary>
 internal enum HookDecision

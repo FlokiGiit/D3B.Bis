@@ -1,12 +1,12 @@
 using AssetsTools.NET.Extra;
-using D3B.Data.Items;
-using D3B.Data.Jobs;
-using D3B.Data.Maps;
-using D3B.Data.Monsters;
-using D3B.Data.World;
-using D3B.Scripts.Unity;
+using D3B.Bis.Data.Items;
+using D3B.Bis.Data.Jobs;
+using D3B.Bis.Data.Maps;
+using D3B.Bis.Data.Monsters;
+using D3B.Bis.Data.World;
+using D3B.Bis.Scripts.Unity;
 
-namespace D3B.Scripts.Extract;
+namespace D3B.Bis.Scripts.Extract;
 
 /// <summary>Reads the world: the client's world graph, and the tables of the atlas (positions, sub-areas and their resources and monsters, areas, zaaps).</summary>
 /// <remarks>

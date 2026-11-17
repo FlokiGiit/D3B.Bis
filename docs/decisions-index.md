@@ -31,7 +31,7 @@ or refines another says so in its own entry. Add a line here with every new deci
 - [D19](decisions/d019-d023-step-1.md#d19-the-solutions-layout-and-build) The solution's layout and build (2026-10-27)
 - [D20](decisions/d019-d023-step-1.md#d20-how-modules-compose) How modules compose (2026-10-27)
 - [D21](decisions/d019-d023-step-1.md#d21-the-plugin-contract) The plugin contract (2026-10-27)
-- [D22](decisions/d019-d023-step-1.md#d22-plugins-compile-against-the-d3bcore-package) Plugins compile against the D3B.Core package (2026-10-27)
+- [D22](decisions/d019-d023-step-1.md#d22-plugins-compile-against-the-d3bbiscore-package) Plugins compile against the D3B.Bis.Core package (2026-10-27)
 - [D23](decisions/d019-d023-step-1.md#d23-mitm-only-no-socket-mode) MITM only, no socket mode (2026-10-27)
 
 ## Step 2 (D24 to D33)
@@ -51,7 +51,7 @@ or refines another says so in its own entry. Add a line here with every new deci
 
 - [D34](decisions/d034-d063-step-3.md#d34-a-hosts-line-brings-each-client-to-d3b-which-rewrites-the-game-servers-address) A hosts line brings each client to D3B, which rewrites the game server's address (2026-10-27)
 - [D35](decisions/d034-d063-step-3.md#d35-the-clients-configuration-brings-it-to-d3b-rewritten-by-the-host-while-it-runs) The client's configuration brings it to D3B, rewritten by the host while it runs (2026-10-27)
-- [D36](decisions/d034-d063-step-3.md#d36-d3bnetwork-relays-the-connection-phase) D3B.Network relays the connection phase (2026-10-27)
+- [D36](decisions/d034-d063-step-3.md#d36-d3bbisnetwork-relays-the-connection-phase) D3B.Bis.Network relays the connection phase (2026-10-27)
 - [D37](decisions/d034-d063-step-3.md#d37-captures-record-raw-reads-in-a-format-of-our-own) Captures record raw reads, in a format of our own (2026-10-27)
 - [D38](decisions/d034-d063-step-3.md#d38-the-connection-is-varint-framed-protobuf-in-the-clear) The connection is varint-framed protobuf, in the clear (2026-10-27)
 - [D39](decisions/d034-d063-step-3.md#d39-the-obfuscated-schema-is-a-protobuf-filedescriptorset) The obfuscated schema is a protobuf FileDescriptorSet (2026-10-27)
@@ -86,10 +86,10 @@ or refines another says so in its own entry. Add a line here with every new deci
 - [D65](decisions/d064-d090-step-4.md#d65-one-bot-per-character-its-account-known-by-the-ticket) One bot per character, its account known by the ticket (2026-10-28)
 - [D66](decisions/d064-d090-step-4.md#d66-the-player-wins-and-the-bot-pauses-until-it-is-resumed) The player wins, and the bot pauses until it is resumed (2026-10-28)
 - [D67](decisions/d064-d090-step-4.md#d67-the-bots-run-time) The bot's run time (2026-10-28)
-- [D68](decisions/d064-d090-step-4.md#d68-cells-and-paths-in-d3bengine) Cells and paths in D3B.Engine (2026-10-28)
+- [D68](decisions/d064-d090-step-4.md#d68-cells-and-paths-in-d3bbisengine) Cells and paths in D3B.Bis.Engine (2026-10-28)
 - [D69](decisions/d064-d090-step-4.md#d69-the-first-behavior-walking-on-a-map-and-its-refusal-named) The first behavior, walking on a map, and its refusal named (2026-10-28)
 - [D70](decisions/d064-d090-step-4.md#d70-bot-states-compared-with-snapshots-written-in-the-tests-not-verify) Bot states compared with snapshots written in the tests, not Verify (2026-10-28)
-- [D71](decisions/d064-d090-step-4.md#d71-paths-through-the-world-in-d3bengine-their-criteria-answered-strictly) Paths through the world in D3B.Engine, their criteria answered strictly (2026-10-28)
+- [D71](decisions/d064-d090-step-4.md#d71-paths-through-the-world-in-d3bbisengine-their-criteria-answered-strictly) Paths through the world in D3B.Bis.Engine, their criteria answered strictly (2026-10-28)
 - [D72](decisions/d064-d090-step-4.md#d72-the-accounts-subscription-read-from-its-identification-prudently) The account's subscription, read from its identification, prudently (2026-10-28)
 - [D73](decisions/d064-d090-step-4.md#d73-changing-maps) Changing maps (2026-10-28)
 - [D74](decisions/d064-d090-step-4.md#d74-travelling-from-map-to-map) Travelling from map to map (2026-10-28)
@@ -116,7 +116,7 @@ or refines another says so in its own entry. Add a line here with every new deci
 - [D92](decisions/d091-d102-step-5.md#d92-step-5-in-five-sessions) Step 5 in five sessions (2026-10-29)
 - [D93](decisions/d091-d102-step-5.md#d93-activities-the-app-starts-from-a-catalogue-the-modules-fill) Activities the app starts, from a catalogue the modules fill (2026-10-29)
 - [D94](decisions/d091-d102-step-5.md#d94-the-apps-first-version) The app's first version (2026-10-29)
-- [D95](decisions/d091-d102-step-5.md#d95-plugins-compile-against-the-d3bbot-package) Plugins compile against the D3B.Bot package (2026-10-29)
+- [D95](decisions/d091-d102-step-5.md#d95-plugins-compile-against-the-d3bbisbot-package) Plugins compile against the D3B.Bis.Bot package (2026-10-29)
 - [D96](decisions/d091-d102-step-5.md#d96-a-plugins-page-in-the-apps-rail) A plugin's page, in the app's rail (2026-10-29)
 - [D97](decisions/d091-d102-step-5.md#d97-the-loader-reads-a-plugins-root-module-from-its-metadata) The loader reads a plugin's root module from its metadata (2026-10-29)
 - [D98](decisions/d091-d102-step-5.md#d98-an-activitys-settings-a-class-its-module-describes-in-code) An activity's settings, a class its module describes in code (2026-10-29)
@@ -218,7 +218,7 @@ or refines another says so in its own entry. Add a line here with every new deci
 - [D182](decisions/d176-d208-step-9.md#d182-the-fights-data-in-the-pack-format-5) The fight's data in the pack, format 5 (2026-10-30)
 - [D183](decisions/d176-d208-step-9.md#d183-the-flags-and-names-read-from-the-clients-code) The flags and names read from the client's code (2026-10-30)
 - [D184](decisions/d176-d208-step-9.md#d184-the-casts-level-and-the-fighters-and-loots-monsters-checked-monsters-named-on-the-map) The cast's level and the fighters' and loot's monsters, checked; monsters named on the map (2026-10-30)
-- [D185](decisions/d176-d208-step-9.md#d185-9cs-rules-in-d3bengine-pure-measured-on-every-cast-and-walk-captured) 9c's rules in `D3B.Engine`, pure, measured on every cast and walk captured (2026-10-30)
+- [D185](decisions/d176-d208-step-9.md#d185-9cs-rules-in-d3bbisengine-pure-measured-on-every-cast-and-walk-captured) 9c's rules in `D3B.Bis.Engine`, pure, measured on every cast and walk captured (2026-10-30)
 - [D186](decisions/d176-d208-step-9.md#d186-range-and-line-of-sight) Range and line of sight (2026-10-30)
 - [D187](decisions/d176-d208-step-9.md#d187-zones-and-target-masks) Zones and target masks (2026-10-30)
 - [D188](decisions/d176-d208-step-9.md#d188-a-casts-conditions-costs-and-cooldowns) A cast's conditions, costs and cooldowns (2026-10-30)
@@ -350,7 +350,7 @@ or refines another says so in its own entry. Add a line here with every new deci
 - [D311](decisions/d293-d358-step-7.md#d311-the-blueprints-as-beautiful-and-as-practical-as-unreals) The blueprints as beautiful and as practical as Unreal's (2026-11-02)
 - [D312](decisions/d293-d358-step-7.md#d312-the-migration-from-zero-confirmed-with-a-copy-of-the-database-first) The migration from zero, confirmed, with a copy of the database first (2026-11-02)
 - [D313](decisions/d293-d358-step-7.md#d313-wires-of-execution-and-of-typed-data-as-unreals) Wires of execution and of typed data, as Unreal's (2026-11-02)
-- [D314](decisions/d293-d358-step-7.md#d314-the-project-in-d3bbot-a-file-per-asset-its-name-the-files-a-stable-id-given-assets-made-from-the-modules) The project in `D3B.Bot`: a file per asset, its name the file's, a stable id, given assets made from the modules (2026-11-02)
+- [D314](decisions/d293-d358-step-7.md#d314-the-project-in-d3bbisbot-a-file-per-asset-its-name-the-files-a-stable-id-given-assets-made-from-the-modules) The project in `D3B.Bis.Bot`: a file per asset, its name the file's, a stable id, given assets made from the modules (2026-11-02)
 - [D315](decisions/d293-d358-step-7.md#d315-how-a-behavior-runs-from-the-first-action-at-each-step-a-state-played-to-its-end-done-urgent-states-and-rules-on-the-bots-loop) How a behavior runs: from the first action at each step, a state played to its end done, urgent states and rules on the bot's loop (2026-11-02)
 - [D316](decisions/d293-d358-step-7.md#d316-nodes-declared-in-c-their-values-an-activitys-settings-the-conditions-and-events-the-state-already-reads-variables-of-three-scopes) Nodes declared in C#, their values an activity's settings; the conditions and events the state already reads; variables of three scopes (2026-11-02)
 - [D317](decisions/d293-d358-step-7.md#d317-profiles-as-variants-and-the-apps-profile-editor-until-the-studios) Profiles as variants, and the app's profile editor until the studio's (2026-11-02)
@@ -444,7 +444,7 @@ or refines another says so in its own entry. Add a line here with every new deci
 
 ## Architecture (D393)
 
-- [D393](decisions/d393-architecture.md#d393-the-studios-model-leaves-d3bbot-for-a-project-of-its-own-d3bstudio) The studio's model leaves `D3B.Bot` for a project of its own, `D3B.Studio` (2026-11-08)
+- [D393](decisions/d393-architecture.md#d393-the-studios-model-leaves-d3bbisbot-for-a-project-of-its-own-d3bbisstudio) The studio's model leaves `D3B.Bis.Bot` for a project of its own, `D3B.Bis.Studio` (2026-11-08)
 
 ## Step 7, 7d4 (D394)
 
@@ -462,8 +462,8 @@ or refines another says so in its own entry. Add a line here with every new deci
 
 ## Tidy-up (D399 to D401)
 
-- [D399](decisions/d399-d401-tidy-up.md#d399-d3bbot-stays-one-project-and-is-cut-by-files-and-the-six-files-over-900-lines-are-split) D3B.Bot stays one project and is cut by files, and the six files over 900 lines are split (2026-11-09)
-  - `D3B.Bot.Harvesting` and `D3B.Bot.Fighting` as projects of their own: a new surface to decide for about 4,700 lines.
+- [D399](decisions/d399-d401-tidy-up.md#d399-d3bbisbot-stays-one-project-and-is-cut-by-files-and-the-six-files-over-900-lines-are-split) D3B.Bis.Bot stays one project and is cut by files, and the six files over 900 lines are split (2026-11-09)
+  - `D3B.Bis.Bot.Harvesting` and `D3B.Bis.Bot.Fighting` as projects of their own: a new surface to decide for about 4,700 lines.
   - Layers by namespace guarded by an architecture test: the owner chose the files only.
 - [D400](decisions/d399-d401-tidy-up.md#d400-benchmarkdotnet-is-dropped) BenchmarkDotNet is dropped (2026-11-09)
   - Removing the fight scripts too: they measure the AI's quality, not its speed.
@@ -559,3 +559,13 @@ or refines another says so in its own entry. Add a line here with every new deci
   - The far cell kept for an element beside another zone, going to the other zone in the same change, skipping silently.
 - [D425](decisions/d424-step-9-the-harvests-zones.md#d425-the-harvests-tour-goes-into-another-zone-of-a-map-as-one-more-place-of-its-tour-once-per-tour-by-a-goal-of-vertices-its-sets-stay-keyed-by-map) The harvest's tour goes into another zone of a map as one more place of its tour, once per tour, by a goal of vertices; its sets stay keyed by map (2026-11-10)
   - Keying every set of the tour by vertex, visiting the other zone before the map is done, wanting every zone an element borders, going whatever the way costs.
+
+## D3B.Bis (D426)
+
+- [D426](decisions/d426-d3b-bis.md#d426-d3bbis-continues-d3b-in-a-repository-of-its-own-its-projects-and-namespaces-under-d3bbis-its-files-in-a-folder-of-its-own-d3bs-formats-kept) D3B.Bis continues D3B in a repository of its own, its projects and namespaces under D3B.Bis, its files in a folder of its own, D3B's formats kept (2026-11-13)
+  - Keeping `%LOCALAPPDATA%\D3B`, moving D3B's files, storing the new type names in the packs, renaming the magics and extensions, rewriting D3B throughout the docs.
+
+## The marketplace dropped (D439)
+
+- [D439](decisions/d439-the-marketplace-dropped.md#d439-the-owner-drops-the-marketplace-the-bot-neither-follows-prices-nor-sells-the-work-of-d427-to-d438-stays-on-branches-never-merged-the-fixes-found-on-the-way-are-kept) The owner drops the marketplace: the bot neither follows prices nor sells, the work of D427 to D438 stays on branches never merged, the fixes found on the way are kept (2026-11-17)
+  - Keeping the following of prices alone, reverting the marketplace on top of its branches, deleting the branches on `origin` now.

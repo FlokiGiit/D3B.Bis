@@ -35,9 +35,9 @@ anywhere a person speaks for D3B in public.
 
 ## Reporting
 
-If someone's conduct harms you or others, report it privately to the maintainer, Aerafal
-([AerafalDev](https://github.com/AerafalDev) on GitHub), through the repository's private reporting form: on the
-[Security](https://github.com/AerafalDev/D3B/security) tab, choose *Report a vulnerability* and start its title with
+If someone's conduct harms you or others, report it privately to the maintainer
+([FlokiGiit](https://github.com/FlokiGiit) on GitHub), through the repository's private reporting form: on the
+[Security](https://github.com/FlokiGiit/D3B.Bis/security) tab, choose *Report a vulnerability* and start its title with
 "Conduct". Only the maintainer reads it. Say what happened, where, with links to the comments involved, and whether you
 want to stay anonymous towards the person you report.
 

@@ -1,6 +1,6 @@
 using System.CommandLine;
 
-namespace D3B.Scripts.Inspect;
+namespace D3B.Bis.Scripts.Inspect;
 
 /// <summary>The arguments and options several commands share, and how a command runs against the client.</summary>
 internal static class CommonOptions

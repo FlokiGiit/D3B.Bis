@@ -1,6 +1,6 @@
 using Cpp2IL.Core.Model.Contexts;
 
-namespace D3B.Scripts.Schema;
+namespace D3B.Bis.Scripts.Schema;
 
 /// <summary>A call in a method's lifted code, with the constants its argument registers held.</summary>
 internal sealed class IsilCall

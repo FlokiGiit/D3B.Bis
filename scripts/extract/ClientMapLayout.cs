@@ -1,4 +1,4 @@
-namespace D3B.Scripts.Extract;
+namespace D3B.Bis.Scripts.Extract;
 
 /// <summary>The two layouts the client stores maps in (client.md).</summary>
 internal enum ClientMapLayout

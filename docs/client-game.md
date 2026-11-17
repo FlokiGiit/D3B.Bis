@@ -741,7 +741,7 @@ resources' protectors', which name the character the attacker too. By structure,
 
 Measured on 2026-10-30 for session 9c (D185 to D191): 49 fights, the 11 of the 40 earlier game connections and 38 of 12
 the owner captured for 9c with 11 breeds at low levels, replayed through the bot's fight state and the pack of format 5,
-each cast and walk checked against `D3B.Engine`'s rules, with a measuring tool never committed that prints counts.
+each cast and walk checked against `D3B.Bis.Engine`'s rules, with a measuring tool never committed that prints counts.
 
 - **Casts chosen and cast by effects.** Of 977 casts, 396 are the first cast of a sequence of a spell (0) the caster
   authored: the casts the fighters chose, 231 the characters' and 165 monsters' and summons'. The other 581 are cast by

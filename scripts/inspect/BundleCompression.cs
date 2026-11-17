@@ -1,4 +1,4 @@
-namespace D3B.Scripts.Inspect;
+namespace D3B.Bis.Scripts.Inspect;
 
 /// <summary>How a block of a UnityFS bundle is compressed: the low six bits of its flags.</summary>
 internal enum BundleCompression

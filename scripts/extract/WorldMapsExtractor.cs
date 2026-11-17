@@ -4,11 +4,11 @@ using AssetRipper.TextureDecoder.Bc;
 using AssetRipper.TextureDecoder.Rgb.Formats;
 using AssetsTools.NET;
 using AssetsTools.NET.Extra;
-using D3B.Data.WorldMaps;
-using D3B.Scripts.Unity;
+using D3B.Bis.Data.WorldMaps;
+using D3B.Bis.Scripts.Unity;
 using SkiaSharp;
 
-namespace D3B.Scripts.Extract;
+namespace D3B.Bis.Scripts.Extract;
 
 /// <summary>Reads the world maps' images of the client, and the worlds they draw, into tiles of JPEG (D308, D369).</summary>
 /// <remarks>
@@ -265,7 +265,7 @@ internal static partial class WorldMapsExtractor
 
     private static (WorldMapCatalog Catalog, IReadOnlyList<(string Name, byte[] Jpeg)> Tiles) Build(SortedDictionary<int, World> worlds, SortedDictionary<(int World, int Zoom, int Index), (string Name, byte[] Jpeg, int Width, int Height)> tiles)
     {
-        var rows = new List<D3B.Data.WorldMaps.WorldMap>(worlds.Count);
+        var rows = new List<D3B.Bis.Data.WorldMaps.WorldMap>(worlds.Count);
         var levels = new List<WorldMapLevel>();
         var rounded = 0;
         var most = 0d;
@@ -318,7 +318,7 @@ internal static partial class WorldMapsExtractor
                 levels.Add(level);
             }
 
-            rows.Add(new D3B.Data.WorldMaps.WorldMap(world.Id, world.NameId, world.OriginX, world.OriginY, world.MapWidth, world.MapHeight, world.MinScale, world.MaxScale, world.StartScale, world.Width, world.Height, world.Visible, first, world.Zooms.Count));
+            rows.Add(new D3B.Bis.Data.WorldMaps.WorldMap(world.Id, world.NameId, world.OriginX, world.OriginY, world.MapWidth, world.MapHeight, world.MinScale, world.MaxScale, world.StartScale, world.Width, world.Height, world.Visible, first, world.Zooms.Count));
         }
 
         if (tiles.Count != levels.Sum(level => level.TileCount))

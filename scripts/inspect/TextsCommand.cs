@@ -1,7 +1,7 @@
 using System.CommandLine;
-using D3B.Scripts.Unity;
+using D3B.Bis.Scripts.Unity;
 
-namespace D3B.Scripts.Inspect;
+namespace D3B.Bis.Scripts.Inspect;
 
 /// <summary><c>texts</c>: the client's text files, one per language.</summary>
 internal static class TextsCommand

@@ -15,14 +15,14 @@ Dofus_Data/StreamingAssets/** ────────► extraction: Unity read
 GameAssembly.dll + metadata   ────────► mapping: schema, captures, matching ─────►  schema, protocol mapping
                                                                                              │ shipped with the app (D172)
                                                                                              ▼
-D3B.App (Avalonia, ShadUI) ── runs in its own process (D91) ──► the bots' host: Generic Host, Kestrel
+D3B.Bis.App (Avalonia, ShadUI) ── in its own process (D91) ───► the bots' host: Generic Host, Kestrel
 installed and updated by Velopack from the releases (D171, D173)
-D3B.Host: the same host, without the app                          │ BotBuilder: default modules, storage (D5)
+D3B.Bis.Host: the same host, without the app                      │ BotBuilder: default modules, storage (D5)
                                                                   ▼
                                                                 one async actor per bot (D9)
                                                                   │ acts through
                                                                   ▼
-official client, one per account ──── its configuration, ──► D3B.Network: Kestrel   ────►  Ankama's connection
+official client, one per account ──── its configuration, ──► D3B.Bis.Network: Kestrel ──►  Ankama's connection
 started by the official launcher      then a rewritten       on a loopback address         server, then game server
                                       address (D35, D51)     (D8, D23, D36, D52)
 ```
@@ -32,27 +32,34 @@ session 3e (D48).
 
 ## Projects
 
-Confirmed at step 1 (D19). Every project exists in `D3B.slnx`; those with no code yet are empty class libraries, and
+Confirmed at step 1 (D19). Every project exists in `D3B.Bis.slnx`; those with no code yet are empty class libraries, and
 each step adds the references it needs.
+
+The projects, assemblies and namespaces are named `D3B.Bis.*` since D426, when D3B.Bis left D3B for a repository of its
+own: no project sets a `RootNamespace` or an `AssemblyName`, both come from the project file's name. What a file or the
+wire holds kept D3B's name, because it is a format and not a brand: the packs' and captures' magics (`D3B-PACK`,
+`D3B-CAPT`), the type names a pack's index stores (`PackTypeNames`), the extensions `.d3bcap` and `.d3breport`, a
+report's code, `d3b.db`, the given behaviors' ids (`d3b.harvest`), the readable protocol's packages (`d3b.game`) and
+the variable `D3B_REPORT_WEBHOOK`. The docs still say D3B for short.
 
 | Path | Role |
 | --- | --- |
-| `src/D3B.Core` | Modules and `BotBuilder`, shared abstractions. |
-| `src/D3B.Network` | Kestrel transport, framing, codec over `IDuplexPipe`. The only project referencing `Microsoft.AspNetCore.App`, with the host. |
-| `src/D3B.Protocol` | Classes generated from the readable `.proto` files, a build's mapping, its matching and audit, and the per-build translation. |
-| `src/D3B.Data` | Data pack format and runtime readers: maps, cells, world graph, world maps' tiles and their coordinates' index, items, spells, monsters, interactives, texts. |
-| `src/D3B.Engine` | Pure logic with no I/O: cell and world pathfinding, line of sight, fight simulation. |
-| `src/D3B.Bot` | The bot's run time: actor, state, recovery, activities and their settings, pages, the harvesting and fighting modules, the default modules, and the host's composition the app and `D3B.Host` share. It knows nothing of the studio (D393). |
-| `src/D3B.Studio` | The studio's model, on top of `D3B.Bot` (D393): the project's assets (`D3B.Studio.Assets`), behaviors and their node catalog (`D3B.Studio.Behaviors`, `.Nodes`), and routes and their actions (`D3B.Studio.Routes`), with the behaviors module that registers them. |
-| `src/D3B.Host` | The bots' host without the app, for measurements: its entry point alone, with the database (D91, D100). |
-| `src/D3B.Storage` | D3B's database, SQLite through EF Core and its migrations: the accounts seen, what the bots learn, the runs and the characters' variables, which the app and `D3B.Host` share (D100, D312). It references `D3B.Studio`, so the references run `D3B.App` to `D3B.Storage` to `D3B.Studio` to `D3B.Bot` (D393). |
-| `src/D3B.App` | The Avalonia desktop app, which runs the bots' host in its process (D91). |
+| `src/D3B.Bis.Core` | Modules and `BotBuilder`, shared abstractions. |
+| `src/D3B.Bis.Network` | Kestrel transport, framing, codec over `IDuplexPipe`. The only project referencing `Microsoft.AspNetCore.App`, with the host. |
+| `src/D3B.Bis.Protocol` | Classes generated from the readable `.proto` files, a build's mapping, its matching and audit, and the per-build translation. |
+| `src/D3B.Bis.Data` | Data pack format and runtime readers: maps, cells, world graph, world maps' tiles and their coordinates' index, items, spells, monsters, interactives, texts. |
+| `src/D3B.Bis.Engine` | Pure logic with no I/O: cell and world pathfinding, line of sight, fight simulation. |
+| `src/D3B.Bis.Bot` | The bot's run time: actor, state, recovery, activities and their settings, pages, the harvesting and fighting modules, the default modules, and the host's composition the app and `D3B.Bis.Host` share. It knows nothing of the studio (D393). |
+| `src/D3B.Bis.Studio` | The studio's model, on top of `D3B.Bis.Bot` (D393): the project's assets (`D3B.Bis.Studio.Assets`), behaviors and their node catalog (`D3B.Bis.Studio.Behaviors`, `.Nodes`), and routes and their actions (`D3B.Bis.Studio.Routes`), with the behaviors module that registers them. |
+| `src/D3B.Bis.Host` | The bots' host without the app, for measurements: its entry point alone, with the database (D91, D100). |
+| `src/D3B.Bis.Storage` | D3B's database, SQLite through EF Core and its migrations: the accounts seen, what the bots learn, the runs and the characters' variables, which the app and `D3B.Bis.Host` share (D100, D312). It references `D3B.Bis.Studio`, so the references run `D3B.Bis.App` to `D3B.Bis.Storage` to `D3B.Bis.Studio` to `D3B.Bis.Bot` (D393). |
+| `src/D3B.Bis.App` | The Avalonia desktop app, which runs the bots' host in its process (D91). |
 | `scripts/` | Inspection, extraction, release and mapping tools, and the bench of the fights' effects, as file-based apps. |
 | `tests/` | One test project per `src/` project that has logic. |
 
 ## Modules
 
-Built at step 1, in `D3B.Core` (D20); the external plugins went at step 7 (D102, D109), then the Lua scripts that
+Built at step 1, in `D3B.Bis.Core` (D20); the external plugins went at step 7 (D102, D109), then the Lua scripts that
 replaced them (D116, D119). Mods come as blueprints at step 7, after step 6 (Mods, below):
 
 - A module implements `IModule.Build(BotBuilder)`. It registers services, message handlers, activities, settings and UI
@@ -60,25 +67,25 @@ replaced them (D116, D119). Mods come as blueprints at step 7, after step 6 (Mod
   module registers through `Services`, `Configuration` and `Logging`, and `Build()` returns the `IHost`.
 - A module is built as soon as it is added. It requires another by calling `bot.AddModule<T>()` first in its `Build`.
   Adding a module type twice builds it once.
-- A group (`IModuleGroup`) lists modules in order; whoever adds it may disable some. `DefaultModules`, in `D3B.Bot`,
+- A group (`IModuleGroup`) lists modules in order; whoever adds it may disable some. `DefaultModules`, in `D3B.Bis.Bot`,
   gathers the standard modules: so far the data module (D31), the protocol module (D48), the network module (D36), the
   bots module (D67), the harvesting module (D127) and the fighting module (D236), then, as
   the steps write them, the rest. D3B's own
   features are modules like any other, so they can be disabled, and later replaced (D20).
-  The behaviors module (D314) is not in the group: it is `D3B.Studio`'s, which `D3B.Bot` does not reference, and the storage module
-  adds it, so the app and `D3B.Host` have it; a host with no storage adds it itself (D393).
-- The host's composition, `BotHost` in `D3B.Bot.Hosting`, which the app and `D3B.Host` share (D91), adds
+  The behaviors module (D314) is not in the group: it is `D3B.Bis.Studio`'s, which `D3B.Bis.Bot` does not reference, and the storage module
+  adds it, so the app and `D3B.Bis.Host` have it; a host with no storage adds it itself (D393).
+- The host's composition, `BotHost` in `D3B.Bis.Bot.Hosting`, which the app and `D3B.Bis.Host` share (D91), adds
   `DefaultModules`, logs what it built, gets the pack of the installed client's build ready (Game data, below), then its
   protocol (Network and protocol, below), and starts the host, or says why it did not (`BotHostStart`). The app and
-  `D3B.Host` add the storage module (D100). `D3B.Host` then runs until it is stopped; the app, until its window is
+  `D3B.Bis.Host` add the storage module (D100). `D3B.Bis.Host` then runs until it is stopped; the app, until its window is
   gone.
-- A module's page (D96), registered with `AddPage` (`D3B.Bot.Pages`) and listed by the bots module in the
+- A module's page (D96), registered with `AddPage` (`D3B.Bis.Bot.Pages`) and listed by the bots module in the
   `PageCatalog`, is an Avalonia control the app makes, in its process (D91), from a factory: the contract names no type
   of the UI's framework, and a host without the app never makes a page. The page gets a `PageContext`: the host's
   services, the app's language and the module's texts in it (`PageTexts`), and the window's refresh.
-- Texts the app shows for a module, a page's title or an activity's name, are `LocalizedText`s (`D3B.Bot.Localization`):
+- Texts the app shows for a module, a page's title or an activity's name, are `LocalizedText`s (`D3B.Bis.Bot.Localization`):
   the same in every language, or the module's own resources, in English and French (D96).
-- An activity's settings (D98), in `D3B.Bot.Settings`: a class whose initial values are the defaults, which the module
+- An activity's settings (D98), in `D3B.Bis.Bot.Settings`: a class whose initial values are the defaults, which the module
   describes in code as it registers the activity, `AddActivity<TActivity, TSettings>(id, name, settings => ...)`, each
   property a setting of a kind, a flag, a number, a text, a choice or the game's professions, areas, sub-areas and
   resources, one or a list, with its name, bounds and help; lists ordered or not, values sought within another setting's,
@@ -97,17 +104,20 @@ replaced them (D116, D119). Mods come as blueprints at step 7, after step 6 (Mod
 
 ## Bot run time
 
-The bots run in `D3B.Bot`: what each part does today, with the decisions that made it so, found through
+The bots run in `D3B.Bis.Bot`: what each part does today, with the decisions that made it so, found through
 [decisions-index.md](decisions-index.md). The order the parts were built in is in [roadmap.md](roadmap.md), by session.
 
-- **One bot per character** of an account (D65). `Bots`, in `D3B.Bot.Runtime`, registered by the bots module
+- **One bot per character** of an account (D65). `Bots`, in `D3B.Bis.Bot.Runtime`, registered by the bots module
   (`BotsModule`) as an `IGameObserver`, ties a game connection to the bot of the character its server confirms the
   client chose, its account the one the connection phase identified by the ticket (`GameSession.Account`, D65). A bot
   outlives its connections: a new one takes the old one's place, the state starting over from what the server sends.
 - **The actor**, `BotActor`: one `Channel<T>` inbox read by one loop, no lock on its state (D9; its inbox messages are `BotInput`, a condition waited for `BotWaiter`, D399). The inbox gets every
   message of its character's game connection, both sides, from the relay's read loops; the loop turns each into the next
-  state and tries it on the behaviors' expectations. Commands from the app come at step 5.
-- **The state**, `CharacterState` in `D3B.Bot.Characters`: an immutable snapshot of what the server said of the
+  state and tries it on the behaviors' expectations. Commands from the app come at step 5. Stopping a bot
+  (`BotActor.DisposeAsync`) completes its inbox and posts nothing in it: what was posted before is read to the end, then
+  the loop, as it ends, interrupts the behavior and ends every wait and every start that waited; what is posted after is
+  refused. The stop is that one instant, so nothing is taken by a loop that already ended what waited.
+- **The state**, `CharacterState` in `D3B.Bis.Bot.Characters`: an immutable snapshot of what the server said of the
   character, its name and level, map, sub-area, cell and the path it walks, the map's own interactive elements and the
   use the character is in (D75), the map's NPCs, the dialog with one and the exchange with the storage (D80), the zaaps
   it knows, a zaap's dialog with its costs and the haven bag it is in (D83), the map's monster groups, each its cell and
@@ -128,7 +138,7 @@ The bots run in `D3B.Bot`: what each part does today, with the decisions that ma
   behavior, and the bot pauses until it is resumed. What the client sends by itself after an action is not the player's:
   a request to leave is the player's only while the character is in a dialog or an exchange (D81), but for a dialog whose
   question offers no reply, which the client closes by itself (D253).
-- **Walking on a map** (D69): `MapWalk`, in `D3B.Bot.Movement`, finds the path in the pack's cells, sends its turning
+- **Walking on a map** (D69): `MapWalk`, in `D3B.Bis.Bot.Movement`, finds the path in the pack's cells, sends its turning
   points, and is over once the server answers the client's confirmation; a refusal, no answer or no confirmation in time
   ends it too, and the character walking already makes it busy. A walk the client does not confirm leaves the character
   on its last cell, where the server has it (`BotContext.SettleWalkAsync`, D85); the server may still hold it, and
@@ -136,7 +146,7 @@ The bots run in `D3B.Bot`: what each part does today, with the decisions that ma
   step is never sent: the server closes the connection of one. The client does not follow a walk ending on the cell its
   previous walk ended on, even on another map (D260): the state keeps that cell (`CharacterState.LastWalkEnd`), and such a
   walk goes in two, to the path's cell before its last, or a step aside first when it has one step.
-- **Using an element** (D75): `ElementUse`, in `D3B.Bot.Interactives`, walks to the nearest cell the client uses the
+- **Using an element** (D75): `ElementUse`, in `D3B.Bis.Bot.Interactives`, walks to the nearest cell the client uses the
   element from, asks for the skill by the id the server gave it on the element, and waits for the start or the refusal,
   then for the end of a use that lasts, such as a harvest. Nothing is sent for an element the map does not offer the
   skill on; the character walking or using answers `Busy`.
@@ -163,7 +173,7 @@ The bots run in `D3B.Bot`: what each part does today, with the decisions that ma
   when it saves that many, and never on a tie with a walk (D167). A journey may also seek zones of maps, vertices of the world graph
   (`TravelAsync(maps, zones, ...)`, D425): the character has arrived when its vertex, found from its cell, is one of them, so another zone
   of its own map is reached by leaving the map and coming back.
-- **Banking** (D79, D80): `Banking`, in `D3B.Bot.Banks`, goes where a banker stands, the nearest bank's inside still
+- **Banking** (D79, D80): `Banking`, in `D3B.Bis.Bot.Banks`, goes where a banker stands, the nearest bank's inside still
   sought, talks to him, gives the reply of his the question offers, puts the stacks asked for in by one request and the
   kamas by another, and leaves. `BankDirectory`, one per host and shared by its bots, holds the banks' insides
   (`WorldInsides`), the bankers and their replies, the insides the server showed holding no banker, and the maps where a
@@ -173,7 +183,7 @@ The bots run in `D3B.Bot`: what each part does today, with the decisions that ma
   (`BankingPreferences`, `Banking:FullAt` and `Banking:UseZaaps`, D405), which a profile answers with its own (`OwnBanking`,
   `FullAt`, `UseZaaps` in `HarvestSettings` and `FightSettings`); a journey makes the changes it may again from the path on
   foot once a teleport failed (`JourneyBudget`).
-- **Activities** (D87), in `D3B.Bot.Activities`: a `BotActivity`, written by a module, chooses each step
+- **Activities** (D87), in `D3B.Bis.Bot.Activities`: a `BotActivity`, written by a module, chooses each step
   from the state, a behavior's worth of work; its other hooks have defaults: when the character is full and how it is
   unloaded, what each interruption leads to, how the character is recovered. `BotActor.StartActivity` runs one at a
   time (`ActivityRun`): each step, unloading and recovery a behavior started once the bot can act, connected, placed,
@@ -189,9 +199,9 @@ The bots run in `D3B.Bot`: what each part does today, with the decisions that ma
   dialog or exchange still open, and lets go of a walk the server holds, each wait bounded.
 - **An activity's report** (D131): what it does, how far it is, what it counts, its warnings and what it looks at on the
   map (`BotActivity.Report`, `ActivityReport`), replaced whole and read by the app; its texts name the game's values by
-  their ids (`GameText`, in `D3B.Bot.Localization`). One that cannot go on says why (`ActivityException`); a run keeps the
+  their ids (`GameText`, in `D3B.Bis.Bot.Localization`). One that cannot go on says why (`ActivityException`); a run keeps the
   name it was started under (`ActivityRun.Title`), and when it started and ended.
-- **Harvesting** (D127 to D130), in `D3B.Bot.Harvesting`, registered by `HarvestingModule`: `HarvestActivity`, its settings
+- **Harvesting** (D127 to D130), in `D3B.Bis.Bot.Harvesting`, registered by `HarvestingModule`: `HarvestActivity`, its settings
   `HarvestSettings` and their zone `HarvestZone`, the skills to use, the sub-areas and their maps, the insides apart. Each
   step harvests the wanted resource the server offers at the character's level, the first asked for then the nearest, or
   travels to the nearest map of the tour still to go through (`HarvestTour`): the probable maps first, then those of the
@@ -248,14 +258,14 @@ The bots run in `D3B.Bot`: what each part does today, with the decisions that ma
   the resources of a map their priority. The journey to the tour's next map stops on the first map of the zone it crosses, not
   yet gone through, where the server offers a wanted element, even one the tour holds back as growing (D392).
 - **A zone as the place** (D415): `HarvestPlace.Zone` and `FightPlace.Zone`, beside Automatic and Chosen (the sub-areas, stored as before), with a
-  `Zone` setting, a zone's id (`SettingKind.Zone`, `ActivitySettingsBuilder.Zone`, a rule asking one). The zone is the studio's file, which `D3B.Bot`
-  does not see (D393), so the activities read it through `IPlaceZones` (`D3B.Bot.Activities`), an optional parameter of their constructors as
-  `BankingPreferences` is, which `ProjectZones` (`D3B.Studio.Assets`, registered by `BehaviorsModule`) implements over the `AssetLibrary` and
+  `Zone` setting, a zone's id (`SettingKind.Zone`, `ActivitySettingsBuilder.Zone`, a rule asking one). The zone is the studio's file, which `D3B.Bis.Bot`
+  does not see (D393), so the activities read it through `IPlaceZones` (`D3B.Bis.Bot.Activities`), an optional parameter of their constructors as
+  `BankingPreferences` is, which `ProjectZones` (`D3B.Bis.Studio.Assets`, registered by `BehaviorsModule`) implements over the `AssetLibrary` and
   `ZoneMaps.Resolve`, the maps kept until the project's version changes. `HarvestZone.Of` and `HuntingGround.Of` take them as `within`: the
   sub-areas are those the maps lie in, the maps those of the zone the world graph holds (the hunt keeps the interiors the zone names). The
   activity reads it when it starts and a preview at each call (`PlaceZoneKey` tells a preview a zone changed); a zone gone ends the run with
   `FailZoneGone`, one holding no map with `FailNoZone`.
-- **Fights** (D179), in `D3B.Bot.Fights`: the character's state holds its fight (`CharacterState.Fight`, `FightState`) from
+- **Fights** (D179), in `D3B.Bis.Bot.Fights`: the character's state holds its fight (`CharacterState.Fight`, `FightState`) from
   the fight's context to the roleplay's: its phase, the character's team and both teams' placement cells, whether the
   character is ready, the fighters by id (`Fighter`: team, cell, life and most life, AP and MP, level, breed or monster and
   grade, summoner), the turns' order, the round, whose turn it is and whether the character may act, and how the fight
@@ -272,7 +282,7 @@ The bots run in `D3B.Bot`: what each part does today, with the decisions that ma
   (D279), and the team's options; a turn puts the fight in its fighting phase, as a client that rejoins a fight gets no
   fight's start. Since 9f4 (D279), the fight's state holds the marks on the cells as the server sets and takes them back,
   glyphs, traps, bombs' walls and portals (`GroundMark`), which `ImaginedFights.MarksOf` gives the engine.
-- **The bot fights** (D198, D202, D235, D244), in `D3B.Bot.Fights`: `FightPilot`, one per bot, made by `Bots`, waits for
+- **The bot fights** (D198, D202, D235, D244), in `D3B.Bis.Bot.Fights`: `FightPilot`, one per bot, made by `Bots`, waits for
   a fight not over that the AI plays (`BotActor.Fights`): every fight under the host's `Fights:Alone`
   (`BotActor.FightsAlone`), else the running activity's own as its profile says (`BotActivity.FightsItsFights`); out of an
   activity, the fights are the player's. The bot connected and not paused, it runs `FightPlay` once the step the fight cut
@@ -294,7 +304,7 @@ The bots run in `D3B.Bot`: what each part does today, with the decisions that ma
   fight" says, a lost fight as "After a lost fight" says, resumed once its life is regained, three in a row ending it. The
   character's state keeps every characteristic the server gives out of fights (`CharacterState.Characteristics`,
   `CharacteristicTotals`, D263). The strategies of 9g, a profile each character played, are gone (D244).
-- **Fighting** (D236, D241, D245 to D249, D259), in `D3B.Bot.Fighting`, registered by `FightingModule`: `FightActivity`, its
+- **Fighting** (D236, D241, D245 to D249, D259), in `D3B.Bis.Bot.Fighting`, registered by `FightingModule`: `FightActivity`, its
   settings `FightSettings`. Each step heals, then on a map of the zone walks onto the cell of the nearest group the
   settings allow, monsters or families of monsters chosen, a family a race (`ChosenMonsters`), with no judgement of its
   strength: the group's size and exclusions are all the settings ask, and the place is chosen for the character's level (D387,
@@ -312,24 +322,24 @@ The bots run in `D3B.Bot`: what each part does today, with the decisions that ma
   settings lead to: the ground's mini-map, its maps, monsters and their levels, the nearest bank (`NearestBank`, shared
   with harvesting's) and isolated maps, and the place for each character (D246). Harvesting's fights are the AI's as its
   profile's "The AI fights" says (D235).
-- **The maps' graphics** (D138), in `D3B.Bot.Interactives`: `GraphicSkills`, one per host, holds what the server said the
+- **The maps' graphics** (D138), in `D3B.Bis.Bot.Interactives`: `GraphicSkills`, one per host, holds what the server said the
   elements of each graphic offer, every skill seen, none for an element that offers none; `GraphicLearner`, an observer of
   the game connections registered by the bots module, teaches it from every map's information any bot receives, by the
   elements the server lists on the map, whatever the activity. D3B's database keeps it from one run to the next.
-- **The NPCs of the maps and their dialogs** (D383), in `D3B.Bot.Npcs`: `KnownNpcs`, one per host, holds the NPCs the bots saw on
+- **The NPCs of the maps and their dialogs** (D383), in `D3B.Bis.Bot.Npcs`: `KnownNpcs`, one per host, holds the NPCs the bots saw on
   each map (`KnownMapNpc`: actor id, cell, direction, how often seen), the questions they asked with the replies offered
   (`KnownNpcQuestion`) and what followed each reply (`KnownNpcOutcome`: another question, the end, a new map or an exchange,
   counted); `NpcLearner`, an observer of the game connections, teaches it from every map's information and every dialog,
   the requests of the player's client and D3B's own alike, a reply being followed by what comes within a second.
   `KnownNpcs.OnMap` is the reading. Ids only: the server sends no NPC's name nor a dialog's text. D3B's database keeps it
   from one run to the next.
-- **The journal** (D112, D113), in `D3B.Bot.Journal`: each bot's last 2,000 entries (`BotActor.Journal`), written by the
+- **The journal** (D112, D113), in `D3B.Bis.Bot.Journal`: each bot's last 2,000 entries (`BotActor.Journal`), written by the
   behaviors once an action is over, with its outcome and duration: a walk asked for itself, a map change, a use, a
   travel, banking; then the bot's connection, pause, resuming and fights, and its activity's start, interruptions,
   unloading and end. An action begun within another (`BotContext.BeginAction`) is one deeper, and a walk made for
   another action has no entry. Entries name the game's ids, never the protocol's messages. `RecentItems<T>` keeps them,
   read by the app as they come.
-- **The trace** (D349, D350), written by `D3B.Studio.Behaviors`, its records in `D3B.Bot.Runtime` (D393): each bot's last 1,000 decisions of its behaviors' runs
+- **The trace** (D349, D350), written by `D3B.Bis.Studio.Behaviors`, its records in `D3B.Bis.Bot.Runtime` (D393): each bot's last 1,000 decisions of its behaviors' runs
   (`BotActor.Trace`, `TraceEntry`), apart from the journal, which says what the bot did: a state entered or none holding,
   an urgent state's cut, a rule played or failed, each step of an action or activity played, done, cut or failed with
   what it said it does, and a threshold the activity watches as it comes to hold or stops holding. Each line names its
@@ -348,8 +358,8 @@ The bots run in `D3B.Bot`: what each part does today, with the decisions that ma
 
 ## Network and protocol
 
-Built in session 3b (D35 to D38): the relay of the connection phase, in `D3B.Network`, registered by the network module
-(`NetworkModule`, in `D3B.Bot`, after the data and protocol modules, and requiring the protocol module, D48); in session
+Built in session 3b (D35 to D38): the relay of the connection phase, in `D3B.Bis.Network`, registered by the network module
+(`NetworkModule`, in `D3B.Bis.Bot`, after the data and protocol modules, and requiring the protocol module, D48); in session
 3f, the game connection (D51 to D53); in session 3h, the game read and acted on (D60 to D62).
 
 - MITM only (D23): Kestrel takes each official client's connection, and D3B opens the matching connection to the server.
@@ -403,13 +413,13 @@ Built in session 3b (D35 to D38): the relay of the connection phase, in `D3B.Net
   captures with it, field by field; with `--messages`, the game's frames by the messages their type URLs name, in order
   and with their time, `--mapping` naming the readable ones (D178).
 - The readable protocol, built in session 3d for the connection phase (D42) and in session 3g for the game's first
-  messages (D55, D56): `.proto` files of our own in `src/D3B.Protocol/Connection/` and `src/D3B.Protocol/Game/`, which
+  messages (D55, D56): `.proto` files of our own in `src/D3B.Bis.Protocol/Connection/` and `src/D3B.Bis.Protocol/Game/`, which
   Grpc.Tools compiles into Google.Protobuf classes at build. Their numbers are the wire's of 3.7.12.12 and 3.7.13.17,
   whose schemas are the same bytes (D361); a build that changes its schema may shuffle the game's, which that build
   measures (Q17). `ReadableProtocol` lists them. A game event marked
   `(d3b.readable.partial)` declares only the fields bot code reads; a request is whole.
-- The mapping, built in session 3d (D43 to D45), in `D3B.Protocol.Mapping`. `scripts/mapping.cs` loads the build's
-  schema (`ProtocolSchema`) and pins (`src/D3B.Protocol/Pins/<version>.json`), measures anchors in the build's captures
+- The mapping, built in session 3d (D43 to D45), in `D3B.Bis.Protocol.Mapping`. `scripts/mapping.cs` loads the build's
+  schema (`ProtocolSchema`) and pins (`src/D3B.Bis.Protocol/Pins/<version>.json`), measures anchors in the build's captures
   (`CaptureAnchors`, by structure and type URLs only, the connection phase's in the captures' directory and the game's
   in its `game` directory, with the messages the game's frames carry), pairs every readable message and enum with its
   counterpart (`ProtocolMatcher`: pins, anchors, fields, then structural scores; `google.protobuf.Any` is its own
@@ -419,12 +429,12 @@ Built in session 3b (D35 to D38): the relay of the connection phase, in `D3B.Net
   readable protocol's digest (`ProtocolDigest`); `MappingFile.FormatVersion` changes with `mapping.proto` or that
   digest.
 - The per-build translation, built in session 3e for the connection phase (D47): `ProtocolTranslation`, in
-  `D3B.Protocol.Translation`, exists only for a build whose mapping holds the contract and pairs every readable field and
+  `D3B.Bis.Protocol.Translation`, exists only for a build whose mapping holds the contract and pairs every readable field and
   value with its own number, since the readable classes read the wire as it is. A frame is decoded once and understood
   only when its message encodes back to its length; one that is not is passed on as it is, and never rewritten. A game
   frame's type URL names the build's message, which the mapping turns into the readable one (`DecodeGame`, D58); a frame
   of a partial message is read without being understood whole (D55).
-- The version gate (D48, D172): the protocol module (`ProtocolModule`, in `D3B.Bot`) registers `ProtocolSource`, which
+- The version gate (D48, D172): the protocol module (`ProtocolModule`, in `D3B.Bis.Bot`) registers `ProtocolSource`, which
   finds the build's schema and mapping beside its pack on this machine, else among the app's own, and the translation,
   which the host asks for before it starts. Without a mapping that holds, the host logs what fails and the commands mapping the
   build, `scripts/schema.cs` then `scripts/mapping.cs`, which need no capture, and exits with code 1.
@@ -432,7 +442,7 @@ Built in session 3b (D35 to D38): the relay of the connection phase, in `D3B.Net
   its oneofs hold and its length, never a value, a frame not understood being a warning, and rewrites the server
   selection's answer.
 - The official client logs in by itself, through Haapi and the login handshake. D3B never does (D23).
-- Captures (D37, D409): each connection's raw reads go to a `.d3bcap` file in `%LOCALAPPDATA%\D3B\captures`. The game
+- Captures (D37, D409): each connection's raw reads go to a `.d3bcap` file in `%LOCALAPPDATA%\D3B.Bis\captures`. The game
   connection's go to its `game` directory, apart from the connection phase's that the mapping tool reads (D53), and
   are recorded by default (`Network:Captures:Game`, on): `RelaySettings.RecordsGame` and `GameCapturesDirectory`. The
   connection phase's holds the account's login token and stays opt-in (`Network:Captures:Enabled`, which records the
@@ -447,11 +457,11 @@ Built in session 3b (D35 to D38): the relay of the connection phase, in `D3B.Net
   other closed, holds a frame not yet whole, and keeps a server selection for its game connection, 10, 5, 5 and 60 s by
   default and raised only; read once, as the relay is built, from `Network:Timeouts:Connect`, `Close`, `Hold` and
   `Selection`, in seconds, into `RelaySettings`.
-- The protocol inspector's frames (D115), in `D3B.Bot.Inspection`: `FrameRecorder`, a game observer, keeps each bot's
+- The protocol inspector's frames (D115), in `D3B.Bis.Bot.Inspection`: `FrameRecorder`, a game observer, keeps each bot's
   last 3,000 frames, both sides, and D3B's own requests, which observers see apart once sent (`IGameObserver.OnSent`).
   `FrameFields` gives a readable message's fields, the ticket hidden, or the shape of one the readable protocol lacks;
   `CaptureFrames` reads a game connection's capture of the installed build through its translation.
-- Bug reports (D409 to D411, D423), in `D3B.Bot.Reports`: a report is one `.d3breport` zip. `CaptureScrubber` copies a
+- Bug reports (D409 to D411, D423), in `D3B.Bis.Bot.Reports`: a report is one `.d3breport` zip. `CaptureScrubber` copies a
   capture with what names the account overwritten, by value and at the same length (`CaptureWriter.Copy` rewrites a
   record at its own offset): the ticket and the client's other opaque strings by shape (a run of 32 characters or more of
   digits and `a` to `f` in the bytes the client or D3B sent) and the ticket by value, and the names of the characters of `CharacterListEvent` and
@@ -462,17 +472,17 @@ Built in session 3b (D35 to D38): the relay of the connection phase, in `D3B.Net
   settings that differ as text, `ReportIdentity` turning the character's name into its number. `ReportWriter` writes the
   zip with `manifest.json` last (sizes, SHA-256, `hasMessage`); `ReportReader` reads one as untrusted input (64 entries,
   256 MiB an entry and 512 MiB in all by `ReportLimits`, expanded bytes counted as they come, only the names of
-  `ReportFiles`, every file checked against the manifest). `ReportAssets` (`D3B.Studio`) gives the profile played and the
-  assets it reaches, and `ReportKnowledge` (`D3B.Storage`) what the bots learned, by ids. `scripts/report.cs` unpacks
+  `ReportFiles`, every file checked against the manifest). `ReportAssets` (`D3B.Bis.Studio`) gives the profile played and the
+  assets it reaches, and `ReportKnowledge` (`D3B.Bis.Storage`) what the bots learned, by ids. `scripts/report.cs` unpacks
   a report under `artifacts/reports/<code>/`, prints the message first and replays its fights. The app's action (BR3, Help,
-  Report a bug) is `ReportDialogViewModel` in `D3B.App.ViewModels.Reports`, three steps in one dialog: the form (area,
+  Report a bug) is `ReportDialogViewModel` in `D3B.Bis.App.ViewModels.Reports`, three steps in one dialog: the form (area,
   character, the optional message of 1,500 characters that the field stops at, with the warning about personal data), the
   preview and the report written. `ReportSourcesFactory` reads from the host what a character's report is made of: its
   bot's journal and trace, the profile it plays through `AccountBook` and `ReportAssets`, what the bots learned, the
   settings the player changed, and its capture, found by the id of its bot's last game connection
   (`BotActor.ConnectionId`, `ReportCaptures.Find`: the relay ends a capture's name with it), read while the relay may still
   hold it open. `ReportDraft` cleans the capture, makes each part a `ReportPartChoice` the player reads and unchecks (the
-  capture of a game's report is required and cannot be), and writes `<code>.d3breport` in `%LOCALAPPDATA%\D3B\reports`;
+  capture of a game's report is required and cannot be), and writes `<code>.d3breport` in `%LOCALAPPDATA%\D3B.Bis\reports`;
   in an app that cannot send, the code is copied and the folder opened. In an app that can, the preview's one button writes the file and sends it, and the code and the
   folder are offered only when the send does not go through. A character is offered with its portrait and its level said once
   (`ReportCharacterChoice`). Sending (BR4): `DiscordReportSink` posts the saved file to a private
@@ -494,11 +504,14 @@ Built at step 2 (D24 to D33):
   client against what D3B relies on before it writes anything. [client.md](client.md) records what the client holds,
   measured.
 - A client build is named by its version (`ClientBuild`). A pack is one file per build and format, kept in
-  `%LOCALAPPDATA%\D3B\data\<version>\data-<format>.pack` (`PackLocations`).
+  `%LOCALAPPDATA%\D3B.Bis\data\<version>\data-<format>.pack` (`PackLocations`).
 - A pack holds named entries, each a MemoryPack payload compressed with zstd, and an index at the end (D25).
   `PackWriter` writes it, compressing several entries at once in a deterministic order (D28). `GamePack` opens it by
   reading the index, then reads each entry when asked, from any thread. `PackCache` keeps the entries last read within
-  a budget. A test fails when the serialized layout changes without a new `GamePack.FormatVersion`.
+  a budget. A test fails when the serialized layout changes without a new `GamePack.FormatVersion`. The index names
+  each entry's type, and a read asks for that name: `PackTypeNames` gives it, the type's full name with the root D3B's
+  packs were written with, `D3B.` where the namespace says `D3B.Bis.`, so that the packs published before D426 are read
+  and format 12 is the same bytes (D426).
 - A pack of format 12 holds (D27, D29, D139, D182, D219, D237, D238, D257, D265, D343, D369, D385, D414):
   - every map as its own entry, its neighbours, cells and interactive elements with their graphics (`MapData`), read
     through a `PackCache` by `GameMaps`;
@@ -524,7 +537,7 @@ Built at step 2 (D24 to D33):
     view loads only the tiles it shows; where a map stands on an image is `WorldMap.PixelOf` (client.md);
   - what fights need, each read once by `GameTables`: the spells, their levels with every field and their effects, each
     with its zone, target mask and triggers as the client writes them, the spells' variants, and the Rogue's bombs and
-    walls (`SpellCatalog`, in `D3B.Data.Spells`); the states (`SpellStateCatalog`); the effects, by the id spells name and
+    walls (`SpellCatalog`, in `D3B.Bis.Data.Spells`); the states (`SpellStateCatalog`); the effects, by the id spells name and
     the server announces (`EffectCatalog`); the monsters, their grades, spells by grade, characteristic ratios and races
     (`MonsterCatalog`); the breeds, their spells, roles and costs (`BreedCatalog`); the characteristics and the Lua
     formulas scaling a monster's, kept and not run (`CharacteristicCatalog`). Their flags have the bits the client's code
@@ -542,7 +555,7 @@ Built at step 2 (D24 to D33):
   names them; `scripts/release.cs` publishes a build's pack, schema and mapping together, once the mapping holds, never
   replacing an asset already published (D33, D50). The app's release workflow takes them from there with
   `scripts/embed.cs`, checked, to ship them beside the app (D172).
-- The data module (`DataModule`, in `D3B.Bot`, D31) registers, as singletons every bot shares, the installed
+- The data module (`DataModule`, in `D3B.Bis.Bot`, D31) registers, as singletons every bot shares, the installed
   `ClientBuild`, the `PackSource` that finds its pack, the `GamePack`, opened once and closed with the host, and the
   stores reading it: `GameTexts`, `GameMaps`, `GameWorld` and `GameTables`. The configuration names the client
   (`Client:Directory`) and the packs' directory on this machine (`Data:Directory`).
@@ -554,13 +567,13 @@ Built at step 2 (D24 to D33):
 
 ## Desktop app
 
-Built in session 5a (D91 to D94), in `D3B.App`, on Avalonia 12, ShadUI and CommunityToolkit.Mvvm; its pages in 5b,
+Built in session 5a (D91 to D94), in `D3B.Bis.App`, on Avalonia 12, ShadUI and CommunityToolkit.Mvvm; its pages in 5b,
 5c, 5e and 5d (D96, D101, D111, D120); its settings page in 6c (D151); redesigned in 6d (D159 to D162); published and
 updating itself in 6f (D171 to D173); the studio's frame in 7c2 (D333 to D340); the characters, the inspector and a
 character's tab in 7c3 (D341 to D348); the assets, a profile's tab, the bottom panel and the settings in 7c4 (D349 to
 D356), the pages of D101 and D162 gone.
 
-- **The bots run in the app's process** (D91): `HostRunner`, in `D3B.App.Hosting`, starts the host's composition with
+- **The bots run in the app's process** (D91): `HostRunner`, in `D3B.Bis.App.Hosting`, starts the host's composition with
   the app, off the UI's thread, the pack's download included, and stops it once the window is gone, which disconnects
   the clients and gives them their configuration back. The window shows the host getting ready, running for the
   installed client's build, or why it did not start.
@@ -579,7 +592,7 @@ D356), the pages of D101 and D162 gone.
   glyphs from the pack, painted in the colour of the text around them by `GlyphIcon`, a neutral dot without the pack
   (D336, D343); a character's portrait is its class's head on its breed's colour, its initials without it (`Portrait`,
   `BreedColors`, D343).
-- **The docks** (D321, D397, `StudioLayout` in `D3B.App.ViewModels.Studio`): on the left the Outliner over the Content browser
+- **The docks** (D321, D397, `StudioLayout` in `D3B.Bis.App.ViewModels.Studio`): on the left the Outliner over the Content browser
   (the assets' tree), in the centre the editor's tabs over the bottom panel, on the right the Details panel, rounded panels with
   a hairline edge, 5 pixels apart, the one last pressed outlined in the accent. Every edge is dragged on its own
   (`DockSplitter`), within the mockup's bounds, the line between Outliner and Content kept as a share; a panel closes by its ×
@@ -592,7 +605,7 @@ D356), the pages of D101 and D162 gone.
   character, the settings, a module's page; each tab opened once, its view kept while it is open, closed by its ×, its
   neighbour then shown. A tab that reads the host shows where the host stands until it runs (`HostStateView`). Route and zone
   have no tab: they are selected in the world's (D397).
-- **The home page** (D406, `HomeViewModel` and `HomeView`, in `D3B.App.ViewModels.Home`; the view's context is `MainViewModel`,
+- **The home page** (D406, `HomeViewModel` and `HomeView`, in `D3B.Bis.App.ViewModels.Home`; the view's context is `MainViewModel`,
   which holds the host's state it shows): the logo, the version, a pill of where the host stands and the banners of a host
   starting, of a build the installed app does not ship and of a host that failed; quick actions (new profile, route, zone, the
   project's folder, the settings, the first four disabled until the host runs); the characters (`HomeCharacterViewModel`, online
@@ -600,7 +613,7 @@ D356), the pages of D101 and D162 gone.
   (`HomeRecentViewModel`, the file's time, read again when `AssetLibrary.Version` moves, a click opens the asset where it is
   edited); the shortcuts. The lists are read with the window's 250 ms refresh and replaced only when they differ. Selecting a
   character in the Outliner does not show the world; a route, a step or a zone does.
-- **The world, the studio's centre** (D395 to D397, `D3B.App.ViewModels.World`, the mockup `docs/mockups/studio-7r.html`): the
+- **The world, the studio's centre** (D395 to D397, `D3B.Bis.App.ViewModels.World`, the mockup `docs/mockups/studio-7r.html`): the
   studio seen as a game engine. `WorldSelection` holds what is selected (nothing, a character, a route and one of its steps, a
   zone) and tells when it changed; the viewport, the Outliner and the Details panel agree through it and never ask one another.
   - `WorldViewportViewModel` and `WorldView` are the persistent view of the world, a tab opened by a selection: one `WorldMapView` (D372) that stays, the
@@ -638,8 +651,8 @@ D356), the pages of D101 and D162 gone.
     (`FollowedRun`: the position, the name, the initials and the colour) is what the Outliner (a badge of initials on the route row and on
     the step rows, hollow while walking, filled once arrived), the viewport (`WorldMapBackdrop.Runs`, `WorldMapRun`: a ring on the step
     gone to and the dashed leg from the step before, `WorldMapBackdropLayer.DrawRuns`) and the Sequencer read, one marker a character.
-- **The Sequencer** (D395, D396, D413, `SequencerViewModel` in `D3B.App.ViewModels.Routes`, `SequencerView`, the control
-  `SequencerGrid` and its scene in `D3B.App.Controls.Sequencer`): a tab of the bottom panel (`BottomTab.Sequencer`,
+- **The Sequencer** (D395, D396, D413, `SequencerViewModel` in `D3B.Bis.App.ViewModels.Routes`, `SequencerView`, the control
+  `SequencerGrid` and its scene in `D3B.Bis.App.Controls.Sequencer`): a tab of the bottom panel (`BottomTab.Sequencer`,
   `BottomPanelViewModel.Follow`) that exists while a route is selected. Each `RouteEditorViewModel` owns one; it reads the editor's
   steps as clips (`RouteClips`) and follows it (`Rebuilt`), and holds the tracks the user added and the clip selected. The grid draws a
   ruler, a row of the steps' zones and a track a kind of action in the map's colours (`WorldMapBackdropLayer.ColorOf`), clips in
@@ -681,7 +694,7 @@ D356), the pages of D101 and D162 gone.
   studio's text 12.5, its small text 11, the pages' fonts 12, 14, 16, 22 and 28 (`Caption`, text, `Title`, `PageTitle`,
   `Figure`); the studio's controls 24 to 30 high (`StudioButton` and its classes: `Tool`, `TabFace`, `TitleSearch`,
   `Status`), the pages' 32 and 36; radii 6, 7, 10 and 12, ShadUI's included; icons 12, 14, 16 and 20. Keycaps (`Border.Key`)
-  say a shortcut, and a tooltip's shortcut is a `KeyTip`. A module's page is an `AppPage` (`D3B.App.Controls`): its title
+  say a shortcut, and a tooltip's shortcut is a `KeyTip`. A module's page is an `AppPage` (`D3B.Bis.App.Controls`): its title
   or a header of its own, its actions on the right, the same margins; docked, its title is the tab's and its margins
   narrower. A setting's help is a tooltip on a mark beside its name.
 - **Dialogs and toasts** (D159, D162): `Dialogs` holds the dialog shown, a `QuestionViewModel` or a dialog's own view model
@@ -690,7 +703,7 @@ D356), the pages of D101 and D162 gone.
   each dialog; `Dialogs.Show` takes an `IDialogViewModel`, and a test fails for a dialog view model with no row, which v0.9.0's Report a bug
   lacked. `Toasts` says what was done and what a bot met, which the window shows through ShadUI's toasts. The view models
   only open, close and say, tested without a window.
-- **The characters** (D323, D344, D397, `CharactersViewModel` in `D3B.App.ViewModels.Characters`): the model behind the
+- **The characters** (D323, D344, D397, `CharactersViewModel` in `D3B.Bis.App.ViewModels.Characters`): the model behind the
   Outliner's character rows, the run block and the menus: the bots (`BotViewModel`: the ring of its state `PlayState`, its
   level, where it is, what it does and its progress, life and pods) and the characters offline (`CharacterLineViewModel`). The
   cards of D323 are gone, the Outliner's rows say it shorter (D397). A click chooses the character for the run block and the
@@ -698,7 +711,7 @@ D356), the pages of D101 and D162 gone.
   pause, stop, a profile, the start on connection, forgetting its account after a question (`CharacterAccounts`). The profiles'
   menus list the project's, the given ones, then each activity with its defaults for the session alone (`ProfileChoices`). What a
   bot meets while the app looks is a toast with a way to its journal or tab (D162).
-- **The Details panel** (D324, D345, D397, `PropertiesViewModel` in `D3B.App.ViewModels.Properties`, `PropertiesView`; it was
+- **The Details panel** (D324, D345, D397, `PropertiesViewModel` in `D3B.Bis.App.ViewModels.Properties`, `PropertiesView`; it was
   the inspector): what is selected, under its search, which filters the rows; sections under a rule, faint labels whose column
   its edge resizes. A character (`CharacterPropertiesViewModel`): its head, name, breed and level and a way to its tab; State,
   where it stands, its life and pods; Game, its profile as a field whose menu opens it or gives another, the start on connection
@@ -717,7 +730,7 @@ D356), the pages of D101 and D162 gone.
   gauges, then the behavior's states, the one playing lit (`BotActivity.Outline`); its session, a tile per resource with
   its rate an hour, the profession raised, fights, deposits and kamas; its latest decisions, from its journal, and a way
   to its whole trace in the bottom panel (D353).
-- **The assets' panel** (D326, D351, D358, `AssetsViewModel` in `D3B.App.ViewModels.Assets`, `AssetsView`): as an IDE's
+- **The assets' panel** (D326, D351, D358, `AssetsViewModel` in `D3B.Bis.App.ViewModels.Assets`, `AssetsView`): as an IDE's
   explorer, several rows chosen, the keyboard, drag and drop, cut and paste, IntelliJ's menus, the kinds shown, the open
   tab located, the folds kept in `app.json`; Add and a search over the project's tree, its folders first, then their assets and the files that do not read, then those given with
   D3B, read only; each kind its IntelliJ icon on its colour (`AssetKinds`), how many use it, a dot while its tab has
@@ -731,7 +744,7 @@ D356), the pages of D101 and D162 gone.
 - **A profile's tab** (D330, D352, `ProfileViewModel`, `ProfileView`): one tab per profile, several open, closed by its ×,
   which asks first when it holds changes, kept open once saved (`ProfilesViewModel.Open`, `EditorTab.Closing`). Its header:
   the name edited in place, the behavior it is a variant of, how many values it changes and "Tout remettre", the menu and
-  save. Its form, the activity's settings (`SettingsEditor` in `D3B.App.ViewModels.Settings`), checked as they change, as an
+  save. Its form, the activity's settings (`SettingsEditor` in `D3B.Bis.App.ViewModels.Settings`), checked as they change, as an
   asset editor (D415, D418): four categories (What, Where, Bank, Care and fights: the modules' `Section` titles, one per
   category, `SettingSectionViewModel`), each with the settings in view and a fold, "Advanced", for those the module marked
   rare (`SettingBuilder.Advanced()`, `SettingDefinition.IsAdvanced`); the fold says "Advanced · N changed" with an amber dot
@@ -751,7 +764,7 @@ D356), the pages of D101 and D162 gone.
   several at once in a dialog (`GamePickerViewModel`, D236, D246); professions are tiles, sub-areas tokens with the
   suggested ones below (D245), shares sliders, short choices segments. The pack's icons are drawn as bitmaps once per
   pack (`GameIcons`).
-- **The bottom panel** (D327, D353, `BottomPanelViewModel` in `D3B.App.ViewModels.Bottom`, `BottomPanelView`): its tabs,
+- **The bottom panel** (D327, D353, `BottomPanelViewModel` in `D3B.Bis.App.ViewModels.Bottom`, `BottomPanelView`): its tabs,
   each with a toolbar; only the one shown reads the host, while the panel is open. The journal (`LogsViewModel`, D111 to
   D114): every source by time or one bot's, by level and text, followed and copied, each line with its source's head;
   `JournalLines` says each entry in the app's language. The trace (`TraceViewModel`, D350): the chosen character's runs,
@@ -760,7 +773,7 @@ D356), the pages of D101 and D162 gone.
   fix. The protocol (`InspectorViewModel`, D115): a bot's frames live or a capture replayed, by direction and name, those
   not read marked, frozen on demand, a frame unfolded in place. The statistics (`StatisticsViewModel`, D146): what the
   kept runs brought, by character and period, the resources with their rates and the runs.
-- **The settings** (D329, D354, `SettingsViewModel`, `D3B.App.ViewModels.AppSettings`, `SettingsView`): a tab of the
+- **The settings** (D329, D354, `SettingsViewModel`, `D3B.Bis.App.ViewModels.AppSettings`, `SettingsView`): a tab of the
   editor, the title's gear, Ctrl , or a setting found. Sections on the left under a search: Bots, the client's display
   time and every delay, the bots' at once (`Bots.Delays`), the relay's from the next start, the host's raised ones once
   it runs; Network, the captures from the next start and their folder; Appearance, the language and the layout given
@@ -768,12 +781,12 @@ D356), the pages of D101 and D162 gone.
   client build, the update (D173) and the licences. A value changed shows a bar and an arrow giving its default back.
 - **The modules' pages** (D333): in the editor's tabs, opened from the Window menu or the search. A module's page
   (`ModulePageViewModel`) is made the first time its tab shows and kept, refreshed every 250 ms while it shows through its
-  context (`AppPageContext`, in `D3B.App.Pages`); one that throws, or is no control, shows what it threw instead
+  context (`AppPageContext`, in `D3B.Bis.App.Pages`); one that throws, or is no control, shows what it threw instead
   (`PageFailureViewModel`), logged, and the bots and the other pages go on. What a page's own code throws on the UI's
   thread, which nothing caught, is told by the page's assembly in its stack and fails that page alone; the app's own faults
   still end it. A page looks like the app's through the theme, Inter and ShadUI's styles it inherits, and the app's
   classes it may use: `PageHeader`, `PageTitle`, `Plate`, `PlateFooter`, `Card` and the typography's.
-- **The map** (D120 to D122, D346, `D3B.App.ViewModels.Maps`), in a character's tab: `MapCanvas`, in `D3B.App.Controls`,
+- **The map** (D120 to D122, D346, `D3B.Bis.App.ViewModels.Maps`), in a character's tab: `MapCanvas`, in `D3B.Bis.App.Controls`,
   draws a scene flat in the theme's palette (`MapPalette`), a map's fixed geometries built once, in layers toggled in a
   menu: the cells, the character and its path, the elements by what the server says of them, the NPCs, the exits from the
   world graph (`MapExits`), the other bots, the zones and stairs, and the fight; it says the cell under the pointer, which
@@ -786,22 +799,22 @@ D356), the pages of D101 and D162 gone.
 - **Published** (D171): pushing a tag `v<version>` has `.github/workflows/release.yml` publish the app self-contained for
   win-x64, put the pack, schema and mapping of the build `ClientVersion` names in `data/<version>/` beside it with
   `scripts/embed.cs` (D172), and pack it with Velopack into the release `v<version>`: an installer, a portable zip, full and
-  delta packages. Installed per user into `%LOCALAPPDATA%\D3B.App`, apart from `%LOCALAPPDATA%\D3B`, which uninstalling
+  delta packages. Installed per user into `%LOCALAPPDATA%\D3B.Bis.App`, apart from `%LOCALAPPDATA%\D3B.Bis`, which uninstalling
   keeps. `LICENSE` and `THIRD-PARTY-NOTICES.md` ship beside it.
-- **Updates** (D173, `D3B.App.Updates`): `Program` lets Velopack run first, as an install, an update or an uninstall asks;
+- **Updates** (D173, `D3B.Bis.App.Updates`): `Program` lets Velopack run first, as an install, an update or an uninstall asks;
   `AppUpdates` checks the repository's releases as the app starts (`VelopackUpdateClient`, or the folder `Updates:Source`
   names), downloads a newer version at once, and installs it when the user restarts from the window's banner, asked first
   while bots play, or once the window is gone and the host stopped. `UpdatesViewModel` says it in the banner and in the
   settings' About section, with the app's version and the client build it ships (`AppRelease`); when the host lacks the installed
   build's files (D172), the installed app says so instead of the host's message, with the update and a button installing
   it. Run from its code, the app does not check.
-- **View models** (`D3B.App.ViewModels`) read the bots' snapshots every 250 ms, on the UI's thread (D9), the page shown
+- **View models** (`D3B.Bis.App.ViewModels`) read the bots' snapshots every 250 ms, on the UI's thread (D9), the page shown
   alone: the bots' loops never wait for the app. Views are thin, and bind compiled.
-- **Translation**: `Localizer`, in `D3B.App.Localization`, reads `Strings.resx` in English and `Strings.fr.resx` in
+- **Translation**: `Localizer`, in `D3B.Bis.App.Localization`, reads `Strings.resx` in English and `Strings.fr.resx` in
   French; the language starts as the system's, or the one the app was left in, and changes live, the views binding
   through `{l:Tr Key}`.
 - **Preferences** (`AppPreferences`): the language and the studio's layout (`StudioLayoutState`), remembered in
-  `%LOCALAPPDATA%\D3B\app.json`, read before the window shows (D101, D162); and the host's settings the settings' tab changed, by their configuration's keys and values,
+  `%LOCALAPPDATA%\D3B.Bis\app.json`, read before the window shows (D101, D162); and the host's settings the settings' tab changed, by their configuration's keys and values,
   such as `Delays:Display` or `Network:Captures:Game`, one given back its default forgotten (D151). It also
   remembers that the notice of the recorded sessions was read (`CapturesNoticeSeen`, D409): the home page shows
   `CapturesNoticeViewModel` until then, and the Network settings say the same always. The app reads the
@@ -810,11 +823,17 @@ D356), the pages of D101 and D162 gone.
 
 ## Storage
 
-Built in session 5c (D99, D100), in `D3B.Storage`, which the app and `D3B.Host` add to the host's composition; the maps'
+Built in session 5c (D99, D100), in `D3B.Bis.Storage`, which the app and `D3B.Bis.Host` add to the host's composition; the maps'
 graphics in session 6b (D138); the resources' growing back and the runs in session 6c (D145, D146); the fights' placement
 cells in session 9f3 (D275); the NPCs and their dialogs in session 7d3b (D383).
 
-- **The database**: SQLite through EF Core, in `%LOCALAPPDATA%\D3B\d3b.db` or `Storage:Path`, its migrations applied
+- **The folder** (D426): D3B.Bis keeps its files in `%LOCALAPPDATA%\D3B.Bis`, apart from D3B's `%LOCALAPPDATA%\D3B`. At the
+  first start, the one where it has no database yet, `PreviousInstall.Import`, called by the app's and the host's entry
+  points before anything is read, copies D3B's database (through SQLite's backup, D3B may be running), the studio's
+  project and the app's preferences, each only where D3B.Bis has none. D3B's files are only read; the read may leave
+  SQLite's empty `-wal` and `-shm` beside D3B's database, which its next write clears. The captures, the packs and the
+  client's configuration are not brought.
+- **The database**: SQLite through EF Core, in `%LOCALAPPDATA%\D3B.Bis\d3b.db` or `Storage:Path`, its migrations applied
   before the host starts (`StoragePreparation`, an `IHostPreparation`); one that does not open stops the host, which says
   why. Migrations are written by `dotnet-ef`, a local tool, through a design-time context.
 - **Accounts and characters** (`AccountBook`): recorded as the relay sees them (`AccountRecorder`, an observer of the game
@@ -859,10 +878,10 @@ cells in session 9f3 (D275); the NPCs and their dialogs in session 7d3b (D383).
 ## Mods
 
 Lua scripts went (D116, D119). Mods come in blueprint style at step 7 (D117), within a studio that the whole app becomes,
-designed in session 7a with no code (D293 to D311); Q13 is settled. Built in session 7b (D312 to D318), in `D3B.Bot`, then
-moved to `D3B.Studio` (D393), with no new interface:
+designed in session 7a with no code (D293 to D311); Q13 is settled. Built in session 7b (D312 to D318), in `D3B.Bis.Bot`, then
+moved to `D3B.Bis.Studio` (D393), with no new interface:
 
-- **The project** (`D3B.Studio.Assets`, D314): `AssetLibrary` reads the folder of `Studio:Path`, `%LOCALAPPDATA%\D3B\studio`
+- **The project** (`D3B.Bis.Studio.Assets`, D314): `AssetLibrary` reads the folder of `Studio:Path`, `%LOCALAPPDATA%\D3B.Bis\studio`
   by default, before the host starts (`AssetPreparation`), each file `<name>.<kind>.json` an asset (`AssetFiles`): its id,
   kind, format 1 and client build, its name the file's; behaviors and profiles hold what they are made of, the other kinds
   their files as they are (`PlannedAsset`). A file that does not read, or takes another's id, is left out and said
@@ -871,7 +890,7 @@ moved to `D3B.Studio` (D393), with no new interface:
   under a new id when its own is taken, and exported (D351). The
   given assets (`GivenAssets`), made from the modules: a behavior per activity, `d3b.<id>`, playing it whole, its settings
   its public settings; a profile per preset, holding what it changes; read only.
-- **A behavior** (`BehaviorAsset`, `D3B.Studio.Behaviors`): public settings, variables, the layer Always, rules on events and the
+- **A behavior** (`BehaviorAsset`, `D3B.Bis.Studio.Behaviors`): public settings, variables, the layer Always, rules on events and the
   stack of states; a state's conditions are sentences joined by and, or and not, a leaf's actions an `ActionGraph` of
   nodes and wires of execution and typed data, its layout kept apart (D313).
 - **Nodes** (D316): `AddNode<TNode, TValues>` registers a `ConditionNode`, `EventNode`, `ActionNode` or `InstantAction`, its
@@ -883,7 +902,7 @@ moved to `D3B.Studio` (D393), with no new interface:
   its actions gone through from the first, goals passed, what the state says nothing of played once per visit
   (`StateVisit`), an activity's node delegating to today's activity; a leaf played to its end and chosen again is done
   unless it repeats (`BehaviorState.Repeat`: a number of times, for ever or until a condition, D421); no state holding, the run waits. On the bot's loop (`BotActivity.Watch`) rules play on events and an
-  urgent state cuts the step. Variables of the run, the character's (`CharacterVariables`, kept by `D3B.Storage`) and the
+  urgent state cuts the step. Variables of the run, the character's (`CharacterVariables`, kept by `D3B.Bis.Storage`) and the
   bots' (`SharedVariables`). The journal says each state entered and each note; the trace, each decision (D350).
 - **The app** (D317, D352): a profile of a behavior playing one activity whole is edited as its settings (`ProfileForms`),
   in a tab of its own, saved as what differs from the behavior, each value that differs marked; a given profile read only,
@@ -898,7 +917,7 @@ The target:
   centre, the editor's tabs, a character's map and what it does (D325), a profile's editor (D330), the settings (D329),
   over the bottom panel's journal, trace, problems, protocol and statistics (D327); on the right, the inspector of the
   character or asset chosen (D324). Coded in 7c2 to 7c4; the pages of D101 and D162 go, nothing they do lost.
-- **The project** (D296): a folder, `%LOCALAPPDATA%\D3B\studio` by default, one JSON file per asset, referenced by a
+- **The project** (D296): a folder, `%LOCALAPPDATA%\D3B.Bis\studio` by default, one JSON file per asset, referenced by a
   stable id: routes, zones, lists, behaviors, profiles, plannings and fight preferences; behaviors given with the app, read
   only. The database keeps what is learned, the accounts and the characters.
 - **A behavior** (D297, D307): a stack of states by priority, each with its conditions of entry, under a layer Always that
@@ -911,21 +930,21 @@ The target:
 - **Routes and zones** (D299, D308): built on the world's map drawn from the client's own images, clicked, painted,
   recorded while playing or typed; the maps clicked are anchors, those between found by the world's path.
   Made in 7d2 (D372 to D374), then 7d3 (D375 to D379) and the zones in 7d4 (D394), without the recording, which is 7d4b:
-  - `RouteAsset` (`D3B.Studio.Assets`, file `<name>.route.json`): anchors, each a map's id and whether it was pinned, the course
+  - `RouteAsset` (`D3B.Bis.Studio.Assets`, file `<name>.route.json`): anchors, each a map's id and whether it was pinned, the course
     (`RouteMode`: loop, one way, there and back) and what to do with a map no path reaches (`RouteUnreachable`); what a file holds
     beyond is kept (`Details`). An anchor holds its actions (`RouteAnchor.Actions`, D378): nodes of the catalog, each with the
     values that differ from its defaults, in its file under `actions`; two anchors are equal by what they hold.
-  - `RouteClips` and `RouteClip` (`D3B.Studio.Routes`, D413): a route's steps read as clips for the Sequencer, never stored. A clip is
+  - `RouteClips` and `RouteClip` (`D3B.Bis.Studio.Routes`, D413): a route's steps read as clips for the Sequencer, never stored. A clip is
     the longest run of consecutive steps that hold an equal action (`RouteAnchor.SameCall`), so that the file is as D378 made it; two
     equal actions on a step are two clips (a `Layer`), clips of one kind that overlap stand in `Lane`s. `Derive` reads, and `Draw`,
     `Reshape` (stretching and moving), `Remove`, `Revalue`, `RevalueOn` and `CommonCalls` edit by the least: an action added goes last,
     the order of the others, the pins, the maps and `Details` are kept, a step the edit does not reach is the same object.
-  - `RouteActions` (`D3B.Studio.Routes`): the actions a route plays on a map, nodes `route.harvest`, `route.fight`, `route.door`,
+  - `RouteActions` (`D3B.Bis.Studio.Routes`): the actions a route plays on a map, nodes `route.harvest`, `route.fight`, `route.door`,
     `route.exit`, `route.zaap`, `route.bag` and `route.npc`, and the behaviors' `wait`, with their values (`RouteExitValues`,
     `RouteDoorValues`, `RouteHarvestValues`, `RouteFightValues`, `RouteNpcValues`) and sentences; each plays (D384): `ForceExit`,
-    `TakeDoor` and `EnterBag` through `ForcedMoves` (`D3B.Bot.Movement`, which sends what `MapChange` sends and shares its
+    `TakeDoor` and `EnterBag` through `ForcedMoves` (`D3B.Bis.Bot.Movement`, which sends what `MapChange` sends and shares its
     helpers), `HarvestHere` and `FightHere` through `MapHarvest` and `MapFight` (the activity's own choice of the next element is
-    `MapHarvest.Candidates`), `TalkToNpc` through `NpcTalk` (`D3B.Bot.Npcs`), and the zaap in `GameRouteStage`, which is given the
+    `MapHarvest.Candidates`), `TalkToNpc` through `NpcTalk` (`D3B.Bis.Bot.Npcs`), and the zaap in `GameRouteStage`, which is given the
     route's next step (`RouteRunner`, `RouteCursor.NextAnchor`). An action that cannot be played throws `RouteActionException`: the
     stage says why in the journal and the route fails. `RouteActionCalls` turns a call into the node's values and back.
     `SettingKind.Cell` is a cell of the map, picked on `CellPicker` in a dialog (D121, D378); `SettingKind.Npc` and
@@ -941,7 +960,7 @@ The target:
     `Positions` give a `RouteRunPosition` per character (route, step, on its way or arrived, actions played, lap, going back) which the app
     reads every 250 ms; the runner tells its stage each step reached (`IRouteStage.Reached`, a journal line in the first lap only). A
     behavior that is a plain chain of two steps or more reports its step through `ActivityReport.Progress` (`StateVisit.Place`).
-  - **A list of steps** (D386), in `D3B.Studio.Behaviors`: `BehaviorSequences` reads a behavior as a list when it is one state of actions
+  - **A list of steps** (D386), in `D3B.Bis.Studio.Behaviors`: `BehaviorSequences` reads a behavior as a list when it is one state of actions
     chained by their way on, and writes a list into one (`BehaviorSequence`: the steps as `NodeCall`s and whether it repeats); the
     behavior's file is the same the canvas of 7e opens. `BehaviorSequences.Offered` are the nodes a step may be: `route.follow`,
     `route.harvest`, `route.fight`, `route.bag`, `wait`, `note`, `pause`, `stop`. `SettingKind.Zone`, a zone's id picked as a route's is (D415, `ZoneFieldViewModel`, which says in words what the zone does and how many maps it holds, and blocks the profile when the zone holds none or is gone). `SettingKind.Route`, a route's id picked in
@@ -961,26 +980,26 @@ The target:
     `StepRepeatViewModel` and `StepRepeatView` are the token under each step and under the list; the condition of an "until" is a
     `RouteActionViewModel` drawn by `ActionSentenceView`, the sentence of `ActionCardView` taken out; `BehaviorSequences.OfferedConditions`
     are the conditions offered.
-  - **Zones** (D394): `ZoneAsset` (`D3B.Studio.Assets`, file `<name>.zone.json`) holds sub-area ids, map ids and left-out map ids,
+  - **Zones** (D394): `ZoneAsset` (`D3B.Bis.Studio.Assets`, file `<name>.zone.json`) holds sub-area ids, map ids and left-out map ids,
     ascending, and what else the file holds (`Details`); `ZoneMaps.Resolve` and `Holds` give the maps it holds (its sub-areas' and
-    the maps named, less those left out); a harvest or a hunt reads them as its place (D415, `ProjectZones`). `ZonesViewModel` and `ZoneEditorViewModel` (`D3B.App.ViewModels.Zones`) hold the editors
+    the maps named, less those left out); a harvest or a hunt reads them as its place (D415, `ProjectZones`). `ZonesViewModel` and `ZoneEditorViewModel` (`D3B.Bis.App.ViewModels.Zones`) hold the editors
     open, selected in the world's viewport (D397; tabs of their own until then) on the routes' `WorldMapView`, which draws a scene's `Squares` (`WorldMapZoneLayer`) and offers the tools
     `Trace` (paint), `Erase` and `Region` (a whole sub-area) beside `Select`; what the editors read from the host is the routes'
     `RouteServices`.
-  - **Undo, dragging and the keys of the editors** (D394), in `D3B.App`: `UndoHistory<T>` (`ViewModels/Studio`) holds the states of
+  - **Undo, dragging and the keys of the editors** (D394), in `D3B.Bis.App`: `UndoHistory<T>` (`ViewModels/Studio`) holds the states of
     the list of steps, the profile and the zone editors, `IUndoable` being what Edit's Undo and Redo follow; changes with the same
     run (a field typed in, `SettingsEditor.TypingRun`; a gesture on the map) are one. `ReorderDrag` (`Controls`), attached to an
     `ItemsControl` with `ReorderRequest` commands, drags rows, moves a focused row with Alt and the up and down arrows and removes it
     with Delete; the route's steps and actions and a list's steps use it.
-  - `RoutePlanner` (`D3B.Studio.Routes`): the legs between anchors by the world's path (`WorldPathfinder`), as a subscribed
+  - `RoutePlanner` (`D3B.Bis.Studio.Routes`): the legs between anchors by the world's path (`WorldPathfinder`), as a subscribed
     character with every zaap of the game known and one taken where it saves 5 changes (D378), each leg kept by its two
     maps; `RouteLeg` lists the maps crossed and the zaaps taken, or says none leads.
-  - `WorldMapIndex` (`D3B.Data.WorldMaps`, a singleton of `DataModule` beside `WorldMapTiles`): the maps on each coordinates
+  - `WorldMapIndex` (`D3B.Bis.Data.WorldMaps`, a singleton of `DataModule` beside `WorldMapTiles`): the maps on each coordinates
     of each world's layer, an inside on the layer of its sub-area's world.
-  - `WorldMapView` (`D3B.App.Controls.WorldMaps`): the world's image from its tiles, zoom and pan eased, the route over it as the
+  - `WorldMapView` (`D3B.Bis.App.Controls.WorldMaps`): the world's image from its tiles, zoom and pan eased, the route over it as the
     mockup's pills and line (`WorldMapRouteLayer`); `TileStore<T>` its bounded cache and loader, `WorldMapViewport` and
     `WorldMapTiling` its arithmetic.
-  - `RouteEditorViewModel` (`D3B.App.ViewModels.Routes`): a route's editor, whose map is the world's viewport (D397; `RouteView`'s
+  - `RouteEditorViewModel` (`D3B.Bis.App.ViewModels.Routes`): a route's editor, whose map is the world's viewport (D397; `RouteView`'s
     tab until then); `RoutesViewModel` holds the editors open and what they read (`RouteServices`), made when first asked for; the
     Details panel's section is `AssetPropertiesViewModel.Route`.
 - **Profiles** (D300) are a behavior and the values they change; in the app a profile plays an activity's given behavior, its
@@ -995,10 +1014,10 @@ The target:
 
 ## Engine
 
-Pure logic with no I/O, in `D3B.Engine`, which references `D3B.Data` for the cells and the world. Built in session 4a
+Pure logic with no I/O, in `D3B.Bis.Engine`, which references `D3B.Bis.Data` for the cells and the world. Built in session 4a
 (D68), 4b (D71, D73), 4c (D75, D76), 4d (D79), 4e (D83) and 4f (D86):
 
-- `MapGeometry`, in `D3B.Engine.Maps`: 14 columns of 40 staggered rows, the eight directions between neighbours, the
+- `MapGeometry`, in `D3B.Bis.Engine.Maps`: 14 columns of 40 staggered rows, the eight directions between neighbours, the
   coordinates the server names a cell by (`MapPoint`), measured on the captures, the distance between two cells, the
   sum of their coordinates' differences, by which the server measures a skill's range, and whether a cell of an edge
   leaves the map in a direction, which the paths and the app's map share (D121).
@@ -1010,11 +1029,11 @@ Pure logic with no I/O, in `D3B.Engine`, which references `D3B.Data` for the cel
   steps weighed by the time the character takes, to one cell or the nearest of several; on a map with stairs, cells of
   moveZone 1, a step changes floor by 10 at most but along a stair (D86). `CellPath` gives the turning points a request
   names. Nothing is kept between calls.
-- `Criterion`, in `D3B.Engine.Criteria`: a criterion of the client's, read once into a tree and answered on three values
+- `Criterion`, in `D3B.Bis.Engine.Criteria`: a criterion of the client's, read once into a tree and answered on three values
   from `CriterionFacts`, what the bot knows; a code it does not know is unknown.
-- `WorldInsides`, in `D3B.Engine.World`: the maps a map's doors lead into at its coordinates on no world map, such as a
+- `WorldInsides`, in `D3B.Bis.Engine.World`: the maps a map's doors lead into at its coordinates on no world map, such as a
   bank's insides (D79).
-- `WorldPathfinder`, in `D3B.Engine.World`: Dijkstra's over the world graph's vertices, a zone of a map each, through
+- `WorldPathfinder`, in `D3B.Bis.Engine.World`: Dijkstra's over the world graph's vertices, a zone of a map each, through
   scrolls, scrolls with an action, map actions and every interactive transition, doors, stairs, portals and "go to"s,
   whose criteria are met (`WorldPathRules`, D248), each change costing the same, to the nearest of several maps or vertices, the graph having
   no edge between two zones of a map, so that another zone of the start's own map is a path out and back (D425); sub-areas
@@ -1026,7 +1045,7 @@ Pure logic with no I/O, in `D3B.Engine`, which references `D3B.Data` for the cel
   zaap of every map it knows one on whose cost it carries (`TeleportCost`), one change like the others (D83). It gives
   the cells each map is left from (`ExitCells`), a door's around its element. Built once per pack and shared; a search
   keeps its state in its own arrays, and takes under 0.7 ms (measured with BenchmarkDotNet, dropped in D400).
-- The rules of a fight, in `D3B.Engine.Fights` (9c, D185 to D190), pure, on the pack's catalogs (D182):
+- The rules of a fight, in `D3B.Bis.Engine.Fights` (9c, D185 to D190), pure, on the pack's catalogs (D182):
   - `Combatant`, a fighter as the rules see it: team, cell, AP, MP, range, lock, dodge, life, summons, breed or monster,
     its grade and properties, summoner, states, and the buffs it holds by the spell that gave each (`HeldBuff`, D227). `CellSet`, a set of a map's cells as 560 bits, which the rules pass around
     without allocating. `FightMap`, a map's cells walkable in a fight and letting sight through, built once per map.
@@ -1046,7 +1065,7 @@ Pure logic with no I/O, in `D3B.Engine`, which references `D3B.Data` for the cel
     and the cells it walks to with what it keeps there.
   - Benchmarked on a captured fight's map: every cell a level may be cast on in 6.3 µs, a line of sight in 30 ns, an
     effect's reach in 1.5 µs, the cells a walk reaches in 1.2 µs.
-- The effects' engine, in `D3B.Engine.Effects` (9d, D195), pure, on the pack's catalogs:
+- The effects' engine, in `D3B.Bis.Engine.Effects` (9d, D195), pure, on the pack's catalogs:
   - `EffectActions`, built once per pack: what each effect id does (`EffectKind`, `EffectAction`), its element and the
     characteristic it changes, from the pack and D3B's table of the client's actions, and who casts the spell an effect
     casts, where (`SpellCaster`, D227); `FightCharacteristic` names the characteristics the formulas read.
@@ -1056,7 +1075,7 @@ Pure logic with no I/O, in `D3B.Engine`, which references `D3B.Data` for the cel
     the critical effects on a critical hit, nothing drawn. A mask naming the caster reaches it outside the zone.
   - Benchmarked on a captured fight's map: a cast foreseen in 0.69 µs, 0.66 µs into a list it reuses, its zones kept per
     thread (`ZoneCells`), 3.7 µs cold; 40 µs before 9e (D200). An effect for the client only is never foreseen (D203).
-- The fight's AI, in `D3B.Engine.Tactics` (9e, D201; 9e2, D205 to D212), pure:
+- The fight's AI, in `D3B.Bis.Engine.Tactics` (9e, D201; 9e2, D205 to D212), pure:
   - `ImaginedFight`, the fighters as the AI imagines them and the buffs its casts gave (`ImaginedBuff`, their rounds),
     and `FightKnowledge`, what it knows of their spells and points.
   - `Imagination`: what a walk and a cast do to an imagined fight, each effect at the middle of its range, a critical
@@ -1072,13 +1091,13 @@ Pure logic with no I/O, in `D3B.Engine`, which references `D3B.Data` for the cel
     the bench what it measures (D206). What it reckons once from where the fight starts and keeps is `JudgeTables` (each
     fighter's damaging spells, the damage of its best turn on every other for every number of AP, which spells land from where
     it walks), the odds are `JudgeOdds`, and the pure turn arithmetic is `JudgeTurns` (D399).
-  - `Summons`, in `D3B.Engine.Fights`: the fighter a summon brings, from its monster's grade and its summoner's
+  - `Summons`, in `D3B.Bis.Engine.Fights`: the fighter a summon brings, from its monster's grade and its summoner's
     characteristics, as the server makes it (D269); `MonsterSpells`, the levels a monster casts at a grade. A summon the
     search brings is judged as one of the fighters the judge starts with: its life a tenth of an ally's, its being alive
     its turn's damage, and the blow it strikes next, before the enemies (`FightJudge`, D270); an enemy that would hit it
     hits it half the time. In the reply the character's summons that play strike first, the latest first; of summons drawn
     at random the likeliest alone comes.
-  - `Glyphs`, `CellMark` and `CellMarkKind`, in `D3B.Engine.Fights` (D280): the marks the pack's effects set on the cells of
+  - `Glyphs`, `CellMark` and `CellMarkKind`, in `D3B.Bis.Engine.Fights` (D280): the marks the pack's effects set on the cells of
     a zone, a glyph struck as a turn begins (401) or ends (402), a glyph-aura (1091), a trap (400), their spell, grade
     and end; the imagined fight's marks, the server's and those the casts set (`ImaginedFight.Marks`).
     `Imagination.TurnStarted` takes back an author's marks whose time is out and strikes a fighter with the glyphs and
@@ -1105,7 +1124,7 @@ Pure logic with no I/O, in `D3B.Engine`, which references `D3B.Data` for the cel
     of 61 captures, 56 ms halfway, 422 ms at most, and 86 ms halfway on the AI's own fights (9e2); benchmarked, a turn
     against four enemies in 1.6 ms (9e), 3.1 ms and 6.5 MB (9e2, D216), 3.1 ms and 4.79 MB (9f, D229), 2.83 ms and
     4.81 MB (9g4, D255); on 452 searches of 94 captures, 90 ms halfway, 538 ms at most (9g4).
-- The weapons' blows, in `D3B.Engine.Fights` (9e3, D220): `WeaponBlows`, each sword's blow a level of spell 0, the
+- The weapons' blows, in `D3B.Bis.Engine.Fights` (9e3, D220): `WeaponBlows`, each sword's blow a level of spell 0, the
   punch's with the sword's fields and its effects used in fights, after the pack's levels in one catalog the rules, the
   effects and the AI share (`SpellCatalog.WithLevels`); `EffectFormulas.DealtByWeapon` and the weapons' multipliers,
   the references' order. The other kinds of weapon wait for blows of theirs.
@@ -1119,7 +1138,7 @@ and pinned in `actors.proto`, `fights.proto` and `fight_actions.proto` (D178); t
 [Bot run time](#bot-run-time)); the fight on the app's map (D180). Built in session 9b: the fight's data in the pack,
 format 5 (D182, in [Game data](#game-data)), its flags read in the client's code (D183), the cast's level and the
 monsters checked on the captures, and the monsters named on the map (D184). Built in session 9c: the rules of a cast and
-of a walk in `D3B.Engine` (D185 to D189, in [Engine](#engine)), checked on every cast and walk captured, 49 fights of 11
+of a walk in `D3B.Bis.Engine` (D185 to D189, in [Engine](#engine)), checked on every cast and walk captured, 49 fights of 11
 breeds with those the owner played for it (D191), and the casts the server refuses left to captures to make (D190, Q16).
 The owner's aims for the AI and the fighting activity are D192. The references' ideas for each session are D181. Built in
 session 9d: what the server announces of a fight named and pinned, mapping format 10, and kept in the fight's state
@@ -1177,14 +1196,14 @@ interface's recast (D292).
   AP and MP spent, life lost and healed, teleports, swaps, summons and deaths; it asks the client whether it is ready for
   the next turn. It ends with each fighter's outcome, experience and loot. The bot acts through the cast's, the walk's,
   the placement's, the readiness' and the turn's end's requests; the client sends the rest by itself.
-- In `D3B.Engine`, from the pack's catalogs: the rules of a cast, line of sight, zones, masks and conditions, and walking
+- In `D3B.Bis.Engine`, from the pack's catalogs: the rules of a cast, line of sight, zones, masks and conditions, and walking
   with its tackle and the spells' modifiers (9c, built); the effects' engine, Bubble's formulas measured one by one
   against the server's answers: damage, steals, heals, critical hits and the zone's decrease; pushes, shields, AP and MP
   removed and erosion left to captures (9d, built, D195, D196).
 - A fight is decided by simulating candidate actions and scoring them (D13): each turn the AI searches the best sequences
   of moves and casts and thinks again after each answer of the server (9e, built, D201, D202), its judgement measured on
   the captures turn by turn (9e2, D206 to D212). The simulator applies spell
-  effects read from the game data. It lives in `D3B.Engine`, with no I/O, so it is tested on its own.
+  effects read from the game data. It lives in `D3B.Bis.Engine`, with no I/O, so it is tested on its own.
 - The hard cases through the effects, measured one at a time (9f): a fighter's states, as the server sets and ends them
   and as the effects set and end them through the spells they cast, the Zobal's masks first (built, D224 to D229);
   summons, those the AI brings and those the client controls (built, D269 to D271); the Roublard's bombs, their chains,
@@ -1227,7 +1246,7 @@ character's (D279). The character's spells by the
 - The effects' formulas are tested on fighters the tests build, with the numbers the bench measured; what a cast foresees
   on a catalog of the tests' own: a blow on each enemy, less a step away, its critical effects, resistances, and a boost
   of the caster its mask names (D195). The bench itself, `scripts/fights.cs`, runs on the captures of the owner's machine.
-- Logic code in `D3B.Engine` and the state handlers is tested directly, with property tests on CsCheck for cell and
+- Logic code in `D3B.Bis.Engine` and the state handlers is tested directly, with property tests on CsCheck for cell and
   world paths (D68, D71) and lines of sight, the same both ways and nearing their end at each cell. A fight's rules are
   tested on maps and fighters the tests build around a map's middle, with a catalog of six spells, each refusal named.
 - Recorded sessions replay through an in-memory `Pipe` (`CaptureReplay`, D37); tests build the sessions they replay.
@@ -1243,8 +1262,8 @@ character's (D279). The character's spells by the
   screen by Avalonia.Headless with Skia, its texts read in both languages (D94), its pieces drawn apart beside the
   mockup's when `D3B_DRAWINGS` names a folder (`Drawings.DrawPart`); the characters, the assets and a profile's tab against
   a database of the test's own and the game's values of a small world, named by a pack's texts in both languages (D101).
-- Activities' settings are tested in `D3B.Bot.Tests`; the assets, behaviors, nodes and routes in `D3B.Studio.Tests`, which compile
-  the helpers of `D3B.Bot.Tests` they need as linked files, as the app's and the storage's tests do (D393); the storage in `D3B.Storage.Tests`, on a database of the test's own,
+- Activities' settings are tested in `D3B.Bis.Bot.Tests`; the assets, behaviors, nodes and routes in `D3B.Bis.Studio.Tests`, which compile
+  the helpers of `D3B.Bis.Bot.Tests` they need as linked files, as the app's and the storage's tests do (D393); the storage in `D3B.Bis.Storage.Tests`, on a database of the test's own,
   its recording and starting on connection through game connections played as the bots' tests play them (D99, D100).
 - The app's module pages are drawn with a page of the tests' own (D109). A profile naming a Lua script, in a host with no
   activity, is shown gone in its tab and a character's card, and one that does not start on connection is said in
@@ -1253,7 +1272,7 @@ character's (D279). The character's spells by the
   through game sessions, D3B's requests included, and the inspector's fields and replays on captures the tests write
   (D115); the journal, the trace, the problems, the protocol and the statistics against bots played the same way, in
   both languages (D111, D353); the trace's lines after the behaviors the bots' tests play (D350).
-- A view model of the studio belongs to the UI thread: what it resumes after an await (the route editor's planning, a save, a creation) comes back to it. A test has no such thread and would resume those on the pool, beside its own steps (a `Dictionary` of the world's zones was written from two threads, a route editor's list modified while another thread read it): every test class of `tests/D3B.App.Tests/ViewModels` carries `[UiThread]`, which runs each of its tests with a `UiThreadContext`, a thread of its own that runs what is posted to it one step at a time. A new test class of a view model that plans, saves or creates takes the attribute too.
+- A view model of the studio belongs to the UI thread: what it resumes after an await (the route editor's planning, a save, a creation) comes back to it. A test has no such thread and would resume those on the pool, beside its own steps (a `Dictionary` of the world's zones was written from two threads, a route editor's list modified while another thread read it): every test class of `tests/D3B.Bis.App.Tests/ViewModels` carries `[UiThread]`, which runs each of its tests with a `UiThreadContext`, a thread of its own that runs what is posted to it one step at a time. A new test class of a view model that plans, saves or creates takes the attribute too.
 - The app's dialogs and toasts are read from its view models (`Dialogs`, `Toasts`): a profile made, copied, closed with
   changes and deleted, an account forgotten from the characters' menu, a character's profile, start and variables from the
   inspector, resources chosen several at once, what a bot met said once; every icon is
@@ -1263,8 +1282,11 @@ character's (D279). The character's spells by the
   fighters, a fight's and a missing map, and what a cell holds, in both languages; its drawing without a screen, a pixel of each mark checked in each
   theme's palette and the cell under the pointer described; its layout's cells found back from their centres (D120 to
   D122).
-- Time is controlled through `FakeTimeProvider`.
-- The Claude Code hooks (D398) are tested where they ship from: `tests/D3B.Hooks.Tests` compiles the files of
+- Time is controlled through `FakeTimeProvider`. The bots' tests move `TestPlay.Time`, a `TestClock`: a fake clock that knows the
+  timers asked of it. Moving a fake clock rings only the timers already made, and what a test sees of a bot (a status, a note, a
+  frame sent) comes before the bot asks its next wait: a test that means to end a wait a bot asks calls `EndAsync` with the wait's
+  delay, or `AskedAsync` before it moves the clock by less, and never `Advance` on such a signal alone.
+- The Claude Code hooks (D398) are tested where they ship from: `tests/D3B.Bis.Hooks.Tests` compiles the files of
   `.claude/hooks/shared/`, which hold every decision, and checks them on commands and paths as Claude Code sends them: which
   pushes are refused or asked, which writes are refused, which changes need a build, a build that fails only on files the
   running app holds. The entry files in `.claude/hooks/` only read the input and report; CI builds each.

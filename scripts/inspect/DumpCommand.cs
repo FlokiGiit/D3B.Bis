@@ -1,6 +1,6 @@
 using System.CommandLine;
 
-namespace D3B.Scripts.Inspect;
+namespace D3B.Bis.Scripts.Inspect;
 
 /// <summary><c>dump</c>: the fields of one object, as a tree.</summary>
 internal static class DumpCommand

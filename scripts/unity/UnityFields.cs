@@ -1,6 +1,6 @@
 using System.Numerics;
 
-namespace D3B.Scripts.Unity;
+namespace D3B.Bis.Scripts.Unity;
 
 /// <summary>The plain fields of a serialized object, read by name through its type tree, each with its type checked.</summary>
 /// <remarks>

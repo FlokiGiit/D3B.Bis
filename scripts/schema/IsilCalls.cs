@@ -1,7 +1,7 @@
 using Cpp2IL.Core.ISIL;
 using Cpp2IL.Core.Model.Contexts;
 
-namespace D3B.Scripts.Schema;
+namespace D3B.Bis.Scripts.Schema;
 
 /// <summary>Reads the calls of a method's machine code, lifted by Cpp2IL to its instruction-set-independent language.</summary>
 /// <remarks>

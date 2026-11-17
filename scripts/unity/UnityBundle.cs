@@ -1,7 +1,7 @@
 using AssetsTools.NET;
 using AssetsTools.NET.Extra;
 
-namespace D3B.Scripts.Unity;
+namespace D3B.Bis.Scripts.Unity;
 
 /// <summary>A bundle opened through AssetsTools.NET: its serialized files, the raw bytes of objects, and its <c>.resS</c> streams.</summary>
 /// <remarks>One thread reads a bundle at a time; different bundles are read in parallel, one manager each.</remarks>

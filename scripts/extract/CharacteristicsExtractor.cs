@@ -1,7 +1,7 @@
-using D3B.Data.Characteristics;
-using D3B.Scripts.Unity;
+using D3B.Bis.Data.Characteristics;
+using D3B.Bis.Scripts.Unity;
 
-namespace D3B.Scripts.Extract;
+namespace D3B.Bis.Scripts.Extract;
 
 /// <summary>Reads the characteristics, and the Lua formulas they name to scale a monster's.</summary>
 /// <remarks>

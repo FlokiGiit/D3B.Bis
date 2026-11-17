@@ -1,4 +1,4 @@
-namespace D3B.Scripts.Inspect;
+namespace D3B.Bis.Scripts.Inspect;
 
 /// <summary>Names the values of Unity's <c>BuildTarget</c> that a serialized file records as its platform.</summary>
 internal static class Platforms

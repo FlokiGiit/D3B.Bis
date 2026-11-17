@@ -2,7 +2,7 @@ using System.Buffers.Binary;
 using System.Numerics;
 using System.Text;
 
-namespace D3B.Scripts.Unity;
+namespace D3B.Bis.Scripts.Unity;
 
 /// <summary>Reads the bytes of a serialized object field by field, as its <see cref="UnityTypeTree"/> lays them out.</summary>
 /// <remarks>Every typed read checks the field's type first, so that a change in the client fails instead of misreading.</remarks>

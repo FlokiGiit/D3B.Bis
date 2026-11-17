@@ -1,11 +1,11 @@
-using D3B.Bot.Characters;
-using D3B.Bot.Fights;
-using D3B.Network.Captures;
-using D3B.Network.Relay;
-using D3B.Protocol.Game;
+using D3B.Bis.Bot.Characters;
+using D3B.Bis.Bot.Fights;
+using D3B.Bis.Network.Captures;
+using D3B.Bis.Network.Relay;
+using D3B.Bis.Protocol.Game;
 using Google.Protobuf;
 
-namespace D3B.Scripts.Fights;
+namespace D3B.Bis.Scripts.Fights;
 
 /// <summary>Counts what D3B did in the fights of the captures: who played each, how it ended, and what came of the AI's requests.</summary>
 /// <remarks>

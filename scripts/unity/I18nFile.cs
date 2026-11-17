@@ -1,6 +1,6 @@
 using System.Text;
 
-namespace D3B.Scripts.Unity;
+namespace D3B.Bis.Scripts.Unity;
 
 /// <summary>A text file of the client, <c>Content/I18n/&lt;language&gt;.bin</c>: an Ankama format, not a Unity one.</summary>
 /// <remarks>

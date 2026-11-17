@@ -2,7 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Security.Cryptography;
 using System.Text.Json;
 
-namespace D3B.Scripts.Unity;
+namespace D3B.Bis.Scripts.Unity;
 
 /// <summary>The launcher's <c>manifest.json</c>: the SHA1 of every file of the client, which tells what a pack was made from.</summary>
 /// <remarks>

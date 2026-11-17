@@ -1,9 +1,9 @@
-using D3B.Data.Banks;
-using D3B.Data.Texts;
-using D3B.Data.World;
-using D3B.Scripts.Unity;
+using D3B.Bis.Data.Banks;
+using D3B.Bis.Data.Texts;
+using D3B.Bis.Data.World;
+using D3B.Bis.Scripts.Unity;
 
-namespace D3B.Scripts.Extract;
+namespace D3B.Bis.Scripts.Extract;
 
 /// <summary>Reads where the banks are, from the world map's hints, and the bankers, from the non-player characters' replies.</summary>
 /// <remarks>

@@ -1,7 +1,7 @@
-using D3B.Data.Interactives;
-using D3B.Scripts.Unity;
+using D3B.Bis.Data.Interactives;
+using D3B.Bis.Scripts.Unity;
 
-namespace D3B.Scripts.Extract;
+namespace D3B.Bis.Scripts.Extract;
 
 /// <summary>Reads the kinds of interactive elements, which the server names an element of the map by.</summary>
 internal static class InteractivesExtractor

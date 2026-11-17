@@ -1,7 +1,7 @@
-using D3B.Data.World;
-using D3B.Scripts.Unity;
+using D3B.Bis.Data.World;
+using D3B.Bis.Scripts.Unity;
 
-namespace D3B.Scripts.Extract;
+namespace D3B.Bis.Scripts.Extract;
 
 /// <summary>Reads the client's <c>Core.PathFinding.WorldPathfinding.PathFindingData</c> into a <see cref="WorldGraph"/>.</summary>
 /// <remarks>

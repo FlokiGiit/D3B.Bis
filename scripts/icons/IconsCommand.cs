@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Net;
 using System.Text;
 
-namespace D3B.Scripts.Icons;
+namespace D3B.Bis.Scripts.Icons;
 
 /// <summary>The command that takes the IntelliJ Platform's icons the app draws and writes them for Avalonia (D331).</summary>
 internal static class IconsCommand
@@ -50,7 +50,7 @@ internal static class IconsCommand
         };
         var output = new Option<FileInfo?>("--output")
         {
-            Description = @"The file to write. Defaults to src\D3B.App\Themes\IntelliJIcons.axaml in the repository.",
+            Description = @"The file to write. Defaults to src\D3B.Bis.App\Themes\IntelliJIcons.axaml in the repository.",
         };
         var check = new Option<bool>("--check")
         {
@@ -70,7 +70,7 @@ internal static class IconsCommand
 
     private static async Task<int> RunAsync(string revision, FileInfo? output, bool check, CancellationToken cancellationToken)
     {
-        var path = output?.FullName ?? Path.Combine(RepositoryRoot(), "src", "D3B.App", "Themes", "IntelliJIcons.axaml");
+        var path = output?.FullName ?? Path.Combine(RepositoryRoot(), "src", "D3B.Bis.App", "Themes", "IntelliJIcons.axaml");
         var icons = new List<(string Name, SvgIcon Icon)>();
         var refused = new List<string>();
 
@@ -202,10 +202,10 @@ internal static class IconsCommand
     {
         for (var directory = new DirectoryInfo(Environment.CurrentDirectory); directory is not null; directory = directory.Parent)
         {
-            if (File.Exists(Path.Combine(directory.FullName, "D3B.slnx")))
+            if (File.Exists(Path.Combine(directory.FullName, "D3B.Bis.slnx")))
                 return directory.FullName;
         }
 
-        throw new InvalidOperationException("Run the tool from the repository, which holds D3B.slnx, or name the file with --output.");
+        throw new InvalidOperationException("Run the tool from the repository, which holds D3B.Bis.slnx, or name the file with --output.");
     }
 }

@@ -1,8 +1,8 @@
-using D3B.Data.Effects;
-using D3B.Data.Spells;
-using D3B.Scripts.Unity;
+using D3B.Bis.Data.Effects;
+using D3B.Bis.Data.Spells;
+using D3B.Bis.Scripts.Unity;
 
-namespace D3B.Scripts.Extract;
+namespace D3B.Bis.Scripts.Extract;
 
 /// <summary>Reads the spells, their levels and effects, their variants, and the Rogue's bombs and walls.</summary>
 /// <remarks>

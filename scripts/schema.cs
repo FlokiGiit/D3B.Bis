@@ -3,8 +3,8 @@
 #:package Samboy063.Cpp2IL.Core
 #:package System.CommandLine
 #:property PublishAot=false
-#:project ../src/D3B.Data/D3B.Data.csproj
-#:project ../src/D3B.Protocol/D3B.Protocol.csproj
+#:project ../src/D3B.Bis.Data/D3B.Bis.Data.csproj
+#:project ../src/D3B.Bis.Protocol/D3B.Bis.Protocol.csproj
 #:include schema/ClientCode.cs
 #:include schema/FieldEncoding.cs
 #:include schema/FieldKind.cs
@@ -23,7 +23,7 @@
 #:include unity/ClientInstall.cs
 
 using System.Globalization;
-using D3B.Scripts.Schema;
+using D3B.Bis.Scripts.Schema;
 
 // Reads the protocol of the installed client from its IL2CPP code with Cpp2IL (D11, D15) and writes its obfuscated
 // schema: every message of Ankama.Dofus.Protocol.Connection and Ankama.Dofus.Protocol.Game, its fields, their numbers and

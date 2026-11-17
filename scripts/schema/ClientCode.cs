@@ -1,10 +1,10 @@
 using System.Buffers.Binary;
 using Cpp2IL.Core;
 using Cpp2IL.Core.Model.Contexts;
-using D3B.Scripts.Unity;
+using D3B.Bis.Scripts.Unity;
 using LibCpp2IL.Logging;
 
-namespace D3B.Scripts.Schema;
+namespace D3B.Bis.Scripts.Schema;
 
 /// <summary>The installed client's IL2CPP code, opened with Cpp2IL: its metadata, and its machine code lifted on demand.</summary>
 /// <remarks>Cpp2IL keeps the client it opened in static state: a process opens one client at a time.</remarks>

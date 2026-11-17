@@ -1,8 +1,8 @@
-using D3B.Protocol.Mapping;
-using D3B.Protocol.Readable;
+using D3B.Bis.Protocol.Mapping;
+using D3B.Bis.Protocol.Readable;
 using Google.Protobuf.Reflection;
 
-namespace D3B.Scripts.Mapping;
+namespace D3B.Bis.Scripts.Mapping;
 
 /// <summary>
 /// Proposes, for each readable message left unpaired, the build's messages it fits that are not paired yet, those the

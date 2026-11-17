@@ -2,7 +2,7 @@ using System.Collections.Concurrent;
 using AssetsTools.NET;
 using AssetsTools.NET.Extra;
 
-namespace D3B.Scripts.Inspect;
+namespace D3B.Bis.Scripts.Inspect;
 
 /// <summary>Names the script of a MonoBehaviour from the MonoScript its type points to.</summary>
 /// <remarks>
