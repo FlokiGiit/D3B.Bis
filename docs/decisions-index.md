@@ -584,3 +584,8 @@ or refines another says so in its own entry. Add a line here with every new deci
 
 - [D442](decisions/d442-the-repository-public.md#d442-flokigiitd3bbis-is-made-public-then-released-as-v0100-the-first-app-without-the-clients-files) FlokiGiit/D3B.Bis is made public, then released as v0.10.0, the first app without the client's files (2026-11-17)
   - Staying private, a public repository for the releases alone.
+
+## The first release's number (D443)
+
+- [D443](decisions/d443-the-first-release-number.md#d443-d3bbiss-first-release-is-v100-not-v0100-d3bs-tags-reach-v0140) D3B.Bis's first release is v1.0.0, not v0.10.0: D3B's tags reach v0.14.0 (2026-11-17)
+  - `v0.15.0`, `v0.10.0` all the same.

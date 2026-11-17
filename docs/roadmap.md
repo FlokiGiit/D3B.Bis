@@ -298,7 +298,8 @@ it grows. A client update before a session gets Q10's session first.
 ## 11. Marketplace and crafting
 
 - Crafting with recipe checks.
-- The marketplace is dropped (D439): the owner sells by hand. Its measures (D427) stay on the branch `feat/market-protocol`.
+- The marketplace is dropped (D439): the owner sells by hand. Its branches, which held its measures (D427), were deleted on the owner's
+  word on 2026-11-17.
 
 ## 12. Treasure hunts and dungeons
 
