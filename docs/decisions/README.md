@@ -60,3 +60,4 @@ Each file holds the decisions of one group of [the index](../decisions-index.md)
 - [The client's files prepared by the app (D440)](d440-the-clients-files-in-the-app.md): 1 decision, 4 KB.
 - [The app ships no client's files (D441)](d441-the-app-ships-no-clients-files.md): 1 decision, 2 KB.
 - [The repository public (D442)](d442-the-repository-public.md): 1 decision, 2 KB.
+- [The first release's number (D443)](d443-the-first-release-number.md): 1 decision, 1 KB.
