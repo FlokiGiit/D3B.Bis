@@ -125,6 +125,9 @@ internal sealed partial class MainViewModel : ObservableObject
     /// <summary>Gets the app's version and its update, in the status bar and the settings (D173).</summary>
     public UpdatesViewModel Updates { get; }
 
+    /// <summary>Gets the banner of a client Ankama updated, whose files the app takes from the build's release (D440).</summary>
+    public ClientFilesViewModel ClientFiles { get; }
+
     /// <summary>Gets the pages the host's modules registered, each opened in a tab of the editor.</summary>
     public ObservableCollection<ModulePageViewModel> Pages { get; } = [];
 
@@ -180,13 +183,9 @@ internal sealed partial class MainViewModel : ObservableObject
     [ObservableProperty]
     public partial string? HostFailure { get; private set; }
 
-    /// <summary>Gets whether the installed app did not start for a client build it does not ship, which a newer version does (D172).</summary>
+    /// <summary>Gets whether the window shows why the host did not start: a failure the client's files from its release do not mend.</summary>
     [ObservableProperty]
-    public partial bool IsMissingBuild { get; private set; }
-
-    /// <summary>Gets what the window says of the client build the installed app does not ship.</summary>
-    [ObservableProperty]
-    public partial string MissingBuildText { get; private set; } = "";
+    public partial bool ShowsHostFailure { get; private set; }
 
     /// <summary>Gets the client build the host runs for, or the one the app ships, in the status bar.</summary>
     [ObservableProperty]
@@ -224,7 +223,8 @@ internal sealed partial class MainViewModel : ObservableObject
     /// <param name="preferences">What the app remembers of its own, its language, layout and the host's settings, or <see langword="null"/> to remember nothing.</param>
     /// <param name="updates">The app's updates, or <see langword="null"/> for an app that never updates.</param>
     /// <param name="close">Closes the app, as File's Quit and restarting it to install its update do.</param>
-    public MainViewModel(HostRunner host, Localizer localizer, AppPreferences? preferences = null, AppUpdates? updates = null, Action? close = null)
+    /// <param name="clientFiles">The download of the installed client's files from its release, or <see langword="null"/> for an app that downloads none.</param>
+    public MainViewModel(HostRunner host, Localizer localizer, AppPreferences? preferences = null, AppUpdates? updates = null, Action? close = null, ClientFiles? clientFiles = null)
     {
         _host = host;
         _localizer = localizer;
@@ -264,6 +264,7 @@ internal sealed partial class MainViewModel : ObservableObject
         Bottom.Problems.OpenFolder = folder => OpenFolder?.Invoke(folder);
         Bottom.Problems.ChooseCharacter = key => RunBlock!.Choose(key);
         Updates = new UpdatesViewModel(localizer, updates, Dialogs, () => IsRunning && Bots.HasItems, _close);
+        ClientFiles = new ClientFilesViewModel(localizer, clientFiles, updates, _close);
         Settings = new SettingsViewModel(localizer, preferences, UseLanguage, Toasts, Updates)
         {
             ResetLayout = Layout.Reset,
@@ -317,9 +318,9 @@ internal sealed partial class MainViewModel : ObservableObject
         HostFailure = IsFailed ? _host.Failure : null;
         Updates.Refresh();
 
-        // Run from its code, the app says what the maintainer does: extract and map the build; installed, that it updates.
-        IsMissingBuild = IsFailed && _host.MissingBuild is not null && Updates.IsInstalled;
-        MissingBuildText = IsMissingBuild ? _localizer.Format("MissingBuildText", _host.MissingBuild, Updates.Version, Updates.ClientVersion) : "";
+        // Installed or run from its code, a build whose files are missing is offered its release's (D440).
+        ClientFiles.Refresh(IsFailed ? _host.MissingBuild : null, IsFailed ? _host.DataDirectory : null);
+        ShowsHostFailure = IsFailed && !ClientFiles.IsShown;
         (HostTitle, HostTone) = status switch
         {
             HostStatus.Starting => (_localizer["HostStatusStarting"], Tone.Info),

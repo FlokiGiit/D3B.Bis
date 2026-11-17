@@ -24,6 +24,7 @@
     <Compile Include="..\D3B.Bis.Bot.Tests\Settings\TestReferences.cs" Link="Bot\TestReferences.cs" />
     <Compile Include="..\D3B.Bis.Bot.Tests\Settings\TestSettings.cs" Link="Bot\TestSettings.cs" />
     <Compile Include="..\D3B.Bis.Bot.Tests\TestInstall.cs" Link="Bot\TestInstall.cs" />
+    <Compile Include="..\D3B.Bis.Data.Tests\Releases\FakeReleaseServer.cs" Link="Data\FakeReleaseServer.cs" />
     <Compile Include="..\D3B.Bis.Data.Tests\TemporaryDirectory.cs" Link="Data\TemporaryDirectory.cs" />
     <Compile Include="..\D3B.Bis.Protocol.Tests\Mapping\Obfuscation.cs" Link="Protocol\Obfuscation.cs" />
   </ItemGroup>

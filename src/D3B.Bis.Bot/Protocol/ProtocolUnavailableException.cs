@@ -8,6 +8,9 @@ public sealed class ProtocolUnavailableException : Exception
     /// <remarks>The app tells such a build apart, which a newer version of D3B ships (D172).</remarks>
     public string? MissingBuild { get; init; }
 
+    /// <summary>Gets where the build's files go on this machine, once <see cref="MissingBuild"/> is set: where the app puts its release's files (D440).</summary>
+    public string? DataDirectory { get; init; }
+
     /// <summary>Initializes a new instance of the <see cref="ProtocolUnavailableException"/> class.</summary>
     public ProtocolUnavailableException()
     {

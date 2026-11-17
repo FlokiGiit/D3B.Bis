@@ -69,7 +69,7 @@ public sealed class ProtocolSource
     private T Read<T>(string what, string path, Func<string, T> read)
     {
         if (!File.Exists(path))
-            throw new ProtocolUnavailableException($"No {what} for client {_build.Version}: none at {path}, nor among the app's own in {_settings.BundledDirectory}. {MapHint()}") { MissingBuild = _build.Version };
+            throw new ProtocolUnavailableException($"No {what} for client {_build.Version}: none at {path}, nor among the app's own in {_settings.BundledDirectory}. {MapHint()}") { MissingBuild = _build.Version, DataDirectory = _settings.PacksDirectory };
 
         try
         {

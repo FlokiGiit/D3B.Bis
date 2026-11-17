@@ -111,4 +111,16 @@ public sealed class AppUpdatesTests
         Assert.Equal("https://github.com/FlokiGiit/D3B.Bis", UpdateSettings.SourceIn(none));
         Assert.Equal(@"C:\releases", UpdateSettings.SourceIn(folder));
     }
+
+    [Fact]
+    public void TheClientsFilesComeFromD3BsReleasesUnlessTheConfigurationNamesAnotherRepository()
+    {
+        var none = new ConfigurationBuilder().Build();
+        var other = new ConfigurationBuilder().AddCommandLine(["--Updates:ClientRepository", "Someone/Fork"]).Build();
+        var wrong = new ConfigurationBuilder().AddCommandLine(["--Updates:ClientRepository", "not a repository"]).Build();
+
+        Assert.Equal("AerafalDev/D3B", UpdateSettings.ClientRepositoryIn(none));
+        Assert.Equal("Someone/Fork", UpdateSettings.ClientRepositoryIn(other));
+        Assert.Equal("AerafalDev/D3B", UpdateSettings.ClientRepositoryIn(wrong));
+    }
 }

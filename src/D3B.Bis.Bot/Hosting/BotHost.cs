@@ -152,7 +152,7 @@ public static class BotHost
         }
         catch (DataUnavailableException exception)
         {
-            return Fails(host, exception.Message, exception.MissingBuild);
+            return Fails(host, exception.Message, exception.MissingBuild, exception.DataDirectory);
         }
     }
 
@@ -175,7 +175,7 @@ public static class BotHost
         }
         catch (ProtocolUnavailableException exception)
         {
-            return Fails(host, exception.Message, exception.MissingBuild);
+            return Fails(host, exception.Message, exception.MissingBuild, exception.DataDirectory);
         }
     }
 
@@ -204,13 +204,13 @@ public static class BotHost
         }
     }
 
-    private static BotHostStart Fails(IHost host, string failure, string? missingBuild = null)
+    private static BotHostStart Fails(IHost host, string failure, string? missingBuild = null, string? dataDirectory = null)
     {
         var log = Logger(host);
 
         HostLog.DoesNotStart(log, failure);
 
-        return new BotHostStart(null, failure, missingBuild);
+        return new BotHostStart(null, failure, missingBuild, missingBuild is null ? null : dataDirectory);
     }
 
     private static ILogger Logger(IHost host)

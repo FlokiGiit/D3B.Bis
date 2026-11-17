@@ -1349,11 +1349,41 @@
   <data name="UpdateFailed" xml:space="preserve">
     <value>La recherche a échoué : {0}</value>
   </data>
-  <data name="MissingBuildTitle" xml:space="preserve">
-    <value>D3B ne connaît pas encore ce client</value>
+  <data name="ClientFilesTitle" xml:space="preserve">
+    <value>Le client Dofus est passé en {0}</value>
   </data>
-  <data name="MissingBuildText" xml:space="preserve">
-    <value>Le launcher a installé le client {0} ; D3B {1} embarque les données du client {2}. La version de D3B pour ce client sort après la mise à jour d'Ankama, et D3B s'y met à jour de lui-même.</value>
+  <data name="ClientFilesText" xml:space="preserve">
+    <value>Il manque à D3B.Bis les fichiers de ce client. « Mettre à jour » les prend dans la release client-{0} de {1}.</value>
+  </data>
+  <data name="ClientFilesUpdate" xml:space="preserve">
+    <value>Mettre à jour</value>
+  </data>
+  <data name="ClientFilesRetry" xml:space="preserve">
+    <value>Réessayer</value>
+  </data>
+  <data name="ClientFilesRestart" xml:space="preserve">
+    <value>Redémarrer</value>
+  </data>
+  <data name="ClientFilesDownloading" xml:space="preserve">
+    <value>Téléchargement des fichiers du client {0}… {1} %</value>
+  </data>
+  <data name="ClientFilesReady" xml:space="preserve">
+    <value>Les fichiers du client {0} sont en place. Redémarrez D3B.Bis pour les utiliser.</value>
+  </data>
+  <data name="ClientFilesNotPublished" xml:space="preserve">
+    <value>La release client-{0} de {1} n'est pas encore publiée. Lancez « {2} » depuis le Bureau : il prépare les fichiers sur ce PC.</value>
+  </data>
+  <data name="ClientFilesMissing" xml:space="preserve">
+    <value>La release client-{0} de {1} n'a pas les fichiers que lit cette version ({2}). Lancez « {3} » depuis le Bureau : il prépare les fichiers sur ce PC.</value>
+  </data>
+  <data name="ClientFilesChecksum" xml:space="preserve">
+    <value>Un fichier téléchargé ne correspond pas à sa somme de contrôle : rien n'a été mis en place. Réessayez ; si cela se reproduit, lancez « {0} » depuis le Bureau.</value>
+  </data>
+  <data name="ClientFilesNetwork" xml:space="preserve">
+    <value>Le téléchargement a échoué : {0} Rien n'a été mis en place. Vérifiez la connexion et réessayez.</value>
+  </data>
+  <data name="ClientFilesWrite" xml:space="preserve">
+    <value>Les fichiers n'ont pas pu être écrits : {0}</value>
   </data>
   <data name="AddMonsters" xml:space="preserve">
     <value>Ajouter des monstres</value>

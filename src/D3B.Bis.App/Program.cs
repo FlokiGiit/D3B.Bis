@@ -1,6 +1,7 @@
 using Avalonia;
 using D3B.Bis.App.Hosting;
 using D3B.Bis.App.Updates;
+using D3B.Bis.Data.Releases;
 using D3B.Bis.Storage;
 using Microsoft.Extensions.Configuration;
 using Velopack;
@@ -26,6 +27,8 @@ internal static class Program
         var preferences = AppPreferences.Load(AppPreferences.DefaultPath);
         var configuration = new ConfigurationBuilder().AddEnvironmentVariables().AddCommandLine(args).Build();
         var updates = new AppUpdates(new VelopackUpdateClient(UpdateSettings.SourceIn(configuration)));
+        var repository = UpdateSettings.ClientRepositoryIn(configuration);
+        var clientFiles = new ClientFiles(new ClientReleaseDownloader(new HttpClient { Timeout = TimeSpan.FromMinutes(10) }, repository), repository);
         var host = new HostRunner(args, preferences.Host);
 
         host.Start();
@@ -33,21 +36,25 @@ internal static class Program
 
         try
         {
-            return BuildAvaloniaApp(host, preferences, updates).StartWithClassicDesktopLifetime(args);
+            return BuildAvaloniaApp(host, preferences, updates, clientFiles).StartWithClassicDesktopLifetime(args);
         }
         finally
         {
             // Off the UI's thread, which no longer runs: the bots stop, and the clients get their configuration back (D35).
             Task.Run(host.StopAsync).GetAwaiter().GetResult();
 
-            // Last: installing the version downloaded may end the process at once (D173).
+            // Last: installing the version downloaded may end the process at once, and starts the app again when asked (D173).
             updates.Finish();
+
+            // Once the host stopped, which held the relay's address: the app started again reads the client's files downloaded (D440).
+            if (clientFiles.RestartRequested && !updates.RestartRequested)
+                ClientFiles.StartAgain(args);
         }
     }
 
-    private static AppBuilder BuildAvaloniaApp(HostRunner host, AppPreferences preferences, AppUpdates updates)
+    private static AppBuilder BuildAvaloniaApp(HostRunner host, AppPreferences preferences, AppUpdates updates, ClientFiles clientFiles)
     {
-        return App.Configure(AppBuilder.Configure(() => new App { Host = host, Preferences = preferences, Updates = updates }))
+        return App.Configure(AppBuilder.Configure(() => new App { Host = host, Preferences = preferences, Updates = updates, ClientFiles = clientFiles }))
             .UsePlatformDetect()
             .LogToTrace();
     }

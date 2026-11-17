@@ -51,6 +51,7 @@ public sealed class PackSource
             throw new DataUnavailableException($"No pack for client {build.Version}: none at {path}, nor at {bundled} among the app's own. {ExtractHint(false)}")
             {
                 MissingBuild = build.Version,
+                DataDirectory = _settings.PacksDirectory,
             };
         }
 
