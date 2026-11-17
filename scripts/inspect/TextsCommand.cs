@@ -1,5 +1,5 @@
 using System.CommandLine;
-using D3B.Bis.Scripts.Unity;
+using D3B.Bis.Extraction.Unity;
 
 namespace D3B.Bis.Scripts.Inspect;
 

@@ -3,12 +3,12 @@
 #:package System.CommandLine
 #:project ../src/D3B.Bis.Bot/D3B.Bis.Bot.csproj
 #:project ../src/D3B.Bis.Data/D3B.Bis.Data.csproj
+#:project ../src/D3B.Bis.Extraction/D3B.Bis.Extraction.csproj
 #:project ../src/D3B.Bis.Protocol/D3B.Bis.Protocol.csproj
 #:include unity/GitHubCli.cs
 #:include release/ReleaseAsset.cs
 #:include release/ReleaseCommand.cs
 #:include release/ReportChannelRelease.cs
-#:include unity/ClientInstall.cs
 
 using System.Globalization;
 using D3B.Bis.Scripts.Release;

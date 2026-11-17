@@ -11,7 +11,8 @@ A tool is a file-based app (D10). Read `scripts/client.cs` and `scripts/client/C
    not AOT-compatible, and `#:include <name>/<Name>Command.cs`. A comment after the usings gives what it does, its usage
    and its exit codes.
 2. Its code in the lowercase folder `scripts/<name>/`, namespace `D3B.Bis.Scripts.<Name>`, `internal static class`, one type
-   per file. What several tools share lives in `scripts/unity/`.
+   per file. What several tools share lives in `scripts/unity/`; the readers of the client, which the app runs too, in
+   `src/D3B.Bis.Extraction`, taken with `#:project` (D440).
 3. List every new file under the matching `/scripts/` folders of `D3B.Bis.slnx`, so that the IDE shows it.
 4. Add a `Build the <name> tool` step to `.github/workflows/ci.yml`, as the others: `dotnet build scripts/<name>.cs`.
 5. Add the command to the README's tools section, and to `CLAUDE.md`'s commands only when a session needs it often.

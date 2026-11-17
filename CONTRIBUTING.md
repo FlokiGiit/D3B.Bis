@@ -92,7 +92,7 @@ live in `Directory.Packages.props` (central package management), never in a proj
 
 - A tool is a file-based app whose entry file starts with `#!/usr/bin/env dotnet`.
 - Its code is pulled in with `#:include` from a lowercase folder of its name; what several tools share lives in
-  `scripts/unity/`.
+  `scripts/unity/`, and the readers of the client, which the app runs too, in `src/D3B.Bis.Extraction` (D440).
 - `#:package` names no version, since central package management sets it. Add `#:property PublishAot=false` when a
   package is not AOT-compatible.
 - Every script file is listed in `D3B.Bis.slnx`, so that it shows in the IDE, and CI builds each tool.

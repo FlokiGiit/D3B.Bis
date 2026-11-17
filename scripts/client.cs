@@ -1,8 +1,8 @@
 #!/usr/bin/env dotnet
 #:package System.CommandLine
+#:project ../src/D3B.Bis.Extraction/D3B.Bis.Extraction.csproj
 #:project ../src/D3B.Bis.Network/D3B.Bis.Network.csproj
 #:include client/ClientCommand.cs
-#:include unity/ClientInstall.cs
 
 using System.Globalization;
 using D3B.Bis.Scripts.Client;

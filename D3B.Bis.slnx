@@ -59,29 +59,7 @@
     <File Path="scripts/embed/EmbedCommand.cs" />
   </Folder>
   <Folder Name="/scripts/extract/">
-    <File Path="scripts/extract/BanksExtractor.cs" />
-    <File Path="scripts/extract/BreedsExtractor.cs" />
-    <File Path="scripts/extract/CharacteristicsExtractor.cs" />
-    <File Path="scripts/extract/ClientMapLayout.cs" />
-    <File Path="scripts/extract/EffectsExtractor.cs" />
     <File Path="scripts/extract/ExtractCommand.cs" />
-    <File Path="scripts/extract/FightTables.cs" />
-    <File Path="scripts/extract/HintsExtractor.cs" />
-    <File Path="scripts/extract/IconsExtractor.cs" />
-    <File Path="scripts/extract/InputFingerprint.cs" />
-    <File Path="scripts/extract/InteractivesExtractor.cs" />
-    <File Path="scripts/extract/ItemsExtractor.cs" />
-    <File Path="scripts/extract/JobsExtractor.cs" />
-    <File Path="scripts/extract/MapReader.cs" />
-    <File Path="scripts/extract/MapsExtractor.cs" />
-    <File Path="scripts/extract/MonstersExtractor.cs" />
-    <File Path="scripts/extract/NpcsExtractor.cs" />
-    <File Path="scripts/extract/SpellsExtractor.cs" />
-    <File Path="scripts/extract/StatesExtractor.cs" />
-    <File Path="scripts/extract/TextsExtractor.cs" />
-    <File Path="scripts/extract/WorldExtractor.cs" />
-    <File Path="scripts/extract/WorldGraphReader.cs" />
-    <File Path="scripts/extract/WorldMapsExtractor.cs" />
   </Folder>
   <Folder Name="/scripts/fights/">
     <File Path="scripts/fights/CapturedFights.cs" />
@@ -129,7 +107,6 @@
   <Folder Name="/scripts/mapping/">
     <File Path="scripts/mapping/CaptureFrames.cs" />
     <File Path="scripts/mapping/MappingCommand.cs" />
-    <File Path="scripts/mapping/PinProposals.cs" />
   </Folder>
   <Folder Name="/scripts/release/">
     <File Path="scripts/release/ReleaseAsset.cs" />
@@ -137,36 +114,10 @@
     <File Path="scripts/release/ReportChannelRelease.cs" />
   </Folder>
   <Folder Name="/scripts/schema/">
-    <File Path="scripts/schema/ClientCode.cs" />
-    <File Path="scripts/schema/FieldEncoding.cs" />
-    <File Path="scripts/schema/FieldKind.cs" />
-    <File Path="scripts/schema/IsilCall.cs" />
-    <File Path="scripts/schema/IsilCalls.cs" />
-    <File Path="scripts/schema/LayoutField.cs" />
-    <File Path="scripts/schema/LayoutOneof.cs" />
-    <File Path="scripts/schema/MessageLayout.cs" />
-    <File Path="scripts/schema/ProtocolReader.cs" />
-    <File Path="scripts/schema/ProtocolTypes.cs" />
-    <File Path="scripts/schema/ProtoText.cs" />
     <File Path="scripts/schema/SchemaCommand.cs" />
-    <File Path="scripts/schema/SchemaSummary.cs" />
-    <File Path="scripts/schema/SilentLogWriter.cs" />
-    <File Path="scripts/schema/WireEncodings.cs" />
   </Folder>
   <Folder Name="/scripts/unity/">
-    <File Path="scripts/unity/AddressablesCatalog.cs" />
-    <File Path="scripts/unity/ClientInstall.cs" />
     <File Path="scripts/unity/GitHubCli.cs" />
-    <File Path="scripts/unity/I18nFile.cs" />
-    <File Path="scripts/unity/LauncherManifest.cs" />
-    <File Path="scripts/unity/UnityBundle.cs" />
-    <File Path="scripts/unity/UnityDataTable.cs" />
-    <File Path="scripts/unity/UnityFields.cs" />
-    <File Path="scripts/unity/UnityReader.cs" />
-    <File Path="scripts/unity/UnityReferences.cs" />
-    <File Path="scripts/unity/UnityReferenceVisitor.cs" />
-    <File Path="scripts/unity/UnityTypeNode.cs" />
-    <File Path="scripts/unity/UnityTypeTree.cs" />
   </Folder>
   <Folder Name="/src/">
     <Project Path="src/D3B.Bis.App/D3B.Bis.App.csproj" />
@@ -174,6 +125,7 @@
     <Project Path="src/D3B.Bis.Core/D3B.Bis.Core.csproj" />
     <Project Path="src/D3B.Bis.Data/D3B.Bis.Data.csproj" />
     <Project Path="src/D3B.Bis.Engine/D3B.Bis.Engine.csproj" />
+    <Project Path="src/D3B.Bis.Extraction/D3B.Bis.Extraction.csproj" />
     <Project Path="src/D3B.Bis.Host/D3B.Bis.Host.csproj" />
     <Project Path="src/D3B.Bis.Network/D3B.Bis.Network.csproj" />
     <Project Path="src/D3B.Bis.Protocol/D3B.Bis.Protocol.csproj" />

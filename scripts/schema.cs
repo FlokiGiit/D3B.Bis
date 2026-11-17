@@ -1,26 +1,11 @@
 #!/usr/bin/env dotnet
 #:package Google.Protobuf
-#:package Samboy063.Cpp2IL.Core
 #:package System.CommandLine
 #:property PublishAot=false
 #:project ../src/D3B.Bis.Data/D3B.Bis.Data.csproj
 #:project ../src/D3B.Bis.Protocol/D3B.Bis.Protocol.csproj
-#:include schema/ClientCode.cs
-#:include schema/FieldEncoding.cs
-#:include schema/FieldKind.cs
-#:include schema/IsilCall.cs
-#:include schema/IsilCalls.cs
-#:include schema/LayoutField.cs
-#:include schema/LayoutOneof.cs
-#:include schema/MessageLayout.cs
-#:include schema/ProtocolReader.cs
-#:include schema/ProtocolTypes.cs
-#:include schema/ProtoText.cs
+#:project ../src/D3B.Bis.Extraction/D3B.Bis.Extraction.csproj
 #:include schema/SchemaCommand.cs
-#:include schema/SchemaSummary.cs
-#:include schema/SilentLogWriter.cs
-#:include schema/WireEncodings.cs
-#:include unity/ClientInstall.cs
 
 using System.Globalization;
 using D3B.Bis.Scripts.Schema;
