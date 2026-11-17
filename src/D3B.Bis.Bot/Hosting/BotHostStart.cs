@@ -11,6 +11,10 @@ namespace D3B.Bis.Bot.Hosting;
 /// </param>
 /// <param name="DataDirectory">
 /// Where a build's files go on this machine, looked in first, once <paramref name="MissingBuild"/> is set: the app puts the
-/// files of its build's release there (D440); <see langword="null"/> otherwise.
+/// files it prepares there (D440); <see langword="null"/> otherwise.
 /// </param>
-public sealed record BotHostStart(IHost? Host, string? Failure, string? MissingBuild = null, string? DataDirectory = null);
+/// <param name="ClientDirectory">
+/// The installed client's directory, once <paramref name="MissingBuild"/> is set: the app prepares the files from it (D440);
+/// <see langword="null"/> otherwise.
+/// </param>
+public sealed record BotHostStart(IHost? Host, string? Failure, string? MissingBuild = null, string? DataDirectory = null, string? ClientDirectory = null);

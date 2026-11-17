@@ -1353,7 +1353,7 @@
     <value>The Dofus client moved to {0}</value>
   </data>
   <data name="ClientFilesText" xml:space="preserve">
-    <value>D3B.Bis lacks this client's files. Update takes them from the release client-{0} of {1}.</value>
+    <value>D3B.Bis lacks this client's files. Update prepares them on this PC from the installed client, in about a minute.</value>
   </data>
   <data name="ClientFilesUpdate" xml:space="preserve">
     <value>Update</value>
@@ -1364,26 +1364,41 @@
   <data name="ClientFilesRestart" xml:space="preserve">
     <value>Restart</value>
   </data>
-  <data name="ClientFilesDownloading" xml:space="preserve">
-    <value>Downloading the files of client {0}… {1} %</value>
+  <data name="ClientFilesPreparing" xml:space="preserve">
+    <value>Step {0} of 3: {1}… {2} %</value>
+  </data>
+  <data name="ClientFilesStepPack" xml:space="preserve">
+    <value>reading the client's data</value>
+  </data>
+  <data name="ClientFilesStepSchema" xml:space="preserve">
+    <value>reading the client's protocol</value>
+  </data>
+  <data name="ClientFilesStepMapping" xml:space="preserve">
+    <value>matching the protocol</value>
   </data>
   <data name="ClientFilesReady" xml:space="preserve">
-    <value>The files of client {0} are in place. Restart D3B.Bis to use them.</value>
+    <value>The files of client {0} are ready. Restart D3B.Bis to use them.</value>
   </data>
-  <data name="ClientFilesNotPublished" xml:space="preserve">
-    <value>The release client-{0} of {1} is not published yet. Run "{2}" from the Desktop: it prepares the files on this PC.</value>
+  <data name="ClientFilesProtocolTitle" xml:space="preserve">
+    <value>The game's protocol changed</value>
   </data>
-  <data name="ClientFilesMissing" xml:space="preserve">
-    <value>The release client-{0} of {1} does not hold the files this version reads ({2}). Run "{3}" from the Desktop: it prepares the files on this PC.</value>
+  <data name="ClientFilesProtocolChanged" xml:space="preserve">
+    <value>Client {0} speaks a protocol D3B.Bis no longer maps: its code must follow it before a bot plays on this client. Nothing was put in place; what did not hold is written in {1}.</value>
   </data>
-  <data name="ClientFilesChecksum" xml:space="preserve">
-    <value>A file downloaded does not match its checksum: nothing was put in place. Try again; if it happens again, run "{0}" from the Desktop.</value>
+  <data name="ClientFilesUnreadTitle" xml:space="preserve">
+    <value>D3B.Bis cannot read this client</value>
   </data>
-  <data name="ClientFilesNetwork" xml:space="preserve">
-    <value>The download failed: {0} Nothing was put in place. Check the connection and try again.</value>
+  <data name="ClientFilesUnread" xml:space="preserve">
+    <value>Step {0} of 3, {1}, failed: {2} Client {3} changed in a way D3B.Bis's code must follow; the details are in {4}.</value>
   </data>
-  <data name="ClientFilesWrite" xml:space="preserve">
-    <value>The files could not be written: {0}</value>
+  <data name="ClientFilesNoClient" xml:space="preserve">
+    <value>Step {0} of 3, {1}, failed: {2} Check that the Dofus client is installed, then try again.</value>
+  </data>
+  <data name="ClientFilesDisk" xml:space="preserve">
+    <value>Step {0} of 3, {1}, failed: {2} Try again once the cause is fixed.</value>
+  </data>
+  <data name="ClientFilesUnexpected" xml:space="preserve">
+    <value>Step {0} of 3, {1}, failed: {2} Try again; the details are in {3}.</value>
   </data>
   <data name="AddMonsters" xml:space="preserve">
     <value>Add monsters</value>

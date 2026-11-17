@@ -49,6 +49,7 @@ the variable `D3B_REPORT_WEBHOOK`. The docs still say D3B for short.
 | `src/D3B.Bis.Protocol` | Classes generated from the readable `.proto` files, a build's mapping, its matching and audit, and the per-build translation. |
 | `src/D3B.Bis.Data` | Data pack format and runtime readers: maps, cells, world graph, world maps' tiles and their coordinates' index, items, spells, monsters, interactives, texts. |
 | `src/D3B.Bis.Engine` | Pure logic with no I/O: cell and world pathfinding, line of sight, fight simulation. |
+| `src/D3B.Bis.Extraction` | The readers of the installed client and the making of a build's files: the pack, the schema with Cpp2IL, the mapping without captures, and their preparation in order, which the tools of `scripts/` and the app share (D440). |
 | `src/D3B.Bis.Bot` | The bot's run time: actor, state, recovery, activities and their settings, pages, the harvesting and fighting modules, the default modules, and the host's composition the app and `D3B.Bis.Host` share. It knows nothing of the studio (D393). |
 | `src/D3B.Bis.Studio` | The studio's model, on top of `D3B.Bis.Bot` (D393): the project's assets (`D3B.Bis.Studio.Assets`), behaviors and their node catalog (`D3B.Bis.Studio.Behaviors`, `.Nodes`), and routes and their actions (`D3B.Bis.Studio.Routes`), with the behaviors module that registers them. |
 | `src/D3B.Bis.Host` | The bots' host without the app, for measurements: its entry point alone, with the database (D91, D100). |
@@ -499,10 +500,23 @@ Built in session 3b (D35 to D38): the relay of the connection phase, in `D3B.Bis
 Built at step 2 (D24 to D33):
 
 - `scripts/inspect.cs` describes the installed client, and `scripts/extract.cs` writes the pack of its build. Both read
-  the client with the Unity readers copied from Dofus Remastered into `scripts/unity/` (AssetsTools.NET), the
-  extraction through their typed readers, which walk an object's bytes by its type tree. The extractor checks the
-  client against what D3B relies on before it writes anything. [client.md](client.md) records what the client holds,
-  measured.
+  the client with the Unity readers copied from Dofus Remastered (AssetsTools.NET), in `D3B.Bis.Extraction.Unity` since
+  D440, the extraction (`PackExtraction`, `D3B.Bis.Extraction.Packs`) through their typed readers, which walk an object's
+  bytes by its type tree. The extractor checks the client against what D3B relies on before it writes anything.
+  [client.md](client.md) records what the client holds, measured.
+- **The library of the tools and the app** (D440): `src/D3B.Bis.Extraction` holds what the extraction, the schema and the
+  mapping need, each step saying what it did on a `TextWriter` (the console for the tools) instead of the console:
+  `PackExtraction.Extract`, with its progress; `SchemaExtraction.Write`, which reads the client's code with Cpp2IL, one client
+  at a time in a process; and `MappingMaker.Make`, the matching, the audit and the write once it holds, the tool measuring its
+  captures before it. `ClientPreparation` runs the three in order through `IPreparationSteps` (`InstalledClientSteps` for the
+  installed client), under `.preparation` in the host's directory, moves the three files into the build's directory together once
+  the mapping holds (the host takes each file where it finds it first, D172, so a pack and a schema alone would be paired with
+  another mapping), weighs their progress as measured on 3.7.14.18 (58 s, 7.5 s and 1 s), and says what failed instead of
+  throwing: a mapping that does not hold (`ProtocolChanged`), a client the readers misread (`ClientUnread`), no client, the
+  disk, or what nothing foresees; a file the client no longer holds is a client misread, not the disk's. The mapping it makes takes the pins committed for the build, else the latest committed
+  build's carried over to it (`CommittedPins`, resources of `D3B.Bis.Protocol`), and no capture. The code moved there is
+  tested where it is new (the order, the progress, the failures, the pins); the readers it holds are checked by a run on the
+  installed client, as they were as tools.
 - A client build is named by its version (`ClientBuild`). A pack is one file per build and format, kept in
   `%LOCALAPPDATA%\D3B.Bis\data\<version>\data-<format>.pack` (`PackLocations`).
 - A pack holds named entries, each a MemoryPack payload compressed with zstd, and an index at the end (D25).
@@ -554,7 +568,7 @@ Built at step 2 (D24 to D33):
   `client-<version>`, each asset with its SHA-256 beside it, never committed (D10, D11, D24, D39). `ClientRelease`
   names them; `scripts/release.cs` publishes a build's pack, schema and mapping together, once the mapping holds, never
   replacing an asset already published (D33, D50). The app's release workflow takes them from there with
-  `scripts/embed.cs`, checked, to ship them beside the app (D172).
+  `scripts/embed.cs` and the GitHub CLI, checked, to ship them beside the app (D172).
 - The data module (`DataModule`, in `D3B.Bis.Bot`, D31) registers, as singletons every bot shares, the installed
   `ClientBuild`, the `PackSource` that finds its pack, the `GamePack`, opened once and closed with the host, and the
   stores reading it: `GameTexts`, `GameMaps`, `GameWorld` and `GameTables`. The configuration names the client
@@ -562,8 +576,9 @@ Built at step 2 (D24 to D33):
 - Before the host starts, it opens the pack of the installed build (D172): the one on this machine, where the tools write,
   else the one the published app ships in `data/<version>/` beside its executable (`DataSettings.Locate`). Nothing is
   downloaded. With no pack for the installed build, the host does not start: it says which build lacks one and how to
-  extract it, names that build to the app (`BotHostStart.MissingBuild`), and exits with code 1. The pack of another build
-  is never used.
+  extract it, names that build to the app (`BotHostStart.MissingBuild`) with where its files go and the client they are made
+  from (`DataDirectory`, `ClientDirectory`), and exits with code 1. The pack of another build is never used. The app then
+  offers to prepare them on this PC (D440, "Desktop app").
 
 ## Desktop app
 
@@ -607,7 +622,7 @@ D356), the pages of D101 and D162 gone.
   have no tab: they are selected in the world's (D397).
 - **The home page** (D406, `HomeViewModel` and `HomeView`, in `D3B.Bis.App.ViewModels.Home`; the view's context is `MainViewModel`,
   which holds the host's state it shows): the logo, the version, a pill of where the host stands and the banners of a host
-  starting, of a build the installed app does not ship and of a host that failed; quick actions (new profile, route, zone, the
+  starting, of a client whose files are missing (D440, below) and of a host that failed; quick actions (new profile, route, zone, the
   project's folder, the settings, the first four disabled until the host runs); the characters (`HomeCharacterViewModel`, online
   first, a click chooses one without leaving the page, a double click opens its tab); the six assets of the project changed last
   (`HomeRecentViewModel`, the file's time, read again when `AssetLibrary.Version` moves, a click opens the asset where it is
@@ -805,9 +820,18 @@ D356), the pages of D101 and D162 gone.
   `AppUpdates` checks the repository's releases as the app starts (`VelopackUpdateClient`, or the folder `Updates:Source`
   names), downloads a newer version at once, and installs it when the user restarts from the window's banner, asked first
   while bots play, or once the window is gone and the host stopped. `UpdatesViewModel` says it in the banner and in the
-  settings' About section, with the app's version and the client build it ships (`AppRelease`); when the host lacks the installed
-  build's files (D172), the installed app says so instead of the host's message, with the update and a button installing
-  it. Run from its code, the app does not check.
+  settings' About section, with the app's version and the client build it ships (`AppRelease`). Run from its code, the app
+  does not check.
+- **The client's files** (D440, `ClientFiles` in `D3B.Bis.App.Updates`, `ClientFilesViewModel`): when the host lacks the installed
+  build's pack, schema or mapping, installed or run from its code, the home page's banner names the client's new version
+  instead of the host's message, with Update. Update runs `ClientPreparation` with `InstalledClientSteps` on a thread of the app's
+  own, into the directory the host looks in first, the three files at once, and keeps what the steps say in `preparation.log` beside the build's files;
+  the banner says the step (1 of 3, the client's data; 2, its protocol; 3, the matching) and the share done, then offers the
+  restart, which starts the app again once its host stopped (and installs the app's own update when one is downloaded). A
+  mapping that does not hold turns the banner red with "The game's protocol changed" and no button, since only the code
+  mends it; so does a client the readers misread; a disk or a client gone offers Try again. Nothing is downloaded: the release
+  of another repository the branch first read is gone (D440). The extraction peaks at 3.4 GB in the app's process; it is
+  collected once the preparation ends.
 - **View models** (`D3B.Bis.App.ViewModels`) read the bots' snapshots every 250 ms, on the UI's thread (D9), the page shown
   alone: the bots' loops never wait for the app. Views are thin, and bind compiled.
 - **Translation**: `Localizer`, in `D3B.Bis.App.Localization`, reads `Strings.resx` in English and `Strings.fr.resx` in
@@ -1290,3 +1314,8 @@ character's (D279). The character's spells by the
   `.claude/hooks/shared/`, which hold every decision, and checks them on commands and paths as Claude Code sends them: which
   pushes are refused or asked, which writes are refused, which changes need a build, a build that fails only on files the
   running app holds. The entry files in `.claude/hooks/` only read the input and report; CI builds each.
+- The preparation of a build's files (D440) is tested on doubles of its steps (`FakeSteps`, `FakePreparation`): the order, the
+  progress, each failure, the log kept and the banner's texts and buttons; the pins carried over on the committed files. The
+  readers of the client it runs, moved from `scripts/`, have no test of their own: they read only a real client, which neither
+  the tests nor CI have, and are checked by a run on the installed one (the same pack, schema and mapping, byte for byte, on
+  3.7.14.18).

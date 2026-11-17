@@ -4,13 +4,12 @@ using Avalonia.Threading;
 using Avalonia.VisualTree;
 using D3B.Bis.App.Hosting;
 using D3B.Bis.App.Localization;
+using D3B.Bis.App.Tests.Updates;
 using D3B.Bis.App.Updates;
 using D3B.Bis.App.ViewModels;
 using D3B.Bis.App.Views;
 using D3B.Bis.Bot.Hosting;
 using D3B.Bis.Bot.Tests.Runtime;
-using D3B.Bis.Data.Releases;
-using D3B.Bis.Data.Tests.Releases;
 using D3B.Bis.Studio.Assets;
 
 namespace D3B.Bis.App.Tests.Views;
@@ -18,6 +17,47 @@ namespace D3B.Bis.App.Tests.Views;
 public sealed class HomeViewTests : IAsyncDisposable
 {
     private readonly TestStore _store = new();
+
+    private static async Task<(List<string> Texts, List<(string Label, bool Enabled)> Buttons, bool IsDanger)> ClientFilesBannerAsync(FakePreparationScript script, bool update, string drawing)
+    {
+        var root = Path.Combine(Path.GetTempPath(), "D3B.Bis.App.Tests", Guid.NewGuid().ToString("N"));
+        var runner = new HostRunner(_ => Task.FromResult(new BotHostStart(null, "No pack for client 3.7.14.18.", "3.7.14.18", root, @"C:\Ankama\Dofus-dofus3")));
+        var files = new ClientFiles(log => new FakePreparation(log, script));
+
+        runner.Start();
+        await Waiting.UntilAsync(() => runner.Status is HostStatus.Failed, TimeSpan.FromSeconds(10));
+
+        if (update)
+        {
+            await files.PrepareAsync("3.7.14.18", @"C:\Ankama\Dofus-dofus3", root);
+            Directory.Delete(root, true);
+        }
+
+        return await OnTheUIThreadAsync(() =>
+        {
+            var localizer = Localizer.Instance;
+
+            localizer.Use(Localizer.French);
+
+            var main = new MainViewModel(runner, localizer, null, null, null, files);
+            var window = new MainWindow { DataContext = main, Width = 1440, Height = 900 };
+
+            main.Refresh();
+            window.Show();
+            Dispatcher.UIThread.RunJobs();
+
+            var home = window.GetVisualDescendants().OfType<HomeView>().Single(view => view.IsEffectivelyVisible);
+            var texts = Texts(home);
+            var buttons = home.GetVisualDescendants().OfType<Button>().Where(button => button.IsEffectivelyVisible && button.Content is string).Select(button => ((string)button.Content!, button.IsEffectivelyEnabled)).ToList();
+            var danger = home.GetVisualDescendants().OfType<Border>().Any(border => border.IsEffectivelyVisible && border.Classes.Contains("Banner") && border.Classes.Contains("Danger"));
+
+            Drawings.Draw(window, drawing);
+            localizer.Use(Localizer.English);
+            window.Close();
+
+            return (texts, buttons, danger);
+        });
+    }
 
     private static List<string> Texts(Control root)
     {
@@ -37,41 +77,23 @@ public sealed class HomeViewTests : IAsyncDisposable
     [Fact]
     public async Task AClientWhoseFilesAreMissingShowsItsVersionAndTheUpdateButtonInsteadOfTheFailure()
     {
-        using var server = new FakeReleaseServer();
-        var runner = new HostRunner(_ => Task.FromResult(new BotHostStart(null, "No pack for client 3.7.14.18.", "3.7.14.18", Path.GetTempPath())));
+        var result = await ClientFilesBannerAsync(new FakePreparationScript(), false, "home-client-files");
 
-        runner.Start();
-        await Waiting.UntilAsync(() => runner.Status is HostStatus.Failed, TimeSpan.FromSeconds(10));
+        Assert.Contains("Le client Dofus est passé en 3.7.14.18", result.Texts);
+        Assert.Contains(("Mettre à jour", true), result.Buttons);
+        Assert.DoesNotContain("Redémarrer", result.Buttons.Select(button => button.Label));
+        Assert.DoesNotContain(result.Texts, text => text.Contains("No pack for client", StringComparison.Ordinal));
+        Assert.False(result.IsDanger);
+    }
 
-        var result = await OnTheUIThreadAsync(() =>
-        {
-            var localizer = Localizer.Instance;
+    [Fact]
+    public async Task AProtocolThatChangedShowsTheBannerAsADangerWithNoButton()
+    {
+        var result = await ClientFilesBannerAsync(new FakePreparationScript { MappingHolds = false }, true, "home-client-protocol-changed");
 
-            localizer.Use(Localizer.French);
-
-            var files = new ClientFiles(new ClientReleaseDownloader(new HttpClient(server, false), server.Repository, null, FakeReleaseServer.Api), server.Repository);
-            var main = new MainViewModel(runner, localizer, null, null, null, files);
-            var window = new MainWindow { DataContext = main, Width = 1440, Height = 900 };
-
-            main.Refresh();
-            window.Show();
-            Dispatcher.UIThread.RunJobs();
-
-            var home = window.GetVisualDescendants().OfType<HomeView>().Single(view => view.IsEffectivelyVisible);
-            var texts = Texts(home);
-            var buttons = home.GetVisualDescendants().OfType<Button>().Where(button => button.IsEffectivelyVisible && button.Content is string).Select(button => ((string)button.Content!, button.IsEffectivelyEnabled)).ToList();
-
-            Drawings.Draw(window, "home-client-files");
-            localizer.Use(Localizer.English);
-            window.Close();
-
-            return (texts, buttons);
-        });
-
-        Assert.Contains("Le client Dofus est passé en 3.7.14.18", result.texts);
-        Assert.Contains(("Mettre à jour", true), result.buttons);
-        Assert.DoesNotContain("Redémarrer", result.buttons.Select(button => button.Item1));
-        Assert.DoesNotContain(result.texts, text => text.Contains("No pack for client", StringComparison.Ordinal));
+        Assert.Contains("Le protocole du jeu a changé", result.Texts);
+        Assert.DoesNotContain(result.Buttons, button => button.Label is "Mettre à jour" or "Réessayer" or "Redémarrer");
+        Assert.True(result.IsDanger);
     }
 
     [Fact]

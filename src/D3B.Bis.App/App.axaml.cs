@@ -27,7 +27,7 @@ internal sealed partial class App : Application
     /// <summary>Gets the app's updates, checked as it starts (D173).</summary>
     public AppUpdates? Updates { get; init; }
 
-    /// <summary>Gets the download of the installed client's files from its release, once Ankama updated the client (D440).</summary>
+    /// <summary>Gets the preparation of the installed client's files on this PC, once Ankama updated the client (D440).</summary>
     public ClientFiles? ClientFiles { get; init; }
 
     /// <summary>Configures what the app draws with, the same with a screen and without one.</summary>

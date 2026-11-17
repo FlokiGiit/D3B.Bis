@@ -138,6 +138,7 @@
     <Project Path="tests/D3B.Bis.Core.Tests/D3B.Bis.Core.Tests.csproj" />
     <Project Path="tests/D3B.Bis.Data.Tests/D3B.Bis.Data.Tests.csproj" />
     <Project Path="tests/D3B.Bis.Engine.Tests/D3B.Bis.Engine.Tests.csproj" />
+    <Project Path="tests/D3B.Bis.Extraction.Tests/D3B.Bis.Extraction.Tests.csproj" />
     <Project Path="tests/D3B.Bis.Hooks.Tests/D3B.Bis.Hooks.Tests.csproj" />
     <Project Path="tests/D3B.Bis.Network.Tests/D3B.Bis.Network.Tests.csproj" />
     <Project Path="tests/D3B.Bis.Protocol.Tests/D3B.Bis.Protocol.Tests.csproj" />

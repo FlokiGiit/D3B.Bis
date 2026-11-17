@@ -52,6 +52,7 @@ public sealed class PackSource
             {
                 MissingBuild = build.Version,
                 DataDirectory = _settings.PacksDirectory,
+                ClientDirectory = _settings.ClientDirectory,
             };
         }
 

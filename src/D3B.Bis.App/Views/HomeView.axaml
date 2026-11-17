@@ -134,7 +134,9 @@
                 </StackPanel>
 
                 <Border
-                    Classes="Banner Info"
+                    Classes="Banner"
+                    Classes.Danger="{Binding ClientFiles.IsBlocked}"
+                    Classes.Info="{Binding !ClientFiles.IsBlocked}"
                     IsVisible="{Binding ClientFiles.IsShown}"
                     Padding="16">
                     <StackPanel Spacing="12">
@@ -145,7 +147,7 @@
                         <TextBlock Text="{Binding ClientFiles.Text}" TextWrapping="Wrap" />
                         <ProgressBar
                             Classes="Meter Info"
-                            IsVisible="{Binding ClientFiles.IsDownloading}"
+                            IsVisible="{Binding ClientFiles.IsPreparing}"
                             Value="{Binding ClientFiles.Progress}" />
                         <StackPanel
                             HorizontalAlignment="Right"
@@ -153,9 +155,9 @@
                             Spacing="8">
                             <Button
                                 Classes="Primary"
-                                Command="{Binding ClientFiles.DownloadCommand}"
-                                Content="{Binding ClientFiles.DownloadLabel}"
-                                IsVisible="{Binding !ClientFiles.IsReady}" />
+                                Command="{Binding ClientFiles.UpdateCommand}"
+                                Content="{Binding ClientFiles.UpdateLabel}"
+                                IsVisible="{Binding ClientFiles.ShowsUpdate}" />
                             <Button
                                 Classes="Primary"
                                 Command="{Binding ClientFiles.RestartCommand}"

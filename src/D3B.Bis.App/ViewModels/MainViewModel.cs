@@ -125,7 +125,7 @@ internal sealed partial class MainViewModel : ObservableObject
     /// <summary>Gets the app's version and its update, in the status bar and the settings (D173).</summary>
     public UpdatesViewModel Updates { get; }
 
-    /// <summary>Gets the banner of a client Ankama updated, whose files the app takes from the build's release (D440).</summary>
+    /// <summary>Gets the banner of a client Ankama updated, whose files the app prepares on this PC (D440).</summary>
     public ClientFilesViewModel ClientFiles { get; }
 
     /// <summary>Gets the pages the host's modules registered, each opened in a tab of the editor.</summary>
@@ -183,7 +183,7 @@ internal sealed partial class MainViewModel : ObservableObject
     [ObservableProperty]
     public partial string? HostFailure { get; private set; }
 
-    /// <summary>Gets whether the window shows why the host did not start: a failure the client's files from its release do not mend.</summary>
+    /// <summary>Gets whether the window shows why the host did not start: a failure that preparing the client's files does not mend.</summary>
     [ObservableProperty]
     public partial bool ShowsHostFailure { get; private set; }
 
@@ -223,7 +223,7 @@ internal sealed partial class MainViewModel : ObservableObject
     /// <param name="preferences">What the app remembers of its own, its language, layout and the host's settings, or <see langword="null"/> to remember nothing.</param>
     /// <param name="updates">The app's updates, or <see langword="null"/> for an app that never updates.</param>
     /// <param name="close">Closes the app, as File's Quit and restarting it to install its update do.</param>
-    /// <param name="clientFiles">The download of the installed client's files from its release, or <see langword="null"/> for an app that downloads none.</param>
+    /// <param name="clientFiles">The preparation of the installed client's files, or <see langword="null"/> for an app that prepares none.</param>
     public MainViewModel(HostRunner host, Localizer localizer, AppPreferences? preferences = null, AppUpdates? updates = null, Action? close = null, ClientFiles? clientFiles = null)
     {
         _host = host;
@@ -318,8 +318,8 @@ internal sealed partial class MainViewModel : ObservableObject
         HostFailure = IsFailed ? _host.Failure : null;
         Updates.Refresh();
 
-        // Installed or run from its code, a build whose files are missing is offered its release's (D440).
-        ClientFiles.Refresh(IsFailed ? _host.MissingBuild : null, IsFailed ? _host.DataDirectory : null);
+        // Installed or run from its code, a build whose files are missing is offered to have them prepared on this PC (D440).
+        ClientFiles.Refresh(IsFailed ? _host.MissingBuild : null, IsFailed ? _host.DataDirectory : null, IsFailed ? _host.ClientDirectory : null);
         ShowsHostFailure = IsFailed && !ClientFiles.IsShown;
         (HostTitle, HostTone) = status switch
         {

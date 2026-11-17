@@ -569,3 +569,8 @@ or refines another says so in its own entry. Add a line here with every new deci
 
 - [D439](decisions/d439-the-marketplace-dropped.md#d439-the-owner-drops-the-marketplace-the-bot-neither-follows-prices-nor-sells-the-work-of-d427-to-d438-stays-on-branches-never-merged-the-fixes-found-on-the-way-are-kept) The owner drops the marketplace: the bot neither follows prices nor sells, the work of D427 to D438 stays on branches never merged, the fixes found on the way are kept (2026-11-17)
   - Keeping the following of prices alone, reverting the marketplace on top of its branches, deleting the branches on `origin` now.
+
+## The client's files prepared by the app (D440)
+
+- [D440](decisions/d440-the-clients-files-in-the-app.md#d440-the-app-prepares-the-installed-clients-pack-schema-and-mapping-itself-in-its-own-process-from-a-library-the-tools-wrap-it-downloads-nothing) The app prepares the installed client's pack, schema and mapping itself, in its own process, from a library the tools wrap; it downloads nothing (2026-11-17)
+  - Downloading the build's files from a release, a child process or an executable beside the app, keeping the downloader for `scripts/embed.cs`.

@@ -1353,7 +1353,7 @@
     <value>Le client Dofus est passé en {0}</value>
   </data>
   <data name="ClientFilesText" xml:space="preserve">
-    <value>Il manque à D3B.Bis les fichiers de ce client. « Mettre à jour » les prend dans la release client-{0} de {1}.</value>
+    <value>Il manque à D3B.Bis les fichiers de ce client. « Mettre à jour » les prépare sur ce PC à partir du client installé, en une minute environ.</value>
   </data>
   <data name="ClientFilesUpdate" xml:space="preserve">
     <value>Mettre à jour</value>
@@ -1364,26 +1364,41 @@
   <data name="ClientFilesRestart" xml:space="preserve">
     <value>Redémarrer</value>
   </data>
-  <data name="ClientFilesDownloading" xml:space="preserve">
-    <value>Téléchargement des fichiers du client {0}… {1} %</value>
+  <data name="ClientFilesPreparing" xml:space="preserve">
+    <value>Étape {0} sur 3 : {1}… {2} %</value>
+  </data>
+  <data name="ClientFilesStepPack" xml:space="preserve">
+    <value>lecture des données du client</value>
+  </data>
+  <data name="ClientFilesStepSchema" xml:space="preserve">
+    <value>lecture du protocole du client</value>
+  </data>
+  <data name="ClientFilesStepMapping" xml:space="preserve">
+    <value>correspondance du protocole</value>
   </data>
   <data name="ClientFilesReady" xml:space="preserve">
-    <value>Les fichiers du client {0} sont en place. Redémarrez D3B.Bis pour les utiliser.</value>
+    <value>Les fichiers du client {0} sont prêts. Redémarrez D3B.Bis pour les utiliser.</value>
   </data>
-  <data name="ClientFilesNotPublished" xml:space="preserve">
-    <value>La release client-{0} de {1} n'est pas encore publiée. Lancez « {2} » depuis le Bureau : il prépare les fichiers sur ce PC.</value>
+  <data name="ClientFilesProtocolTitle" xml:space="preserve">
+    <value>Le protocole du jeu a changé</value>
   </data>
-  <data name="ClientFilesMissing" xml:space="preserve">
-    <value>La release client-{0} de {1} n'a pas les fichiers que lit cette version ({2}). Lancez « {3} » depuis le Bureau : il prépare les fichiers sur ce PC.</value>
+  <data name="ClientFilesProtocolChanged" xml:space="preserve">
+    <value>Le client {0} parle un protocole que D3B.Bis ne sait plus faire correspondre : son code doit le suivre avant qu'un bot joue sur ce client. Rien n'a été mis en place ; ce qui ne tient plus est écrit dans {1}.</value>
   </data>
-  <data name="ClientFilesChecksum" xml:space="preserve">
-    <value>Un fichier téléchargé ne correspond pas à sa somme de contrôle : rien n'a été mis en place. Réessayez ; si cela se reproduit, lancez « {0} » depuis le Bureau.</value>
+  <data name="ClientFilesUnreadTitle" xml:space="preserve">
+    <value>D3B.Bis ne sait pas lire ce client</value>
   </data>
-  <data name="ClientFilesNetwork" xml:space="preserve">
-    <value>Le téléchargement a échoué : {0} Rien n'a été mis en place. Vérifiez la connexion et réessayez.</value>
+  <data name="ClientFilesUnread" xml:space="preserve">
+    <value>L'étape {0} sur 3, {1}, a échoué : {2} Le client {3} a changé d'une façon que le code de D3B.Bis doit suivre ; le détail est dans {4}.</value>
   </data>
-  <data name="ClientFilesWrite" xml:space="preserve">
-    <value>Les fichiers n'ont pas pu être écrits : {0}</value>
+  <data name="ClientFilesNoClient" xml:space="preserve">
+    <value>L'étape {0} sur 3, {1}, a échoué : {2} Vérifiez que le client Dofus est installé, puis réessayez.</value>
+  </data>
+  <data name="ClientFilesDisk" xml:space="preserve">
+    <value>L'étape {0} sur 3, {1}, a échoué : {2} Réessayez une fois la cause réglée.</value>
+  </data>
+  <data name="ClientFilesUnexpected" xml:space="preserve">
+    <value>L'étape {0} sur 3, {1}, a échoué : {2} Réessayez ; le détail est dans {3}.</value>
   </data>
   <data name="AddMonsters" xml:space="preserve">
     <value>Ajouter des monstres</value>

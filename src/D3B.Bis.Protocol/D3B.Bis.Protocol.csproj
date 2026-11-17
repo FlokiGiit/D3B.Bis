@@ -10,6 +10,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Pins\*.json" LogicalName="Pins.%(Filename)%(Extension)" />
+  </ItemGroup>
+
+  <ItemGroup>
     <InternalsVisibleTo Include="D3B.Bis.Protocol.Tests" />
   </ItemGroup>
 

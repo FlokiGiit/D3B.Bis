@@ -1,4 +1,5 @@
 using System.CommandLine;
+using System.Security.Cryptography;
 using D3B.Bis.Data;
 using D3B.Bis.Data.Packs;
 using D3B.Bis.Data.Releases;
@@ -116,41 +117,32 @@ internal static class EmbedCommand
         }
     }
 
-    /// <summary>Downloads the files from the build's release, each checked against its SHA-256 (D24), with the app's own code (D440).</summary>
+    /// <summary>Downloads the files and their checksums from the build's release, and checks each against its SHA-256 (D24).</summary>
     private static void Download(ClientBuild build, string repository, string[] names, string directory)
     {
-        using var http = new HttpClient { Timeout = TimeSpan.FromMinutes(10) };
-        var downloader = new ClientReleaseDownloader(http, repository, Token());
+        var tag = ClientRelease.TagOf(build);
+        var patterns = names.SelectMany(name => new[] { "--pattern", name, "--pattern", ClientRelease.ChecksumNameOf(name) });
+        var (exitCode, _, error) = GitHubCli.Run(["release", "download", tag, "--repo", repository, "--dir", directory, .. patterns]);
 
-        try
+        if (exitCode is not 0)
+            throw new InvalidOperationException($"gh release download {tag} failed: {error.Trim()}");
+
+        foreach (var name in names)
         {
-            downloader.DownloadAsync(build, names, directory, null, CancellationToken.None).GetAwaiter().GetResult();
-        }
-        catch (ClientReleaseException exception)
-        {
-            throw new InvalidDataException(exception.Message, exception);
-        }
-    }
+            var path = Path.Combine(directory, name);
+            var checksum = Path.Combine(directory, ClientRelease.ChecksumNameOf(name));
 
-    /// <summary>Gets the token a private repository's releases need: the environment's, as CI gives it, else the GitHub CLI's.</summary>
-    private static string? Token()
-    {
-        if (Environment.GetEnvironmentVariable("GH_TOKEN") is { Length: > 0 } token)
-            return token;
+            if (!File.Exists(path) || !File.Exists(checksum))
+                throw new InvalidDataException($"release {tag} of {repository} lacks {name} or its checksum.");
 
-        if (Environment.GetEnvironmentVariable("GITHUB_TOKEN") is { Length: > 0 } github)
-            return github;
+            var expected = ClientRelease.ParseChecksum(File.ReadAllText(checksum), name);
+            string actual;
 
-        try
-        {
-            var (exitCode, output, _) = GitHubCli.Run(["auth", "token"]);
+            using (var stream = File.OpenRead(path))
+                actual = Convert.ToHexStringLower(SHA256.HashData(stream));
 
-            return exitCode is 0 && output.Trim() is { Length: > 0 } cli ? cli : null;
-        }
-        catch (InvalidOperationException)
-        {
-            // Without gh, a public repository's releases are read with no token.
-            return null;
+            if (actual != expected)
+                throw new InvalidDataException($"{name} of release {tag} has SHA-256 {actual}, not {expected} as published.");
         }
     }
 

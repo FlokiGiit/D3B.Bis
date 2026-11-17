@@ -15,9 +15,8 @@ using D3B.Bis.Scripts.Embed;
 // Either way they are checked as the host checks them: the pack opens as the build's, and the mapping holds against the
 // schema (D48).
 // Usage: dotnet run --file scripts/embed.cs -- --client-version <version> --output <dir> [--packs <dir>]; --help describes
-// the options. Without --packs it reads the release through GitHub's API, as the app does (D440), with GH_TOKEN, GITHUB_TOKEN
-// or the GitHub CLI's token when one is there, which a private repository needs.
-// Exit code: 0 once the three files are in place; 1 when one is not the build's, does not hold, or the download failed; 2 when one is
+// the options. Without --packs it runs the GitHub CLI, gh, which reads the releases with its own credentials or GH_TOKEN.
+// Exit code: 0 once the three files are in place; 1 when one is not the build's, does not hold, or gh failed; 2 when one is
 // missing.
 
 CultureInfo.DefaultThreadCurrentCulture = CultureInfo.InvariantCulture;

@@ -1,7 +1,7 @@
 using Avalonia;
 using D3B.Bis.App.Hosting;
 using D3B.Bis.App.Updates;
-using D3B.Bis.Data.Releases;
+using D3B.Bis.Extraction;
 using D3B.Bis.Storage;
 using Microsoft.Extensions.Configuration;
 using Velopack;
@@ -27,8 +27,7 @@ internal static class Program
         var preferences = AppPreferences.Load(AppPreferences.DefaultPath);
         var configuration = new ConfigurationBuilder().AddEnvironmentVariables().AddCommandLine(args).Build();
         var updates = new AppUpdates(new VelopackUpdateClient(UpdateSettings.SourceIn(configuration)));
-        var repository = UpdateSettings.ClientRepositoryIn(configuration);
-        var clientFiles = new ClientFiles(new ClientReleaseDownloader(new HttpClient { Timeout = TimeSpan.FromMinutes(10) }, repository), repository);
+        var clientFiles = new ClientFiles(log => new InstalledClientSteps(log));
         var host = new HostRunner(args, preferences.Host);
 
         host.Start();
@@ -46,7 +45,7 @@ internal static class Program
             // Last: installing the version downloaded may end the process at once, and starts the app again when asked (D173).
             updates.Finish();
 
-            // Once the host stopped, which held the relay's address: the app started again reads the client's files downloaded (D440).
+            // Once the host stopped, which held the relay's address: the app started again reads the client's files prepared (D440).
             if (clientFiles.RestartRequested && !updates.RestartRequested)
                 ClientFiles.StartAgain(args);
         }

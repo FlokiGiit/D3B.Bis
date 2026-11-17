@@ -95,6 +95,13 @@ toolwindows/profiler, toolwindows/project, toolwindows/run, toolwindows/services
 | SQLitePCLRaw | SourceGear, LLC | Apache-2.0 |
 | SQLite | Its authors | Public domain |
 | Velopack | Velopack Ltd. | MIT |
+| AssetsTools.NET, which reads the client's bundles as the app prepares a build's files (D440) | nesrak1 | MIT |
+| AssetRipper.TextureDecoder, AssetRipper.CIL, AssetRipper.Primitives | ds5678 | MIT |
+| Cpp2IL.Core, LibCpp2IL, Disarm, StableNameDotNet, WasmDisassembler, which read the client's protocol (D440) | Sam Byass (Samboy063) | MIT |
+| AsmResolver | Washi | MIT |
+| Iced | The iced project and contributors | MIT |
+| AssetRipper.Gee.External.Capstone, Capstone.NET | Ahmed Garhy | MIT |
+| Capstone, the native `capstone.dll` its wrapper ships | The Capstone authors | BSD-3-Clause |
 
 ## MIT
 

@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\D3B.Bis.Extraction\D3B.Bis.Extraction.csproj" />
     <ProjectReference Include="..\D3B.Bis.Storage\D3B.Bis.Storage.csproj" />
   </ItemGroup>
 
